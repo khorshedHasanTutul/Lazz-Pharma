@@ -1,4 +1,5 @@
 import React from "react";
+import NavLinkMenus from "./NavLinkMenus";
 
 const NavHeader = () => {
   return (
@@ -588,56 +589,7 @@ const NavHeader = () => {
                     <span class="Mobile_Menu"> MENU </span>
                   </button>
                 </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                  <ul class="nav navbar-nav">
-                    <li class="active">
-                      <span></span>
-                      <a href="https://www.lazzpharma.com/">Home</a>
-                    </li>
-                    <li class="">
-                      <span></span>
-                      <a href="https://www.lazzpharma.com/Home/OrderUs">
-                        Order Us
-                      </a>
-                    </li>
-                    <li class="">
-                      <span></span>
-                      <a href="https://www.lazzpharma.com/Home/FindStore">
-                        Branch Location
-                      </a>
-                    </li>
-                    <li class="">
-                      <span></span>
-                      <a href="https://www.lazzpharma.com/Home/Comments">
-                        Review
-                      </a>
-                    </li>
-                    <li class="">
-                      <span></span>
-                      <a href="https://www.lazzpharma.com/Home/Career">
-                        Career
-                      </a>
-                    </li>
-                    <li class="">
-                      <span></span>
-                      <a href="https://www.lazzpharma.com/Home/Gallery">
-                        Gallery
-                      </a>
-                    </li>
-                    <li class="">
-                      <span></span>
-                      <a href="https://www.lazzpharma.com/Home/AboutUs">
-                        About Us
-                      </a>
-                    </li>
-                    <li class="">
-                      <span></span>
-                      <a href="https://www.lazzpharma.com/Home/ContactUs">
-                        Contact Us
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+                <NavLinkMenus />
               </div>
             </nav>
           </div>

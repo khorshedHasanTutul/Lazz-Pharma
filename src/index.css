@@ -532,7 +532,9 @@ font-family: 'Open Sans', sans-serif !important;
 font-weight: 500;
 }
 
-
+.row.custom-slide-row {
+	display: flex;
+}
 .row.custom-row {
 align-items: center;
 display: flex;
