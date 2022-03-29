@@ -1,15 +1,16 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { urlAboutRoute, urlCarrerRoute, urlContactRoute, urlGalleryRoute, urlHomeRoute, urlRequestOrderRoute, urlReviewRoute } from "../../Service/UrlService";
 
 const NavLinkMenus = () => {
   const navLinksData = [
     {
       text: "Home",
-      to: "/",
+      to: urlHomeRoute(),
     },
     {
       text: "Order Us",
-      to: "/order",
+      to: urlRequestOrderRoute(),
     },
     {
       text: "Branch & Location",
@@ -17,23 +18,23 @@ const NavLinkMenus = () => {
     },
     {
       text: "Review",
-      to: "/review",
+      to: urlReviewRoute(),
     },
     {
       text: "Carrer",
-      to: "/carrer",
+      to: urlCarrerRoute(),
     },
     {
       text: "Gallery",
-      to: "/gallery",
+      to: urlGalleryRoute(),
     },
     {
       text: "About Us",
-      to: "/about",
+      to: urlAboutRoute(),
     },
     {
       text: "Contact Us",
-      to: "/contact",
+      to: urlContactRoute(),
     },
   ];
   return (
@@ -42,7 +43,7 @@ const NavLinkMenus = () => {
         {navLinksData.map((links) => (
           <li>
             <span></span>
-            <NavLink to={links.to}>{links.text}</NavLink>
+            <NavLink to={links.to} exact>{links.text}</NavLink>
           </li>
         ))}
         {/* <li class="active">

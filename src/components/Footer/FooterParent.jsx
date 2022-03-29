@@ -2,7 +2,7 @@ import React from 'react'
 
 const FooterParent = () => {
   return (
-    <footer id="footer">
+    <footer id="footer" style={{marginTop:"60px",paddingTop:"50px"}}>
       <div class="container-fluid">
         {/* <!-- introduce-box --> */}
         <div id="introduce-box" class="row">
