@@ -1018,7 +1018,9 @@ span.notify-right{
 
 .banner-boder-zoom .col-md-12 a img {
   width: 100% !important;
-}
+  max-height: 350px;
+  object-fit: cover;
+  }
 
 .carousel-inner > .item > a > img, .carousel-inner > .item > img, .img-responsive, .thumbnail a > img, .thumbnail > img {
   width: 180px !important;
