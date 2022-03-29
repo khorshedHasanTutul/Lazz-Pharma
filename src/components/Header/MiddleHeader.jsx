@@ -20,7 +20,7 @@ const MiddleHeader = () => {
                 autocomplete="off"
                 type="text"
                 placeholder="Search by Trade or Generic Name..."
-                style={{fontSize: "16px"}}
+                style={{ fontSize: "16px" }}
               />
             </div>
             <button type="button" class="pull-right btn-search">
