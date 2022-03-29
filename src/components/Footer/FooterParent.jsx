@@ -10,7 +10,7 @@ const FooterParent = () => {
             <div id="address-box">
               <a href="https://www.lazzpharma.com/#"
                 ><img
-                  src="./Lazz Pharma Limited_files/Lazz_Logo_305x50.png"
+                  src="/Contents/assets/image/logo.png"
                   alt="logo"
               /></a>
               <div id="address-list">
