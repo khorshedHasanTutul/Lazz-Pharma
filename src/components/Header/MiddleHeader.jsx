@@ -1,16 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { urlHomeRoute } from "../../Service/UrlService";
 
 const MiddleHeader = () => {
   return (
     <div class="container-fluid main-header">
       <div class="row custom-row">
         <div class="col-xs-12 col-sm-4 col-lg-3 logo">
-          <a href="https://www.lazzpharma.com/#">
+          <Link to={urlHomeRoute()}>
             <img
               alt="Lazz Pharma Limited"
               src="/Contents/assets/image/logo.png"
             />
-          </a>
+          </Link>
         </div>
         <div class="col-xs-7 col-sm-4 col-lg-6 header-search-box">
           <form class="form-inline">
