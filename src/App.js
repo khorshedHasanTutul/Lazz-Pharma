@@ -12,15 +12,21 @@ import Contact from "./components/pages/Contact";
 import Gallery from "./components/pages/Gallery";
 import Home from "./components/pages/Home";
 import OrderUS from "./components/pages/OrderUS";
+import Privacy from "./components/pages/Privacy";
+import Returnpolicy from "./components/pages/Returnpolicy";
 import Review from "./components/pages/Review";
+import TermsCondition from "./components/pages/TermsCondition";
 import {
   urlAboutRoute,
   urlCarrerRoute,
   urlContactRoute,
   urlGalleryRoute,
   urlHomeRoute,
+  urlPrivacyPolicy,
   urlRequestOrderRoute,
+  urlReturnPolicy,
   urlReviewRoute,
+  urlTermsConditionRoute,
 } from "./Service/UrlService";
 
 function App() {
@@ -50,6 +56,15 @@ function App() {
           </Route>
           <Route path={urlContactRoute()} exact>
             <Contact />
+          </Route>
+          <Route path={urlReturnPolicy()} exact>
+            <Returnpolicy />
+          </Route>
+          <Route path={urlTermsConditionRoute()} exact>
+            <TermsCondition />
+          </Route>
+          <Route path={urlPrivacyPolicy()} exact>
+            <Privacy />
           </Route>
         </Switch>
       </main>

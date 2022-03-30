@@ -5,3 +5,6 @@ export const urlCarrerRoute=()=>'/carrer';
 export const urlGalleryRoute=()=>'/gallery';
 export const urlAboutRoute=()=>'/about';
 export const urlContactRoute=()=>'/contact';
+export const urlReturnPolicy=()=>'/return';
+export const urlTermsConditionRoute=()=>'/termsCondition';
+export const urlPrivacyPolicy=()=>'/privacy';
