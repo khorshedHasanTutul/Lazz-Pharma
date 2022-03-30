@@ -1,10 +1,13 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import { getCategories } from "../../Service/DataService";
 import { urlHomeRoute } from "../../Service/UrlService";
 import NavLinkMenus from "./NavLinkMenus";
 
 const NavHeader = () => {
   const { pathname } = useLocation();
+  const getMainCategories = getCategories();
+  // console.log({ getMainCategories });
   return (
     <div id="nav-top-menu" class="nav-top-menu home">
       <div class="container-fluid">
@@ -28,38 +31,45 @@ const NavHeader = () => {
                     class="vertical-menu-list"
                     style={{ display: "block" }}
                   >
-                    <li>
-                      <a
-                        class="parent"
-                        href="https://www.lazzpharma.com/ProductCategoryDetails/Index?Id=05554363-1502-48cc-90f5-96f2ffff41e2"
-                      >
-                        <img
-                          class="icon-menu normal-img"
-                          alt="Lazz"
-                          src="./Lazz Pharma Limited_files/medicine.png"
-                        />
-                        <img
-                          class="icon-menu hover-img"
-                          alt="Lazz"
-                          src="img/medicine.png"
-                        />
-                        Medicine
-                      </a>
-                      <div class="vertical-dropdown-menu">
-                        <a href="https://www.lazzpharma.com/#"></a>
-                        <div class="vertical-groups col-sm-12">
-                          <div class="mega-group col-sm-12">
-                            <ul class="group-link-default">
-                              <li>
-                                <a href="https://www.lazzpharma.com/ProductSubCategoryDetails/Index?Id=3e96268f-b249-420b-9f6a-1ac2a262caae">
-                                  Anxiety
-                                </a>
-                              </li>
-                            </ul>
+                    {getMainCategories.map((item) => {
+                      const getChildCategories = getCategories(item.id);
+                      return (
+                        <li>
+                          <a
+                            class="parent"
+                            href="https://www.lazzpharma.com/ProductCategoryDetails/Index?Id=05554363-1502-48cc-90f5-96f2ffff41e2"
+                          >
+                            <img
+                              class="icon-menu normal-img"
+                              alt="Lazz"
+                              src="./Lazz Pharma Limited_files/medicine.png"
+                            />
+                            <img
+                              class="icon-menu hover-img"
+                              alt="Lazz"
+                              src="img/medicine.png"
+                            />
+                            {item.name}
+                          </a>
+                          <div class="vertical-dropdown-menu">
+                            <a href="https://www.lazzpharma.com/#"></a>
+                            <div class="vertical-groups col-sm-12">
+                              <div class="mega-group col-sm-12">
+                                <ul class="group-link-default">
+                                  {getChildCategories.map((child) => (
+                                    <li>
+                                      <a href="https://www.lazzpharma.com/ProductSubCategoryDetails/Index?Id=3e96268f-b249-420b-9f6a-1ac2a262caae">
+                                        {child.name}
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </li>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               )}
