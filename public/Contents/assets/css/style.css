@@ -741,9 +741,7 @@ img.alignright{
 }
 .main-header .header-search-box{
     margin-top: 17px;
-    padding-left: 80px;
-    padding-right: 45px;
-    
+    padding-left: 80px; 
 }
     .main-header .header-search-box .form-inline {
         height: 41px;
@@ -1037,7 +1035,7 @@ span.notify-right{
     background: #fff;
 }
 .box-vertical-megamenus .title{
-    background: #000;
+    background: #31B086;
     color: #fff;
     height: 50px;
     line-height: 50px;
@@ -1245,10 +1243,12 @@ span.notify-right{
 /*-----------------
  [ 3.4.2 Main menu]
  */
-#main-menu{
-  padding: 0;
-  margin-left: -15px;
+ #main-menu {
+	padding: 0;
+	margin-left: -15px;
+	background: #016449;
 }
+
 #main-menu .container-fluid{
   padding: 0;
 }
@@ -1263,16 +1263,18 @@ span.notify-right{
 #main-menu .navbar-collapse{
   padding: 0;
 }
-#main-menu .navbar .navbar-nav>li>a{
-  color: #333;
-  margin: 15px 0;
-  padding: 0;
-  border-right: 1px solid #cacaca;
-  padding: 0 25px;
-  background: transparent;
+#main-menu .navbar .navbar-nav > li > a {
+	color: #fff;
+	margin: 15px 0;
+	padding: 0;
+	padding: 0 25px;
+	background: transparent;
+	border-right: 1px solid transparent;
+	font-family: "Open Sans", sans-serif !important;
+	font-weight: 500;
 }
 #main-menu .navbar .navbar-nav>li:last-child>a{
-  border-right: none;
+  border-right: 1px solid transparent;
 }
 #main-menu .navbar .navbar-nav>li:hover,
 #main-menu .navbar .navbar-nav>li.active{
