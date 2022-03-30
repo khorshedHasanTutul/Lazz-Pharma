@@ -439,19 +439,23 @@ body {
   font-size: 1.2em;
   color: white;
 }
+.form-inline .pull-right.btn-search > i {
+	font-size: 20px;
+}
 
 .main-header .header-search-box .form-inline .btn-search {
-  width: 50px !important;
+  width: 60px !important;
   border-radius: 0px 6px 6px 0px !important;
 }
 
 .main-header .header-search-box .form-inline {
-  height: 41px;
-  border: 1px solid #ddd !important;
-  position: relative;
-  border-radius: 6px !important;
-  margin-right: 18px !important;
+	height: 44px;
+	border: 2px solid #04432e !important;
+	position: relative;
+	border-radius: 6px !important;
+	/* margin-right: 18px !important; */
 }
+
 .main-header .header-search-box .form-inline .input-serach input {
   border: none;
   padding-left: 15px;
@@ -459,6 +463,7 @@ body {
   font-size: 14px !important;
   font-weight: 400;
   font-family: "Open Sans", sans-serif !important;
+  height: 37px;
 }
 
 .option2 #main-menu .navbar-default .navbar-nav > li > a {
@@ -593,11 +598,11 @@ body {
 .main-header .header-search-box {
   margin-top: 17px;
   padding-left: 15px !important;
-  padding-right: 45px;
+
 }
 
 .box-vertical-megamenus .vertical-menu-content {
-  border-top: 3px solid #04432e;
+  border-top: 0px solid #04432e;
   background: #fff;
   display: none;
   /* padding-bottom: 15px; */
