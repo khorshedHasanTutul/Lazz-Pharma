@@ -216,7 +216,7 @@ label {
     position: fixed;
     right: 0;
     top: 125px;
-    display: none;
+    /* display: none; */
 }
 
 .cart-box-inner-view {
@@ -345,7 +345,7 @@ label {
 }
 
 .cart_info .cart-box-view {
-    display: none;
+    /* display: none; */
 }
 
 .cart_info_details .cart-box-view {

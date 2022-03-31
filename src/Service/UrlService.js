@@ -8,3 +8,4 @@ export const urlContactRoute=()=>'/contact';
 export const urlReturnPolicy=()=>'/return';
 export const urlTermsConditionRoute=()=>'/termsCondition';
 export const urlPrivacyPolicy=()=>'/privacy';
+export const urlProductDetails=()=>'/product/details/'

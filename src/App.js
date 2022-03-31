@@ -16,6 +16,7 @@ import Privacy from "./components/pages/Privacy";
 import Returnpolicy from "./components/pages/Returnpolicy";
 import Review from "./components/pages/Review";
 import TermsCondition from "./components/pages/TermsCondition";
+import ProductDetails from "./components/pages/ProductDetails";
 import {
   urlAboutRoute,
   urlCarrerRoute,
@@ -23,6 +24,7 @@ import {
   urlGalleryRoute,
   urlHomeRoute,
   urlPrivacyPolicy,
+  urlProductDetails,
   urlRequestOrderRoute,
   urlReturnPolicy,
   urlReviewRoute,
@@ -56,6 +58,9 @@ function App() {
           </Route>
           <Route path={urlContactRoute()} exact>
             <Contact />
+          </Route>
+          <Route path={urlProductDetails()+':id'} exact>
+            <ProductDetails />
           </Route>
           <Route path={urlReturnPolicy()} exact>
             <Returnpolicy />
