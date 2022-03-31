@@ -42,31 +42,33 @@ const NavHeader = () => {
                             <img
                               class="icon-menu normal-img"
                               alt="Lazz"
-                              src="./Lazz Pharma Limited_files/medicine.png"
+                              src="./Contents/assets/image/medicine.png"
                             />
                             <img
                               class="icon-menu hover-img"
                               alt="Lazz"
-                              src="img/medicine.png"
+                              src="./Contents/assets/image/medicine.png"
                             />
                             {item.name}
                           </a>
-                          <div class="vertical-dropdown-menu">
-                            <a href="https://www.lazzpharma.com/#"></a>
-                            <div class="vertical-groups col-sm-12">
-                              <div class="mega-group col-sm-12">
-                                <ul class="group-link-default">
-                                  {getChildCategories.map((child) => (
-                                    <li>
-                                      <a href="https://www.lazzpharma.com/ProductSubCategoryDetails/Index?Id=3e96268f-b249-420b-9f6a-1ac2a262caae">
-                                        {child.name}
-                                      </a>
-                                    </li>
-                                  ))}
-                                </ul>
+                          {getChildCategories.length>0 && (
+                            <div class="vertical-dropdown-menu">
+                              <a href="https://www.lazzpharma.com/#"></a>
+                              <div class="vertical-groups col-sm-12">
+                                <div class="mega-group col-sm-12">
+                                  <ul class="group-link-default">
+                                    {getChildCategories.map((child) => (
+                                      <li>
+                                        <a href="https://www.lazzpharma.com/ProductSubCategoryDetails/Index?Id=3e96268f-b249-420b-9f6a-1ac2a262caae">
+                                          {child.name}
+                                        </a>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
                               </div>
                             </div>
-                          </div>
+                          )}
                         </li>
                       );
                     })}
