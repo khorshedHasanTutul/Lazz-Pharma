@@ -1073,8 +1073,12 @@ span.notify-right{
   margin-left: -1px;
   position: relative;
 }
+
 .box-vertical-megamenus .vertical-menu-list>li:hover{
-  background: #04432e;
+  background: linear-gradient(to left,#d2cfcf 0,#04432E 50%) !important;
+  color: #fff;
+  opacity: 1;
+  height: 40px;
 }
 .box-vertical-megamenus .vertical-menu-list>li:hover>a{
   color: #fff;
@@ -1273,6 +1277,7 @@ span.notify-right{
 	font-family: "Open Sans", sans-serif !important;
 	font-weight: 500;
 }
+
 #main-menu .navbar .navbar-nav>li:last-child>a{
   border-right: 1px solid transparent;
 }

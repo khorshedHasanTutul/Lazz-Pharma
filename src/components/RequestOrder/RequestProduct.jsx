@@ -365,7 +365,7 @@ const RequestProduct = () => {
               type="button"
               style={{width: "100%", marginTop: "3%"}}
             >
-              <i class="fa fa-picture-o" aria-hidden="true"></i>
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
               <span> Set Your Location (Optional) </span>
             </button>
           </div>
@@ -392,7 +392,7 @@ const RequestProduct = () => {
               type="button"
               style={{ width: "100%" }}
             >
-              <span class="glyphicon glyphicon-plus"> </span>
+              <i class="fa fa-plus" aria-hidden="true"></i>
               <span> Upload Prescription Here</span>
             </button>
             <input
@@ -502,7 +502,7 @@ const RequestProduct = () => {
           type="button"
           style={{marginBottom: "15px"}}
         >
-          <span class="glyphicon glyphicon-upload"></span> Send
+          <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Send
         </button>
       </div>
     </div>

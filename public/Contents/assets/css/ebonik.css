@@ -64,8 +64,10 @@ label {
 }
 
 .SearchPrice {
-    font-weight: 700;
-    color: #04432e;
+	font-weight: 600;
+	line-height: 28px;
+	font-family: "Open Sans", sans-serif !important;
+	text-transform: capitalize;
 }
 
 .SearchProps {
@@ -350,11 +352,7 @@ label {
     display: block;
 }
 
-.request_product {
-    border: 1px solid black;
-    width: 80%;
-    margin: 0 auto;
-}
+
 
 .notice {
     text-align: center;
@@ -1109,7 +1107,7 @@ label {
         background-color: #31b086;
         height: 50px;
         border: 1px solid #04432e;
-        margin-top: 11px;
+        margin-top: 1px;
     }
 
     .ticker-move {
