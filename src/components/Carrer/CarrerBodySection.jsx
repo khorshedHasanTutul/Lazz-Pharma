@@ -3,8 +3,8 @@ import React from "react";
 const CarrerBodySection = () => {
   return (
     <div class="container section">
-      <div class="row">
-        <div class="col-md-6">
+      <div class="row custom-career-row">
+        <div class="col-md-6 career-content">
           <h1>Are you Dedicated, Hardworking and Fun? Join Us!</h1>
           <p class="career_common">
             We believe in those people who are passionate about their work and
@@ -17,7 +17,7 @@ const CarrerBodySection = () => {
               type="button"
               style={{ width: "100%" }}
             >
-              <span class="glyphicon glyphicon-plus"></span>{" "}
+              <i class="fa fa-plus" aria-hidden="true"></i>{" "}
               <span> Drop Your CV Here</span>
             </button>
             <input
@@ -35,9 +35,9 @@ const CarrerBodySection = () => {
             />
           </div>
         </div>
-        <div class="col-md-6">
+      <div class="col-md-6 career-img">
           <img
-            src="Lazz%20Pharma%20Limited_files/Lazz_Emp.jpg"
+            src="https://www.superdrug.com/medias/custom-content/lp/2021/makeupfeature/e0421/e0521_MakuepContent_BestFoundations.jpg"
             alt="LazzEmployee"
           />
         </div>
@@ -70,14 +70,14 @@ const CarrerBodySection = () => {
                 <h4>Salary</h4>
                 <p>Negotiable</p>
               </div>
-              <div class="timeline-footer"></div>
+              
               <div style={{ position: "relative" }}>
                 <button
                   class="btn btn_upload"
                   type="button"
                   style={{ width: "35%" }}
                 >
-                  <span class="glyphicon glyphicon-plus"></span>{" "}
+                  <i class="fa fa-plus" aria-hidden="true"></i>{" "}
                   <span> Drop Your CV Here</span>
                 </button>
                 <input

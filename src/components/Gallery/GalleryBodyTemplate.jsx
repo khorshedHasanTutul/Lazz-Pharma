@@ -7,14 +7,42 @@ const GalleryBodyTemplate = () => {
         <div align="center">
           <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
             <img
-              src="Lazz%20Pharma%20Limited_files/60debc99-e5a2-46c8-8f82-83ecf1ebd6d0Lazz-Center-Opening-9.jpg"
+              src="https://www.superdrug.com/medias/custom-content/lp/2021/makeupfeature/e0421/e0421_MakuepContent_TopMascaras.jpg"
               class="img-responsive gallery_image"
               alt="img"
             />
           </div>
           <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
             <img
-              src="Lazz%20Pharma%20Limited_files/835d0754-ce60-4f9f-8cc5-3234f30ffbb5HAS_7788.jpg"
+              src="https://www.superdrug.com/medias/custom-content/lp/2021/makeupfeature/e0421/e0421_MakuepContent_TopMascaras.jpg"
+              class="img-responsive gallery_image"
+              alt="img"
+            />
+          </div>
+          <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+            <img
+              src="https://www.superdrug.com/medias/custom-content/lp/2021/makeupfeature/e0421/e0421_MakuepContent_TopMascaras.jpg"
+              class="img-responsive gallery_image"
+              alt="img"
+            />
+          </div>
+          <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+            <img
+              src="https://www.superdrug.com/medias/custom-content/lp/2021/makeupfeature/e0421/e0421_MakuepContent_TopMascaras.jpg"
+              class="img-responsive gallery_image"
+              alt="img"
+            />
+          </div>
+          <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+            <img
+              src="https://www.superdrug.com/medias/custom-content/lp/2021/makeupfeature/e0421/e0421_MakuepContent_TopMascaras.jpg"
+              class="img-responsive gallery_image"
+              alt="img"
+            />
+          </div>
+          <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+            <img
+              src="https://www.superdrug.com/medias/custom-content/lp/2021/makeupfeature/e0421/e0421_MakuepContent_TopMascaras.jpg"
               class="img-responsive gallery_image"
               alt="img"
             />

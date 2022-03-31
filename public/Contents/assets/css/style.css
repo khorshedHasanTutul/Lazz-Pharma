@@ -99,6 +99,17 @@ a:focus{
   color: #fff;
   margin-right:5px;
 }
+
+.new_comment_container .button {
+	border: 1px solid #eaeaea;
+	background: #04432E;
+	color: #fff;
+	margin-right: 5px;
+	height: 40px;
+	line-height: 40px;
+	padding: 0;
+}
+
 .button-sm{
   padding: 5px 10px;
 }
@@ -106,12 +117,15 @@ a:focus{
   background: #04432e;
   border: 1px solid #04432e;
 }
-.input{
-  border-radius: 0px;
-  border: 1px solid #eaeaea;
-  -webkit-box-shadow: inherit;
-  box-shadow: inherit;
+.input {
+	border-radius: 0px;
+	border: 1px solid #eaeaea;
+	-webkit-box-shadow: inherit;
+	box-shadow: inherit;
+	height: 40px;
+	line-height: 40px;
 }
+
 .button .fa{
   line-height: inherit;
 }
@@ -1281,11 +1295,15 @@ span.notify-right{
 #main-menu .navbar .navbar-nav>li:last-child>a{
   border-right: 1px solid transparent;
 }
+
 #main-menu .navbar .navbar-nav>li:hover,
 #main-menu .navbar .navbar-nav>li.active{
   background: #04432e;
   color: #fff;
 }
+
+
+
 #main-menu .navbar .navbar-nav>li:hover>a,
 #main-menu .navbar .navbar-nav>li.active>a{
   color: #fff;
@@ -4441,10 +4459,13 @@ span.notify-right{
 }
 
 
-.box-border{
-  border: 1px solid #eaeaea;
-  padding:20px;
-  overflow: hidden;
+.box-border {
+	border: 1px solid #eaeaea;
+	padding: 10px 20px;
+	overflow: hidden;
+}
+.col-md-6.box-border > label {
+	margin: 0;
 }
 .box-wishlist label,
 .box-wishlist .button{

@@ -2,7 +2,7 @@ import React from "react";
 
 const PrivacyContent = () => {
   return (
-    <div class="col-md-9">
+    <div class="col-md-10">
       <div class="SearchFont">
         <blockquote>
           <p>

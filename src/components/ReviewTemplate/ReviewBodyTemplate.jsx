@@ -38,7 +38,7 @@ const ReviewBodyTemplate = () => {
                 <div class="col ctr_img">
                   <div class="img_container">
                     <div class="img_round">
-                      <img src="Lazz%20Pharma%20Limited_files/profile-user.png" />
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlGf1LsCO_POD_MWK0T40UPrQZfYOjgU0SvQ&usqp=CAU" />
                     </div>
                   </div>
                 </div>
@@ -72,7 +72,7 @@ const ReviewBodyTemplate = () => {
                 <div class="col ctr_img">
                   <div class="img_container">
                     <div class="img_round">
-                      <img src="Lazz%20Pharma%20Limited_files/profile-user.png" />
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlGf1LsCO_POD_MWK0T40UPrQZfYOjgU0SvQ&usqp=CAU" />
                     </div>
                   </div>
                 </div>
@@ -105,7 +105,7 @@ const ReviewBodyTemplate = () => {
                 <div class="col ctr_img">
                   <div class="img_container">
                     <div class="img_round">
-                      <img src="Lazz%20Pharma%20Limited_files/profile-user.png" />
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlGf1LsCO_POD_MWK0T40UPrQZfYOjgU0SvQ&usqp=CAU" />
                     </div>
                   </div>
                 </div>
@@ -136,7 +136,7 @@ const ReviewBodyTemplate = () => {
                 <div class="col ctr_img">
                   <div class="img_container">
                     <div class="img_round">
-                      <img src="Lazz%20Pharma%20Limited_files/profile-user.png" />
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlGf1LsCO_POD_MWK0T40UPrQZfYOjgU0SvQ&usqp=CAU" />
                     </div>
                   </div>
                 </div>
