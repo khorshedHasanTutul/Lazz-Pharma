@@ -14,28 +14,28 @@ const AboutBodyTemplate = () => {
           <div class="carousel-inner">
             <div class="item active">
               <img
-                src="Lazz%20Pharma%20Limited_files/About%25204-f.jpg"
+                src="https://www.lazzpharma.com/Content/assets/iqraimages/AboutSlider/About%204-f.jpg"
                 alt="Lazz Pharma"
                 style={{ width: "100%" }}
               />
             </div>
             <div class="item">
               <img
-                src="Lazz%20Pharma%20Limited_files/About%25203-f.jpg"
+                src="https://www.lazzpharma.com/Content/assets/iqraimages/AboutSlider/About%203-f.jpg"
                 alt="Lazz Pharma"
                 style={{ width: "100%" }}
               />
             </div>
             <div class="item">
               <img
-                src="Lazz%20Pharma%20Limited_files/About%25202-f.jpg"
+                src="https://www.lazzpharma.com/Content/assets/iqraimages/AboutSlider/About%202-f.jpg"
                 alt="Lazz Pharma"
                 style={{ width: "100%" }}
               />
             </div>
             <div class="item">
               <img
-                src="Lazz%20Pharma%20Limited_files/About%25201-f.jpg"
+                src="https://www.lazzpharma.com/Content/assets/iqraimages/AboutSlider/About%201-f.jpg"
                 alt="Lazz Pharma"
                 style={{ width: "100%" }}
               />
@@ -68,7 +68,7 @@ const AboutBodyTemplate = () => {
               <div class="my-card">
                 <img
                   class="my-card-img"
-                  src="Lazz%20Pharma%20Limited_files/Chairman-600x400-f.jpg"
+                  src="https://www.lazzpharma.com/Content/assets/iqraimages/Directors/Chairman-600x400-f.jpg"
                   alt="img"
                 />
                 <div class="my-card-body trainer-card-body">
@@ -96,7 +96,7 @@ const AboutBodyTemplate = () => {
               <div class="my-card">
                 <img
                   class="my-card-img"
-                  src="Lazz%20Pharma%20Limited_files/lutfor-rahman-580x400-f.jpg"
+                  src="https://www.lazzpharma.com/Content/assets/iqraimages/Directors/lutfor-rahman-580x400-f.jpg"
                   alt="img"
                 />
                 <div class="my-card-body trainer-card-body">
@@ -125,7 +125,7 @@ const AboutBodyTemplate = () => {
                 <div class="my-card">
                   <img
                     class="my-card-img"
-                    src="Lazz%20Pharma%20Limited_files/photo-1-f.jpg"
+                    src="https://www.lazzpharma.com/Content/assets/iqraimages/Directors/photo-1-f.jpg"
                     alt="img"
                   />
                   <div class="my-card-body trainer-card-body">
@@ -153,7 +153,7 @@ const AboutBodyTemplate = () => {
                 <div class="my-card">
                   <img
                     class="my-card-img"
-                    src="Lazz%20Pharma%20Limited_files/photo%25202%2520-%2520final-f.jpg"
+                    src="https://www.lazzpharma.com/Content/assets/iqraimages/Directors/photo%202%20-%20final-f.jpg"
                     alt="img"
                   />
                   <div class="my-card-body trainer-card-body">
@@ -189,7 +189,7 @@ const AboutBodyTemplate = () => {
                       <img
                         alt="img"
                         class="my-card-img"
-                        src="Lazz%20Pharma%20Limited_files/Anower-Hossain1.jpg"
+                        src="https://www.lazzpharma.com/Content/assets/iqraimages/CorporateMembers/Anower-Hossain1.jpg"
                       />
                     </div>
                   </div>
@@ -198,7 +198,7 @@ const AboutBodyTemplate = () => {
                       <img
                         alt="img"
                         class="my-card-img"
-                        src="Lazz%20Pharma%20Limited_files/A.jpg"
+                        src="https://www.lazzpharma.com/Content/assets/iqraimages/CorporateMembers/A.L.M-Kamal-Uddin-(Hafez)2.jpg"
                       />
                     </div>
                   </div>
@@ -207,7 +207,7 @@ const AboutBodyTemplate = () => {
                       <img
                         alt="img"
                         class="my-card-img"
-                        src="Lazz%20Pharma%20Limited_files/Md_003.jpg"
+                        src="https://www.lazzpharma.com/Content/assets/iqraimages/CorporateMembers/Md.-Rovin3.jpg"
                       />
                     </div>
                   </div>
@@ -216,7 +216,7 @@ const AboutBodyTemplate = () => {
                       <img
                         alt="img"
                         class="my-card-img"
-                        src="Lazz%20Pharma%20Limited_files/Md_005.jpg"
+                        src="https://www.lazzpharma.com/Content/assets/iqraimages/CorporateMembers/Md.-Yousuf-Al-Amin4.jpg"
                       />
                     </div>
                   </div>
@@ -225,7 +225,7 @@ const AboutBodyTemplate = () => {
                       <img
                         alt="img"
                         class="my-card-img"
-                        src="Lazz%20Pharma%20Limited_files/Md.jpg"
+                        src="https://www.lazzpharma.com/Content/assets/iqraimages/CorporateMembers/Md.-Abid-Hasan-b5.jpg"
                       />
                     </div>
                   </div>
@@ -234,7 +234,7 @@ const AboutBodyTemplate = () => {
                       <img
                         alt="img"
                         class="my-card-img"
-                        src="Lazz%20Pharma%20Limited_files/Md_004.jpg"
+                        src="https://www.lazzpharma.com/Content/assets/iqraimages/CorporateMembers/Md.-Hassan-Raju6.jpg"
                       />
                     </div>
                   </div>
@@ -243,7 +243,7 @@ const AboutBodyTemplate = () => {
                       <img
                         alt="img"
                         class="my-card-img"
-                        src="Lazz%20Pharma%20Limited_files/Md_002.jpg"
+                        src="https://www.lazzpharma.com/Content/assets/iqraimages/CorporateMembers/Md.-Al-Amin7.jpg"
                       />
                     </div>
                   </div>

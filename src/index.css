@@ -408,6 +408,23 @@ body {
   transition: 0.3s;
 }
 
+.row.custom-career-row {
+	padding-bottom: 50px;
+}
+
+.col-lg-3 {
+	width: 25% !important;
+}
+
+.col-md-6.career-content {
+	background: transparent !important;
+	padding-right: 90px;
+}
+
+.col-md-6.career-img {
+	background: transparent !important;
+}
+
 .introduce-list li:hover i {
   padding-left: 5px;
   transition: 0.3s;
@@ -427,6 +444,29 @@ body {
 }
 .new-mail {
   border-right: inherit !important;
+}
+
+.msg-blow {
+	font-size: 18px;
+	font-weight: 500;
+}
+
+.contact_info > a {
+	color: #04432E;
+	font-size: 18px;
+}
+
+.col-sm-12.contact_info > h4 {
+	color: #000;
+	font-weight: 700;
+	font-size: 19px;
+}
+
+.contact_info > span {
+	color: #212121;
+	font-weight: 600;
+	font-size: 22px;
+	font-family: "Open Sans", sans-serif !important;
 }
 
 .col-md-6.hide_on_mobile p {
@@ -461,6 +501,30 @@ body {
 	position: relative;
 	border-radius: 6px !important;
 	/* margin-right: 18px !important; */
+}
+
+.SearchFont blockquote p strong {
+	font-size: 20px;
+	font-family: "Open Sans", sans-serif !important;
+  color: #000;
+}
+
+.SearchFont > p {
+	font-family: "Open Sans", sans-serif !important;
+	font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.SearchFont span p strong {
+	font-family: "Open Sans", sans-serif !important;
+	font-size: 20px;
+  color: #000;
+}
+
+.SearchFont strong p  {
+	font-family: "Open Sans", sans-serif !important;
+	font-size: 20px;
+  color: #000;
 }
 
 .main-header .header-search-box .form-inline .input-serach input {
@@ -577,7 +641,7 @@ body {
   display: block;
   background: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  padding: 12px 10px;
+  padding: 12px 9px;
   border-radius: 6px;
   color: #04432e;
   display: flex;
@@ -867,10 +931,32 @@ width: 100%;
   border: 2px solid transparent;
 }
 
+.form-control.new-msg {
+	height: 120px;
+}
+
+.col-md-5.contact-md {
+	border: 1px solid #ddd;
+	width: 38%;
+	float: right;
+	padding: 40px 0px;
+	margin-top: 40px;
+	border-radius: 10px;
+}
+
 .External_Block_Button:hover {
    border: 2px solid #31b086;
    background: transparent;
    transition: 0.6s;
+   color: #000;
+}
+#form_container .col-sm-12.text-right.form-group .External_Block_Button {
+	padding: 10px 32px !important;
+}
+
+#form_container .form-group div label {
+	color: #000;
+	font-size: 16px !important;
 }
 
 .breadcrumb.clearfix .home {
@@ -889,6 +975,19 @@ width: 100%;
   background: #fff;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
 }
+
+.gallery_product > img {
+	width: 100% !important;
+	height: auto;
+}
+
+.img_container .img_round {
+	border: 1px solid #ddd;
+	overflow: hidden;
+	border-radius: 50%;
+}
+
+
 
 .btn.btn_cancel.btn-success.btn-default.btn-round i {
 	position: relative;
