@@ -3,7 +3,7 @@ import { getProducts, productTypes } from "../../../Service/DataService";
 import ProductsInfoModel from "../ProductsInfoModel";
 
 const FeaturedProducts = () => {
-  const getFeaturedProducts=getProducts(productTypes.featured);
+  const getFeaturedProducts = getProducts(productTypes.featured);
   return (
     <div class="content-page">
       <div class="container-fluid">
@@ -27,11 +27,9 @@ const FeaturedProducts = () => {
                     <div class="tab-panel active">
                       <div class="">
                         <ul class="product-list row">
-                          {
-                            getFeaturedProducts.map(item=>(
-                              <ProductsInfoModel item={item} />
-                            ))
-                          }
+                          {getFeaturedProducts.map((item) => (
+                            <ProductsInfoModel item={item} />
+                          ))}
                         </ul>
                       </div>
                     </div>
