@@ -1,5 +1,5 @@
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Open Sans", sans-serif !important;
 }
 #footer .introduce-list {
   padding-left: 0;
@@ -256,17 +256,24 @@ body {
   text-transform: capitalize;
 }
 
+.btn.btn_upload > i {
+	margin-top: 1px;
+	font-size: 19px;
+}
+
+.btn.btn_upload {
+	margin-top: 0 !important;
+}
+.fa.fa-paper-plane-o {
+	margin-top: 3px;
+}
+
 .vertical-dropdown-menu {
   position: absolute;
   top: 58px !important;
   left: 100%;
   z-index: 900;
-  -webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
-  transition: opacity 0.5s, transform 0.5s;
-  -webkit-transition: all 0.45s ease-out 0s;
-  -moz-transition: all 0.45s ease-out 0s;
-  -o-transition: all 0.45s ease-out 0s;
-  transition: all 0.45s ease-out 0s;
+  transition: 0.4s;
   -moz-transform: inherit !important;
   -webkit-transform: inherit !important;
   transform: inherit !important;
@@ -506,7 +513,7 @@ body {
 
 .box-vertical-megamenus .vertical-menu-list > li > a {
   padding-left: 20px;
-  line-height: 36px;
+  line-height: 40px;
   display: block;
   font-size: 14px !important;
   font-family: "Open Sans", sans-serif !important;
@@ -570,13 +577,16 @@ body {
   display: block;
   background: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  padding: 12px 9px;
+  padding: 12px 10px;
   border-radius: 6px;
   color: #04432e;
   display: flex;
   align-items: center;
   font-weight: 600 !important;
   font-family: "Open Sans", sans-serif !important;
+}
+.container-fluid.custom-nav-container {
+	padding-right: 0;
 }
 
 .info-content > ul > li > a span {
@@ -747,9 +757,17 @@ width: 100%;
 }
 
 .vertical-dropdown-menu {
-  max-width: 220px !important;
+  max-width: 247px !important;
   width: 100% !important;
 }
+
+.splide__slide img {
+	vertical-align: bottom;
+	width: 100% !important;
+	object-fit: cover !important;
+}
+
+
 
 .main_dispaly:hover .btn_add_to_cart {
   background-color: #31b086 !important;
@@ -864,12 +882,18 @@ width: 100%;
 }
 
 .request_product {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
   border-radius: 10px;
   padding: 10px 20px;
   background: #fff;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+}
+
+.btn.btn_cancel.btn-success.btn-default.btn-round i {
+	position: relative;
+	top: 4px;
+	right: 6px;
 }
 
 .request_product .notice {

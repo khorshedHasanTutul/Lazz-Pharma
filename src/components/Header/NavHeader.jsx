@@ -10,7 +10,7 @@ const NavHeader = () => {
   // console.log({ getMainCategories });
   return (
     <div id="nav-top-menu" class="nav-top-menu home">
-      <div class="container-fluid">
+      <div class="container-fluid custom-nav-container">
         <div class="row">
           {/* <!-- desktop varsion --> */}
           <div

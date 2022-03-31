@@ -25,7 +25,7 @@ const Banner = () => {
   return (
     <div>
       <div className="banner-area">
-        <div className="container">
+        <div className="container-fluid">
           <div className="row custom-slide-row">
             <div className="col-md-3"></div>
             <div className="col-md-9">
