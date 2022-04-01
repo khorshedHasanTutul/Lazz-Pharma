@@ -20,6 +20,7 @@ import ProductDetails from "./components/pages/ProductDetails";
 import {
   urlAboutRoute,
   urlCarrerRoute,
+  urlCheckoutRoute,
   urlContactRoute,
   urlGalleryRoute,
   urlHomeRoute,
@@ -30,6 +31,7 @@ import {
   urlReviewRoute,
   urlTermsConditionRoute,
 } from "./Service/UrlService";
+import Checkout from "./components/pages/Checkout";
 
 function App() {
   return (
@@ -61,6 +63,9 @@ function App() {
           </Route>
           <Route path={urlProductDetails()+':id'} exact>
             <ProductDetails />
+          </Route>
+          <Route path={urlCheckoutRoute()} exact>
+            <Checkout />
           </Route>
           <Route path={urlReturnPolicy()} exact>
             <Returnpolicy />

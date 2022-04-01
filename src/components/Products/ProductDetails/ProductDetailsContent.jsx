@@ -10,7 +10,6 @@ const ProductDetailsContent = () => {
     try {
       const response = await axios.get(BASE_URL + PRODUCT_DETAILS, {
         params: { id: id },
-        
       });
       console.log(response.data);
     } catch (err) {
