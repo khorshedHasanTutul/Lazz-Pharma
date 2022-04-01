@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { urlProductDetails } from "../../Service/UrlService";
+import cartContext from "../../store/cart-context";
 
 const ProductsInfoModel = ({ item }) => {
+
+  const cartCtx = useContext(cartContext);
+  const cartCtxModal = cartCtx.getCartModel;
+
+  const addToCartHandler = (item, e) => {
+    e.preventDefault();
+    if (cartCtxModal.Items.find((itemInner) => itemInner.id === item.id)) {
+      alert("Product already exist in cart.");
+    } else {
+      cartCtx.storeCartItems(item);
+    }
+  };
+  
   return (
     <li class="col-sm-2 col-md-2 col-xs-6 main_dispaly_container">
       <div class="main_dispaly">
@@ -48,7 +62,10 @@ const ProductsInfoModel = ({ item }) => {
           )}
         </div>
         <div>
-          <div style={{ textAlign: "center" }}>
+          <div
+            style={{ textAlign: "center" }}
+            onClick={addToCartHandler.bind(this, item)}
+          >
             <div class="btn_cart">
               <a class="btn_add_to_cart" title="Add to Cart" href>
                 <svg
