@@ -881,6 +881,300 @@ width: 100%;
   display: none;
 }
 
+.shaping-address-saveing-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px;
+	margin-bottom: 30px;
+	border: 1px solid #04432E;
+}
+
+.shapping-address-inner-content {
+	display: flex;
+	align-items: center;
+}
+
+.location-ad-icon > i {
+	font-size: 3rem;
+	padding-right: 20px;
+	color: #04432E;
+}
+
+.saving-address-content > small, .saving-address-content > span {
+	font-size: 1.2rem;
+	font-weight: bold;
+	display: block;
+}
+
+.saving-address-content > span > aside {
+	background: #04432E;
+	padding: 3px 10px;
+	border-radius: 5px;
+	color: #fff;
+	margin-right: 8px;
+}
+.saving-address-content > span {
+	display: inline-block;
+}
+
+.saving-ad-btn > button {
+	background: #04432E;
+	color: white;
+	padding: 5px 10px;
+	border-radius: 6px 6px;
+}
+
+.saving-ad-btn > button:hover {
+	background: white;
+	color: #04432E;
+	border: 1px solid #04432E;
+	transition: .3s ease-in-out;
+}
+
+
+.d-flexx {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.inner-shop-add-flex span {
+	font-size: 16px;
+	font-weight: 600;
+	color: #000;
+	display: block;
+	padding-bottom: 20px;
+	text-align: left;
+}
+.address-info-inner-flex {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+.address-info-right-default {
+	flex: 0 0 32%;
+}
+.address-info-from {
+	flex: 0 0 65%;
+}
+.address-inner-select-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+}
+.address-info-inner-content .address-inner-select-item .custom-input::after {
+	position: absolute;
+	top: 50%;
+	right: 12px;
+	z-index: 1;
+	pointer-events: none;
+	content: "\f107";
+	font-family: FontAwesome;
+}
+.address-info-inner-content .custom-input label, .address-info-inner-content .address-textarea label {
+	color: #000;
+	font-size: 15px;
+	font-weight: 400;
+	display: block;
+	margin-bottom: 5px;
+}
+.address-info-inner-content .address-inner-select-item .custom-input select {
+	width: 100%;
+	background: transparent;
+	-webkit-appearance: none;
+}
+
+.address-info-inner-content .custom-input input, .address-info-inner-content .custom-input select, #discount_codeSubmit input, .address-info-inner-content .address-textarea textarea {
+	width: 100%;
+	border: 1px solid #04432E;
+	height: 35px;
+	display: block;
+	padding: 0px 10px;
+	font-weight: 400;
+	font-size: 14px;
+	color: #04432E;
+	font-family: 'Poppins', sans-serif;
+	outline: none;
+	border-radius: 6px;
+	box-sizing: border-box;
+}
+.address-info-inner-content .custom-input input, .address-info-inner-content .custom-input select, #discount_codeSubmit input, .address-info-inner-content .address-textarea textarea {
+	font-weight: 400;
+	font-size: 14px;
+	color: #04432E;
+	font-family: 'Poppins', sans-serif;
+}
+.address-info-inner-content .address-inner-select-item .custom-input::after {
+	position: absolute;
+	top: 50%;
+	right: 12px;
+	z-index: 1;
+	pointer-events: none;
+	content: "\f107";
+	font-family: FontAwesome;
+}
+.address-info-inner-content .custom-input label, .address-info-inner-content .address-textarea label {
+	color: #000;
+	font-size: 15px;
+	font-weight: 400;
+	display: block;
+	margin-bottom: 5px;
+}
+.address-info-inner-content .address-textarea textarea {
+	height: 120px;
+	padding: 10px 10px;
+}
+.address-info-inner-content .custom-input input, .address-info-inner-content .custom-input select, #discount_codeSubmit input, .address-info-inner-content .address-textarea textarea {
+	width: 100%;
+	border: 1px solid #04432E;
+	height: 35px;
+	display: block;
+	padding: 0px 10px;
+	font-weight: 400;
+	font-size: 14px;
+	color: #04432E;
+	font-family: 'Poppins', sans-serif;
+	outline: none;
+	border-radius: 6px;
+	box-sizing: border-box;
+}
+.all-address-save-btn {
+	margin-top: 15px;
+}
+.chosse-your-fvt-btn ul {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.chosse-your-fvt-btn ul li {
+	margin: 5px;
+}
+.chosse-your-fvt-btn ul li.active a {
+	background: transparent;
+	border: 2px solid var(--green-color);
+	color: #000;
+}
+
+.chosse-your-fvt-btn ul li.default-set a {
+	background: #04432E;
+	color: #fff;
+	border: 2px solid #04432E;
+	transition: 0.5s;
+}
+.address-info-inner-content .custom-input label, .address-info-inner-content .address-textarea label {
+	color: #000;
+	font-size: 15px;
+	font-weight: 400;
+	display: block;
+	margin-bottom: 5px;
+}
+.address-info-inner-content .address-textarea textarea {
+	height: 120px;
+	padding: 10px 10px;
+}
+.address-info-inner-content .custom-input input, .address-info-inner-content .custom-input select, #discount_codeSubmit input, .address-info-inner-content .address-textarea textarea {
+	width: 100%;
+	border: 1px solid #04432E;
+	height: 35px;
+	display: block;
+	padding: 0px 10px;
+	font-weight: 400;
+	font-size: 14px;
+	color: #04432E;
+	font-family: 'Poppins', sans-serif;
+	outline: none;
+	border-radius: 6px;
+	box-sizing: border-box;
+}
+.chosse-your-fvt-btn ul li.active a {
+	background: transparent;
+	border: 2px solid var(--green-color);
+	color: #000;
+}
+.chosse-your-fvt-btn ul li a {
+	background: transparent;
+	color: #04432E;
+	display: block;
+	padding: 10px 44px;
+	text-align: center;
+	/* border: 2px solid #04432E; */
+	font-weight: 500;
+	font-size: 16px;
+	border-radius: 5px;
+}
+.address-info-inner-content .address-inner-select-item .custom-input {
+	flex: 0 0 32%;
+	position: relative;
+}
+.address-info-inner-content .address-textarea textarea {
+	height: 120px !important;
+	padding: 10px 10px !important;
+}
+.chosse-your-fvt-btn ul li {
+	margin: 5px;
+	border: 1px solid #04432E;
+	border-radius: 6px;
+}
+
+h3 {
+	color: #31B086;
+	font-family: #31B086;
+	font-weight: 700;
+	font-size: 20px;
+	line-height: 1.5;
+	text-transform: capitalize;
+}
+.address-info-right-default h2 {
+	text-align: center;
+	color: #04432E;
+	font-size: 18px;
+	margin-bottom: 15px;
+}
+.address-home-default-single {
+	padding: 15px;
+	box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+	border-radius: 10px;
+	overflow: hidden;
+	margin-bottom: 20px;
+	text-align: center;
+	padding-bottom: 20px;
+	position: relative;
+}
+.address-home-default-single h3 {
+	font-size: 18px;
+	color: #04432E;
+}
+.address-home-default-single.active {
+	border: 2px solid #04432E;
+}
+.selected-address {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+}
+.address-info-from > form {
+	box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+	padding: 30px;
+	border-radius: 10px;
+}
+
+.address-info-inner-content .custom-input input, .address-info-inner-content .custom-input select, #discount_codeSubmit input, .address-info-inner-content .address-textarea textarea {
+	width: 100%;
+	border: 1px solid #04432E;
+	height: 35px;
+	display: block;
+	padding: 0px 10px;
+	font-weight: 400;
+	font-size: 14px;
+	color: #04432E;
+	font-family: 'Poppins', sans-serif;
+	outline: none;
+	border-radius: 6px;
+	box-sizing: border-box;
+}
+
 .new-phon.new-phonx {
   margin-left: -10px !important;
 }
