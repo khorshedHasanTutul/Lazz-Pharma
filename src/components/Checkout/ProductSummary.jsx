@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import cartContext from "../../store/cart-context";
 
-const ProductSummary = () => {
+const ProductSummary = ({proceedToAddressHandler}) => {
   let history = useHistory();
   const cartCtx = useContext(cartContext);
   const [qty, setQty] = useState("");
@@ -52,6 +52,7 @@ const ProductSummary = () => {
         Your shopping cart contains:
         <span> {cartCtxModal.TotalItems} Product</span>
       </div>
+
       <div class="order-detail-content">
         <table class="table table-bordered table-responsive cart_summary">
           <thead>
@@ -164,7 +165,7 @@ const ProductSummary = () => {
             </tr>
           </tfoot>
         </table>
-        <div class="row" style={{ margin: "auto" }}>
+        {/* <div class="row" style={{ margin: "auto" }}>
           <div class="col-md-6 box-border">
             <label class="Method_Selector">
               <input type="radio" name="radio_5" id="radio_button_7" />
@@ -177,20 +178,39 @@ const ProductSummary = () => {
               Outside Dhaka
             </label>
           </div>
+        </div> */}
+        <div class="shaping-address-saveing-row">
+          <div class=" shapping-address-inner-content">
+            <div class="location-ad-icon" style={{ fontSize: "3rem" }}>
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+            </div>
+            <div class="saving-address-content">
+              <small>Khorshed Hasan Tutul</small>
+              <small>01704247162</small>
+              <span>
+                <aside>Office</aside>
+              </span>
+              <span>jakma@outlook.com</span>
+              <span>Dhaka-Dhaka-Mirpur-Mirpur Block C Road 12</span>
+            </div>
+          </div>
+          <div class="saving-ad-btn">
+            <button>Change</button>
+          </div>
         </div>
-        <div>
-          <p class="OrderNotice" style={{ marginTop: "10px" }}>
+        {/* <div>
+          <p class="OrderNotice" style={{ marginTop: "50px" }}>
             *** সকাল ১০ টা থেকে ৭ টার মধ্যে অর্ডার করলে ২৪ থেকে ৪৮ ঘন্টার মধ্যে
             ডেলিভারি। <br />
             ***শুক্রবারে সকল ডেলিভারি কার্যক্রম বন্ধ থাকে।
           </p>
-        </div>
+        </div> */}
         <div class="row" style={{ margin: "auto" }}>
           <div class="cart_navigation">
             <a class="prev-btn" href="https://www.lazzpharma.com/">
               Continue shopping
             </a>
-            <a class="next-btn">Proceed to checkout</a>
+            <a onClick={proceedToAddressHandler} class="next-btn" href>Proceed to checkout</a>
           </div>
         </div>
       </div>
