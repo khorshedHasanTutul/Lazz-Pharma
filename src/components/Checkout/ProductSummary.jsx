@@ -71,7 +71,7 @@ const ProductSummary = ({proceedToAddressHandler}) => {
                 <td class="cart_product">
                   <a href>
                     <img
-                      src="CheckoutLazz%20Pharma%20Limited_files/med.jpg"
+                      src="/Contents/assets/image/pditals.jpg"
                       alt="Product"
                     />
                   </a>
