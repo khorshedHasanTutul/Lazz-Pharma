@@ -57,7 +57,7 @@ const ContentCart = ({ openCart }) => {
     <div class="cart-box-view">
       <div class="cart-box-inner-view">
         <div class="cart-header row no_margin">
-          <div class="col-xs-8">
+          <div class="col-xs-8 lazz-cart-item">
             <img
               class="header-bag"
               src="./Contents/assets/image/add-cart.png"
@@ -87,9 +87,9 @@ const ContentCart = ({ openCart }) => {
                 {cartCtxModal.Items.map((item) => (
                   <tr>
                     <td>
-                      <img src="/Content/assets/images/med.jpg" alt="img" />
+                      <img src="/Contents/assets/image/cartLogo.jpg" alt="img" />
                     </td>
-                    <td>
+                    <td className="card-title-product">
                       <a href="/ProductArea/Product/Details/f8ccb3df-f11d-483b-8f8d-b5212e7c23c5">
                         <span class="SearchProductName SearchFont">
                           {item.name}
@@ -109,7 +109,7 @@ const ContentCart = ({ openCart }) => {
                         ৳ {(item.MRP - (item.MRP * item.Ds) / 100).toFixed(2)}
                       </strong>
                     </td>
-                    <td
+                    <td className="cart-inc-dsc"
                       style={{
                         fontSize: "13px",
                         verticalAlign: "middle",
@@ -150,11 +150,11 @@ const ContentCart = ({ openCart }) => {
                       </div>
                     </td>
                     {item.Ds > 0 && item.Ds !== null && (
-                      <td style={{ whiteSpace: "nowrap" }}>
+                      <td className="dis-new-con" style={{ whiteSpace: "nowrap" }}>
                         {item.Ds > 0 && item.Ds !== null && (
                           <>
                             <span class="SearchFont SearchDelPrice">
-                              <del>৳ </del>
+                              <aside>৳</aside>
                             </span>
                             <del>{item.MRP * item.quantity}</del>
                             <br />
