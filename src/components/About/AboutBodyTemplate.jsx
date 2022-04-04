@@ -1,63 +1,31 @@
 import React from "react";
+import Slider from "../utilities/Slider";
+import AboutSliderTemplate from "./AboutSliderTemplate";
 
 const AboutBodyTemplate = () => {
+  const Banner = [
+    {
+      id: 1,
+      image: "/Contents/assets/image/banner1.jpg",
+    },
+    {
+      id: 2,
+      image: "/Contents/assets/image/banner2.jpg",
+    },
+  ];
+  const options = {
+    rewind: true,
+    type: "loop",
+    autoplay: true,
+    rewindSpeed: 1000,
+    speed: 500,
+    pauseOnHover: false,
+    width: "100%",
+  };
   return (
     <div class="row">
       <div class="col-md-12">
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-          <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-            <li data-target="#myCarousel" data-slide-to="3"></li>
-          </ol>
-          <div class="carousel-inner">
-            <div class="item active">
-              <img
-                src="https://www.lazzpharma.com/Content/assets/iqraimages/AboutSlider/About%204-f.jpg"
-                alt="Lazz Pharma"
-                style={{ width: "100%" }}
-              />
-            </div>
-            <div class="item">
-              <img
-                src="https://www.lazzpharma.com/Content/assets/iqraimages/AboutSlider/About%203-f.jpg"
-                alt="Lazz Pharma"
-                style={{ width: "100%" }}
-              />
-            </div>
-            <div class="item">
-              <img
-                src="https://www.lazzpharma.com/Content/assets/iqraimages/AboutSlider/About%202-f.jpg"
-                alt="Lazz Pharma"
-                style={{ width: "100%" }}
-              />
-            </div>
-            <div class="item">
-              <img
-                src="https://www.lazzpharma.com/Content/assets/iqraimages/AboutSlider/About%201-f.jpg"
-                alt="Lazz Pharma"
-                style={{ width: "100%" }}
-              />
-            </div>
-            <a
-              class="left carousel-control"
-              href="#myCarousel"
-              data-slide="prev"
-            >
-              <span class="glyphicon glyphicon-chevron-left"></span>
-              <span class="sr-only"> Previous </span>
-            </a>
-            <a
-              class="right carousel-control"
-              href="#myCarousel"
-              data-slide="next"
-            >
-              <span class="glyphicon glyphicon-chevron-right"></span>
-              <span class="sr-only"> Next </span>
-            </a>
-          </div>
-        </div>
+        <Slider Template={AboutSliderTemplate} options={options} data={Banner}  />
         <div class="team_heading_title text-center">
           <h1 class="text-uppercase">Board of Directors</h1>
           <hr />
