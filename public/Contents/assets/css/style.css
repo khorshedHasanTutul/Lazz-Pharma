@@ -225,8 +225,8 @@ img.alignright {
   top: 0;
   left: 0;
   width: 100%;
-  opacity: 0;
-  visibility: hidden;
+  opacity: 1;
+  /* visibility: hidden; */
 }
 
 .tab-container .active {
@@ -1005,6 +1005,13 @@ img.alignright {
 .cart-block .cart-block-content {
   padding: 20px;
   overflow: hidden;
+}
+
+.product-tab .tab-container {
+	padding: 20px;
+	border: 1px solid #e2e2e2;
+	margin-top: -1px;
+	z-index: 1;
 }
 
 .cart-block .cart-block-content .cart-title {
@@ -4602,8 +4609,8 @@ span.notify-right {
   line-height: 50px;
   float: left;
   display: inline;
-  /* background: #e2e2e2; */
-  border-bottom: 1px solid #e2e2e2;
+  background: #e2e2e2;
+  border: 1px solid #e2e2e2;
   color: #333333;
   text-transform: uppercase;
   text-align: center;

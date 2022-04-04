@@ -37,7 +37,7 @@ const CarrerBodySection = () => {
         </div>
       <div class="col-md-6 career-img">
           <img
-            src="https://www.superdrug.com/medias/custom-content/lp/2021/makeupfeature/e0421/e0521_MakuepContent_BestFoundations.jpg"
+            src={"./Contents/assets/image/carrer.jpg"}
             alt="LazzEmployee"
           />
         </div>

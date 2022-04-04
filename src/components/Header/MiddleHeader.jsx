@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { urlHomeRoute } from "../../Service/UrlService";
+import { urlHomeRoute, urlRequestOrderRoute } from "../../Service/UrlService";
 
 const MiddleHeader = () => {
   return (
@@ -40,13 +40,13 @@ const MiddleHeader = () => {
           <div class="info-content">
             <ul>
               <li>
-                <a href>
+                <Link to={urlRequestOrderRoute()}>
                   <i class="fa fa-file-text-o" aria-hidden="true"></i>
                   <span>Upload Prescription</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a href>
+                <a href="tel:01319864049">
                   <i class="fa fa-volume-control-phone" aria-hidden="true"></i>{" "}
                   <span>Call For Order</span>
                 </a>

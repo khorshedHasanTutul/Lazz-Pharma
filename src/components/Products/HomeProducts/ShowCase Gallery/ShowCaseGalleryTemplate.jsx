@@ -6,7 +6,7 @@ const ShowCaseGalleryTemplate = () => {
                 <img
                   class="img-responsive"
                   alt="ads"
-                  src="./Contents/assets/image/b1.jpg"
+                  src="./Contents/assets/image/LazzMalik.jpg"
                   style={{ margin: "0px auto" }}
                 />
               </a>
