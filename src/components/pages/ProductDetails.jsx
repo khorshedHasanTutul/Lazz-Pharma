@@ -11,7 +11,7 @@ const ProductDetails = () => {
         <div id="columns" class="container">
           <ProductDetailsHeader />
           <ProductDetailsContent />
-          {/* <div id="left_column" class="column col-xs-12 col-sm-3">
+          <div id="left_column" class="column col-xs-12 col-sm-3">
             <div class="block left-module">
               <p class="title_block">RELATED PRODUCTS</p>
               <div class="block_content">
@@ -149,7 +149,7 @@ const ProductDetails = () => {
                 </ul>
               </div>
             </div>
-          </div> */}
+          </div>
           {/* <ReturnPolicyProduct /> */}
         </div>
       </div>

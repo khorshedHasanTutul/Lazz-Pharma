@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
+  urlBranchLocationRoute,
   urlContactRoute,
+  urlHowToOrderRoute,
   urlPrivacyPolicy,
+  urlRequestOrderRoute,
   urlReturnPolicy,
   urlTermsConditionRoute,
 } from "../../Service/UrlService";
@@ -54,30 +57,30 @@ const FooterParent = () => {
                   </li>
                   <li>
                     <i class="fa fa-angle-double-right"></i>
-                    <a
-                      href="https://www.lazzpharma.com/OrderUs"
+                    <Link
+                    to={urlRequestOrderRoute()}
                       style={{ color: "white" }}
                     >
                       Urgent Order
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <i class="fa fa-angle-double-right"></i>
-                    <a
-                      href="https://www.lazzpharma.com/FindStore"
+                    <Link
+                      to={urlBranchLocationRoute()}
                       style={{ color: "white" }}
                     >
                       Find Store
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <i class="fa fa-angle-double-right"></i>
-                    <a
-                      href="https://www.lazzpharma.com/HowToOrder"
+                    <Link
+                      to={urlHowToOrderRoute()}
                       style={{ color: "white" }}
                     >
                       How to Order
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>

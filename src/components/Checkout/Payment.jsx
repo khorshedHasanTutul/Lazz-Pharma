@@ -9,6 +9,17 @@ const Payment = () => {
         Your shopping cart contains:
         <span> 2 Product</span>
       </div>
+      <div class="discount-cupon-payment">
+        <label for="discount_code">Use Coupon</label>
+        <form id="discount_codeSubmit">
+          <input
+            type="text"
+            id="discount_code"
+            placeholder="Discount Code..."
+          />
+          <button type="submit">Apply</button>
+        </form>
+      </div>
       <div class="order-detail-content">
         <div class="shaping-address-saveing-row">
           <div class=" shapping-address-inner-content">

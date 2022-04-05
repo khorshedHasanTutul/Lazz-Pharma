@@ -20,18 +20,24 @@ import ProductDetails from "./components/pages/ProductDetails";
 import {
   urlAboutRoute,
   urlCarrerRoute,
+  urlCategoryWiseRoute,
   urlCheckoutRoute,
   urlContactRoute,
   urlGalleryRoute,
   urlHomeRoute,
+  urlHowToOrderRoute,
   urlPrivacyPolicy,
   urlProductDetails,
   urlRequestOrderRoute,
   urlReturnPolicy,
   urlReviewRoute,
+  urlSubCategoryWiseRoute,
   urlTermsConditionRoute,
 } from "./Service/UrlService";
 import Checkout from "./components/pages/Checkout";
+import HowToOrder from "./components/pages/HowToOrder";
+import CategoryWiseProduct from "./components/Products/CategoryProduct/CategoryWiseProduct";
+import SubCategoryProduct from "./components/Products/SubCategoryProduct/SubCategoryProduct";
 
 function App() {
   return (
@@ -61,7 +67,7 @@ function App() {
           <Route path={urlContactRoute()} exact>
             <Contact />
           </Route>
-          <Route path={urlProductDetails()+':id'} exact>
+          <Route path={urlProductDetails() + ":id"} exact>
             <ProductDetails />
           </Route>
           <Route path={urlCheckoutRoute()} exact>
@@ -75,6 +81,15 @@ function App() {
           </Route>
           <Route path={urlPrivacyPolicy()} exact>
             <Privacy />
+          </Route>
+          <Route path={urlHowToOrderRoute()} exact>
+            <HowToOrder />
+          </Route>
+          <Route path={urlCategoryWiseRoute() + ":id"}>
+            <CategoryWiseProduct />
+          </Route>
+          <Route path={urlSubCategoryWiseRoute() + ":id"}>
+            <SubCategoryProduct />
           </Route>
         </Switch>
       </main>

@@ -5,6 +5,7 @@ import { BASE_URL, PRODUCT_DETAILS } from "../../lib/endpoints";
 import ProductInfoTabs from "./ProductInfoTabs";
 
 const ProductDetailsContent = ({ item }) => {
+  const [clickedReviewHandler, setClickedReviewHandler] = useState(false);
   const cartCtx = useContext(cartContext);
   const [count, setCount] = useState(1);
   const qtyIncHandler = () => {
@@ -22,6 +23,10 @@ const ProductDetailsContent = ({ item }) => {
   const addToCartHandler = () => {
     // cartCtx.singleProductAdd(item,count);
     alert("Under Construction");
+  };
+
+  const reviewClickedHandler = () => {
+    setClickedReviewHandler((prevState) => !prevState);
   };
 
   // const { id } = useParams();
@@ -67,7 +72,7 @@ const ProductDetailsContent = ({ item }) => {
               </div>
               <div class="comments-advices">
                 <a href>No Review</a>
-                <a href="#reviews">
+                <a href onClick={reviewClickedHandler}>
                   <i class="fa fa-pencil"></i> write a review
                 </a>
               </div>
@@ -119,7 +124,7 @@ const ProductDetailsContent = ({ item }) => {
               class="form-action"
               onClick={addToCartHandler.bind(null, item)}
             >
-              <div class="button-group btn-add-cart-container" >
+              <div class="button-group btn-add-cart-container">
                 <a class="btn-add-cart btn-add-cart-lazz" href>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -135,7 +140,10 @@ const ProductDetailsContent = ({ item }) => {
             </div>
           </div>
         </div>
-        <ProductInfoTabs />
+        <ProductInfoTabs
+          clickedReviewHandler={clickedReviewHandler}
+          reviewClickedHandler={reviewClickedHandler}
+        />
       </div>
     </div>
   );
