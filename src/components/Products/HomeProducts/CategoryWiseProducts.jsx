@@ -5,6 +5,7 @@ import {
   getProducts,
   productTypes,
 } from "../../../Service/DataService";
+import { urlSubCategoryWiseRoute } from "../../../Service/UrlService";
 import ProductsInfoModel from "../ProductsInfoModel";
 
 const CategoryWiseProducts = () => {
@@ -34,7 +35,7 @@ const CategoryWiseProducts = () => {
               >
                 {getChildCategories.map((item) => (
                   <li>
-                    <a
+                    <Link
                       class="parent"
                       href="https://www.lazzpharma.com/ProductCategoryDetails/Index?Id=05554363-1502-48cc-90f5-96f2ffff41e2"
                     >
@@ -49,7 +50,7 @@ const CategoryWiseProducts = () => {
                         src="./Contents/assets/image/b1.jpg"
                       />
                       {item.name}
-                    </a>
+                    </Link>
                     {/* <div class="vertical-dropdown-menu">
                       <a href="https://www.lazzpharma.com/#"></a>
                       <div class="vertical-groups col-sm-12">
@@ -161,7 +162,7 @@ const CategoryWiseProducts = () => {
                 <ul id="_shop_sub_category_list" class="sub-category-list">
                   {getChildCategories.map((item) => (
                     <li>
-                      <Link to={"/hello"}>{item.name}</Link>
+                      <Link to={urlSubCategoryWiseRoute()+item.id}>{item.name}</Link>
                     </li>
                   ))}
                 </ul>

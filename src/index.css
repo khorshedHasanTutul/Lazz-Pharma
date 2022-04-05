@@ -1043,6 +1043,35 @@ width: 100%;
   border: 2px solid #04432e;
   transition: 0.5s;
 }
+#discount_codeSubmit {
+	margin-bottom: 30px;
+	max-width: 330px;
+	width: 100%;
+	display: flex;
+}
+#discount_codeSubmit button {
+	margin-left: 10px;
+	border: none;
+	background: transparent;
+	color: #fff;
+	font-weight: 400;
+	font-size: 16px;
+	font-family: 'Poppins', sans-serif;
+	height: 35px;
+	padding: 5px 11px;
+	cursor: pointer;
+	border: 1px solid #04432e;
+	color: #04432e;
+	transition: 0.5s;
+}
+
+.discount-cupon-payment label {
+	color: #000;
+	font-size: 16px;
+	font-weight: 500;
+	display: block;
+	margin-bottom: 4px;
+}
 .address-info-inner-content .custom-input label,
 .address-info-inner-content .address-textarea label {
   color: #000;

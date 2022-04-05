@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { getCategories } from "../../Service/DataService";
-import { urlHomeRoute } from "../../Service/UrlService";
+import { urlCategoryWiseRoute, urlHomeRoute, urlSubCategoryWiseRoute } from "../../Service/UrlService";
 import NavLinkMenus from "./NavLinkMenus";
 
 const NavHeader = () => {
@@ -35,9 +36,9 @@ const NavHeader = () => {
                       const getChildCategories = getCategories(item.id);
                       return (
                         <li>
-                          <a
+                          <Link
                             class="parent"
-                            href="https://www.lazzpharma.com/ProductCategoryDetails/Index?Id=05554363-1502-48cc-90f5-96f2ffff41e2"
+                            to={urlCategoryWiseRoute()+item.id}
                           >
                             <img
                               class="icon-menu normal-img"
@@ -50,18 +51,18 @@ const NavHeader = () => {
                               src="./Contents/assets/image/medicine.png"
                             />
                             {item.name}
-                          </a>
+                          </Link>
                           {getChildCategories.length>0 && (
                             <div class="vertical-dropdown-menu">
-                              <a href="https://www.lazzpharma.com/#"></a>
+                              {/* <a href></a> */}
                               <div class="vertical-groups col-sm-12">
                                 <div class="mega-group col-sm-12">
                                   <ul class="group-link-default">
                                     {getChildCategories.map((child) => (
                                       <li>
-                                        <a href="https://www.lazzpharma.com/ProductSubCategoryDetails/Index?Id=3e96268f-b249-420b-9f6a-1ac2a262caae">
+                                        <Link to={urlSubCategoryWiseRoute()+child.id}>
                                           {child.name}
-                                        </a>
+                                        </Link>
                                       </li>
                                     ))}
                                   </ul>
