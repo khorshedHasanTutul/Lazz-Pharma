@@ -1,13 +1,47 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { storeAddressObj } from "../../Service/AddressService";
 import { urlHomeRoute } from "../../Service/UrlService";
+import addressContext from "../../store/address-context";
+import cartContext from "../../store/cart-context";
+import AddressList from "./AddressList";
+import AddressValidation from "./AddressValidation/AddressValidation";
+import AreaValidation from "./AddressValidation/AreaValidation";
+import DistrictValidation from "./AddressValidation/DistrictValidation";
+import Divisionvalidation from "./AddressValidation/DivisionValidation";
+import EmailValidation from "./AddressValidation/EmailValidation";
+import MobileValidation from "./AddressValidation/MobileValidation";
+import NameValidation from "./AddressValidation/NameValidation";
+import BottomActiveAddress from "./BottomActiveAddress";
 
 const Address = ({ ProceedToOrderHandler }) => {
+  const { pathname } = useLocation();
+  const ctxCart=useContext(cartContext);
+  const ctxCartModal=ctxCart.getCartModel;
+  const ctxAddress = useContext(addressContext);
+  const [clicked, setClicked] = useState(false);
+  let addressObj = Object.assign({}, storeAddressObj);
+
+  const saveAddresshandler = () => {
+    addressObj = Object.assign({}, storeAddressObj);
+    setClicked(true);
+    if (
+      addressObj.name.length !== 0 &&
+      addressObj.mobile.length !== 0 &&
+      addressObj.division.length !== 0 &&
+      addressObj.district.length !== 0 &&
+      addressObj.area.length !== 0 &&
+      addressObj.address.length !== 0
+    ) {
+      ctxAddress.storeAddressCtx(addressObj);
+    }
+  };
   return (
     <div class="tab_content">
       <div class="heading-counter warning">
         Your shopping cart contains:
-        <span> 2 Product</span>
+        <span> {ctxCartModal.TotalItems} Product</span>
       </div>
       <div
         id="Tab4"
@@ -24,109 +58,21 @@ const Address = ({ ProceedToOrderHandler }) => {
               <div class="address-info-from">
                 <form>
                   <div class="address-info-inner-content">
-                    <div class="custom-input">
-                      <label for="name">Name</label>
-                      <input type="text" name="" id="name" required="" />
-                      <div class="alert alert-error">Name is required.</div>
-                    </div>
-                    <div class="custom-input">
-                      <label for="mobile">Mobile</label>
-                      <input type="text" name="" id="mobile" required="" />
-                      <div class="alert alert-error">Mobile is required.</div>
-                    </div>
-                    <div class="custom-input">
-                      <label for="email">Email</label>
-                      <input type="text" name="" id="email" required="" />
-                      <div class="alert alert-error">Email is required.</div>
-                    </div>
+                    <NameValidation clicked={clicked}/>
+                    <MobileValidation clicked={clicked}/>
+                    <EmailValidation clicked={clicked}/>
                     <div class="address-inner-select-item">
-                      <div class="custom-input">
-                        <label for="district">Select District</label>
-                        <select id="district">
-                          <option value="">Dhake</option>
-                          <option value="">Rangpur</option>
-                          <option value="">Dinajpur</option>
-                        </select>
-                      </div>
-                      <div class="custom-input">
-                        <label for="district">Select Division</label>
-                        <select id="district">
-                          <option value="">Dhake</option>
-                          <option value="">Rangpur</option>
-                          <option value="">Dinajpur</option>
-                        </select>
-                      </div>
-                      <div class="custom-input">
-                        <label for="district">Select Area</label>
-                        <select id="district">
-                          <option value="">Dhake</option>
-                          <option value="">Rangpur</option>
-                          <option value="">Dinajpur</option>
-                        </select>
-                      </div>
+                      <Divisionvalidation clicked={clicked}/>
+                      <DistrictValidation clicked={clicked}/>
+                      <AreaValidation clicked={clicked}/>
                     </div>
-                    <div class="address-textarea">
-                      <label for="message">Address</label>
-                      <textarea
-                        class="effect2"
-                        name=""
-                        id="message"
-                        required=""
-                      ></textarea>
-                    </div>
-                    <div class="all-address-save-btn">
-                      <div class="chosse-your-fvt-btn">
-                        <ul>
-                          <li class="active">
-                            <a href>Home</a>
-                          </li>
-                          <li>
-                            <a href>Office</a>
-                          </li>
-                          <li>
-                            <a href>Home Town</a>
-                          </li>
-                          <li class="default-set">
-                            <a href>Save Address</a>
-                          </li>
-                        </ul>
-                      </div>
-                      {/* <!-- <div class="chosse-another-address">
-                                                               <a href>Save Address</a>
-                                                           </div> --> */}
-                    </div>
+                    <AddressValidation clicked={clicked}/>
+                    <BottomActiveAddress saveAddresshandler={saveAddresshandler}/>
                   </div>
                 </form>
               </div>
 
-              <div class="address-info-right-default">
-                <h3>Saved Addresses</h3>
-                <h2>Select Your Shipping Address</h2>
-                {/* <!-- single item --> */}
-                <div class="address-home-default-single">
-                  <h3>Home</h3>
-                  <p>Jak ma (01792855468)</p>
-                  <p>Mirpur 12,Dhaka City,Dhaka</p>
-                  <p>House 1005,Road 12,Avenue 3,Mirpur DOSH</p>
-                </div>
-                {/* <!-- single item --> */}
-                <div class="address-home-default-single">
-                  <h3>Office</h3>
-                  <p>No Address Saved In Office Slot</p>
-                </div>
-                {/* <!-- single item --> */}
-                <div class="address-home-default-single active">
-                  <div class="selected-address">
-                    <p>
-                      <i class="fa fa-check" aria-hidden="true"></i>Selected
-                    </p>
-                  </div>
-                  <h3>Home Town</h3>
-                  <p>Jak ma (01792855468)</p>
-                  <p>Mirpur 12,Dhaka City,Dhaka</p>
-                  <p>House 1005,Road 12,Avenue 3,Mirpur DOSH</p>
-                </div>
-              </div>
+              <AddressList />
             </div>
           </div>
           <div class="cart_navigation">

@@ -1,10 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import addressContext from "../../store/address-context";
 import cartContext from "../../store/cart-context";
 
-const ProductSummary = ({proceedToAddressHandler}) => {
+const ProductSummary = ({proceedToAddressHandler,AddressActiveHandler}) => {
   let history = useHistory();
   const cartCtx = useContext(cartContext);
+  const ctxAddress = useContext(addressContext);
+  const getCtxStoreAddress = ctxAddress.getStoreAddressCtx;
+  const getCtxAddressActiveType = ctxAddress.getActiveType;
+  const findActiveAddress = getCtxStoreAddress.find(
+    (item) => item.type === getCtxAddressActiveType
+  );
   const [qty, setQty] = useState("");
   const cartCtxModal = cartCtx.getCartModel;
 
@@ -179,25 +186,46 @@ const ProductSummary = ({proceedToAddressHandler}) => {
             </label>
           </div>
         </div> */}
-        <div class="shaping-address-saveing-row">
-          <div class=" shapping-address-inner-content">
-            <div class="location-ad-icon" style={{ fontSize: "3rem" }}>
-              <i class="fa fa-map-marker" aria-hidden="true"></i>
-            </div>
-            <div class="saving-address-content">
-              <small>Khorshed Hasan Tutul</small>
-              <small>01704247162</small>
-              <span>
-                <aside>Office</aside>
-              </span>
-              <span>jakma@outlook.com</span>
-              <span>Dhaka-Dhaka-Mirpur-Mirpur Block C Road 12</span>
-            </div>
-          </div>
-          <div class="saving-ad-btn">
-            <button>Change</button>
-          </div>
-        </div>
+        {getCtxStoreAddress.length > 0 &&
+              findActiveAddress?.name.length > 0 && (
+                <div class="shaping-address-saveing-row">
+                  <div class="shapping-address-inner-content">
+                    <div class="location-ad-icon">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </div>
+                    <div class="saving-address-content">
+                      <small>
+                        {findActiveAddress && findActiveAddress.name}
+                      </small>
+                      <small>
+                        {findActiveAddress && findActiveAddress.mobile}
+                      </small>
+                      <span>
+                        <aside>
+                          {findActiveAddress && findActiveAddress.type}
+                        </aside>
+                      </span>
+                      <span>
+                        {findActiveAddress && findActiveAddress.email}
+                      </span>
+                      &nbsp;
+                      <span>
+                        {findActiveAddress &&
+                          findActiveAddress.division +
+                            "-" +
+                            findActiveAddress.district +
+                            "-" +
+                            findActiveAddress.area +
+                            "-" +
+                            findActiveAddress.address}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="saving-ad-btn" onClick={AddressActiveHandler}>
+                    <button>Change</button>
+                  </div>
+                </div>
+              )}
         {/* <div>
           <p class="OrderNotice" style={{ marginTop: "50px" }}>
             *** সকাল ১০ টা থেকে ৭ টার মধ্যে অর্ডার করলে ২৪ থেকে ৪৮ ঘন্টার মধ্যে

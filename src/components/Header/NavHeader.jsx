@@ -2,7 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { getCategories } from "../../Service/DataService";
-import { urlCategoryWiseRoute, urlHomeRoute, urlSubCategoryWiseRoute } from "../../Service/UrlService";
+import {
+  urlCategoryWiseRoute,
+  urlHomeRoute,
+  urlSubCategoryWiseRoute,
+} from "../../Service/UrlService";
 import NavLinkMenus from "./NavLinkMenus";
 
 const NavHeader = () => {
@@ -38,7 +42,7 @@ const NavHeader = () => {
                         <li>
                           <Link
                             class="parent"
-                            to={urlCategoryWiseRoute()+item.id}
+                            to={urlCategoryWiseRoute() + item.id}
                           >
                             <img
                               class="icon-menu normal-img"
@@ -52,7 +56,7 @@ const NavHeader = () => {
                             />
                             {item.name}
                           </Link>
-                          {getChildCategories.length>0 && (
+                          {getChildCategories.length > 0 && (
                             <div class="vertical-dropdown-menu">
                               {/* <a href></a> */}
                               <div class="vertical-groups col-sm-12">
@@ -60,7 +64,11 @@ const NavHeader = () => {
                                   <ul class="group-link-default">
                                     {getChildCategories.map((child) => (
                                       <li>
-                                        <Link to={urlSubCategoryWiseRoute()+child.id}>
+                                        <Link
+                                          to={
+                                            urlSubCategoryWiseRoute() + child.id
+                                          }
+                                        >
                                           {child.name}
                                         </Link>
                                       </li>

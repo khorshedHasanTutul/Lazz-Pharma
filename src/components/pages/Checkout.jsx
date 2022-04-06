@@ -1,10 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { storeAddressObj } from "../../Service/AddressService";
+import addressContext from "../../store/address-context";
+import cartContext from "../../store/cart-context";
 import Address from "../Checkout/Address";
 import CheckoutHeader from "../Checkout/CheckoutHeader";
 import Payment from "../Checkout/Payment";
 import ProductSummary from "../Checkout/ProductSummary";
 
 const Checkout = () => {
+  const ctxCart = useContext(cartContext);
+  const ctxAddress = useContext(addressContext);
+  // const [alert, setAlert] = useState(false);
+  // const [qtyAlert, setQtyAlert] = useState(false);
+  const getStoreCtxAddress = ctxAddress.getStoreAddressCtx;
+  const getActiveTypeAddress = ctxAddress.getActiveType;
+  const findActiveAddress = getStoreCtxAddress.find(
+    (item) => item.type === getActiveTypeAddress
+  );
   const ProSummaryRef = useRef(null);
   const [isActiveProductSummary, setActiveProductSummary] = useState(true);
   const [isActiveAddress, setActiveAddress] = useState(false);
@@ -23,25 +35,43 @@ const Checkout = () => {
   };
 
   const paymentActiveHandler = () => {
-    setActiveProductSummary(false);
-    setActiveAddress(false);
-    setActivePayment(true);
+    if (okToProceed()) {
+      setActiveProductSummary(false);
+      setActiveAddress(false);
+      setActivePayment(true);
+    } else {
+      // setAlert(true);
+        alert("Please Enter Valid Address!");
+    }
+  };
+
+  const okToProceed = () => {
+    if (
+      (getStoreCtxAddress.length > 0 && findActiveAddress) ||
+      (storeAddressObj.name.length > 0 &&
+        storeAddressObj.mobile.length > 0 &&
+        storeAddressObj.division.length > 0 &&
+        storeAddressObj.district.length > 0 &&
+        storeAddressObj.area.length > 0 &&
+        storeAddressObj.address.length > 0)
+    )
+      return true;
+    else return false;
   };
 
   const proceedToAddressHandler = () => {
-    // if (getStoreCtxAddress.length > 0 && findActiveAddress) {
-    // paymentActiveHandler();
-    // } else
-    AddressActiveHandler();
+    if (getStoreCtxAddress.length > 0 && findActiveAddress) {
+      paymentActiveHandler();
+    } else AddressActiveHandler();
   };
 
   const ProceedToOrderHandler = () => {
-    // if (okToProceed()) {
+    if (okToProceed()) {
       paymentActiveHandler();
-    // } else {
-    //     setAlert(true)
-    // //   alert("Please Enter Valid Address!");
-    // }
+    } else {
+      // setAlert(true);
+        alert("Please Enter Valid Address!");
+    }
   };
 
   useEffect(() => {
@@ -100,7 +130,7 @@ const Checkout = () => {
                 />
               )}
               {isActiveAddress && <Address ProceedToOrderHandler={ProceedToOrderHandler}/>}
-              {isActivePayment && <Payment />}
+              {isActivePayment && <Payment AddressActiveHandler={AddressActiveHandler}/>}
             </div>
           </div>
         </div>
