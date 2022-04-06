@@ -6,14 +6,17 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import ScrolToTop from "./components/pages/ScrolToTop";
 import CartContextProvider from "./store/CartContextProvider";
+import AddressContextProvider from "./store/AddressContextProvider";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <ScrolToTop />
-      <CartContextProvider>
-        <App />
-      </CartContextProvider>
+      <AddressContextProvider>
+        <CartContextProvider>
+          <App />
+        </CartContextProvider>
+      </AddressContextProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

@@ -6,16 +6,16 @@ const TopHeader = () => {
       <div class="container-fluid">
         <div class="row top-header">
           <div class="top_header_content">
-            <div class="col-sm-12 col-md-6">
+            <div class="col-sm-12 col-md-6 d-flex-res j-c-sb">
               <p
                 class="fa fa-phone"
-                style={{paddingRight:"13px", paddingLeft:"13px"}}
+                // style={{paddingRight:"13px", paddingLeft:"13px"}}
               >
                 <span class="info-wrap" style={{fontFamily: "sans-serif"}}>
-                  <a class="new-phon" href="tel:0258155933">
+                  {/* <a class="new-phon" href="tel:0258155933">
                     0258155933,
-                  </a>{" "}
-                  <a class="new-phon new-phonx" href="tel:01319864049">
+                  </a>{" "} */}
+                  <a class="new-phon" href="tel:01319864049">
                     01319864049
                   </a>
                 </span>
