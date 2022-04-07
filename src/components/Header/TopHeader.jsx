@@ -11,7 +11,7 @@ const TopHeader = () => {
                 class="fa fa-phone"
                 // style={{paddingRight:"13px", paddingLeft:"13px"}}
               >
-                <span class="info-wrap" style={{fontFamily: "sans-serif"}}>
+                <span class="info-wrap" style={{fontFamily: "sans-serif",paddingRight:"5px"}}>
                   {/* <a class="new-phon" href="tel:0258155933">
                     0258155933,
                   </a>{" "} */}

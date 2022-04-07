@@ -796,6 +796,15 @@ body {
 .d-flex > li {
 	padding-right: 15px;
 }
+.nav-mid {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+}
+.mobile-nav-links .d-flex{
+  display: none;
+}
 
 .box-vertical-megamenus .vertical-menu-content {
   border-top: 0px solid #04432e;
@@ -829,6 +838,53 @@ body {
   justify-content: center;
   align-items: center;
   padding-top: 10px !important;
+}
+
+.group-link-default > li:last-child > a {
+	border: none !important;
+}
+
+.btn_cart .input-group-buttons.product_qty {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	opacity: .8;
+  margin-top: 10px;
+}
+.input-group-buttons {
+	border-collapse: separate;
+	display: table;
+	position: relative;
+	border-radius: 5px;
+	background: #31B086;
+}
+.btn_cart .input-group-buttons.product_qty > input {
+	display: block;
+	height: 38px;
+	line-height: 0;
+	padding: 0;
+	font-weight: 700;
+	width: 94px;
+}
+/* input, textarea {
+	border: 1px solid #ddd;
+	box-sizing: border-box;
+	color: #212121;
+	display: block;
+	font-family: Poppins,sans-serif;
+	font-family: var(--poppins);
+	font-size: 16px;
+	width: 100%;
+} */
+.input-group-buttons > button {
+	background: #31B086;
+	cursor: pointer;
+	padding: 9px 8px;
+	border-radius: 4px;
+  color: white;
+}
+.input-group-buttons i{
+  padding-top: 3px;
 }
 
 .develop_by > li > a > img {

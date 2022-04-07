@@ -146,7 +146,7 @@ table td {
 }
 img {
   vertical-align: top;
-  max-width: 100%;
+  /* max-width: 100%; */
 }
 embed {
   vertical-align: top;

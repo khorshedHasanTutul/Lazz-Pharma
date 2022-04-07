@@ -90,7 +90,7 @@ const RegistrationModal = ({ closeModal, closeLoginModalhandler }) => {
     <div class="login-main-area">
       <div class="login-info-from">
         <form>
-          <h2>registration to Jasmine</h2>
+          <h2>registration</h2>
           <i class="fa fa-spinner" aria-hidden="true"></i>
           <div class="login-info-inner-content">
             <div class="custom-input">

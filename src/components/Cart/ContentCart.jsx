@@ -6,7 +6,7 @@ import cartContext from "../../store/cart-context";
 const ContentCart = ({ openCart }) => {
   const cartCtx = useContext(cartContext);
   const [qty, setQty] = useState("");
-  const history= useHistory();
+  const history = useHistory();
   const cartCtxModal = cartCtx.getCartModel;
 
   const cartItemRemoverHandler = (item) => {
@@ -48,10 +48,10 @@ const ContentCart = ({ openCart }) => {
     }
   };
 
-  const orderNowButtonPressedHandler=()=>{
+  const orderNowButtonPressedHandler = () => {
     history.push(urlCheckoutRoute());
     openCart();
-  }
+  };
 
   return (
     <div class="cart-box-view">
@@ -87,7 +87,10 @@ const ContentCart = ({ openCart }) => {
                 {cartCtxModal.Items.map((item) => (
                   <tr>
                     <td>
-                      <img src="/Contents/assets/image/cartLogo.jpg" alt="img" />
+                      <img
+                        src="/Contents/assets/image/cartLogo.jpg"
+                        alt="img"
+                      />
                     </td>
                     <td className="card-title-product">
                       <a href="/ProductArea/Product/Details/f8ccb3df-f11d-483b-8f8d-b5212e7c23c5">
@@ -109,7 +112,8 @@ const ContentCart = ({ openCart }) => {
                         ৳ {(item.MRP - (item.MRP * item.Ds) / 100).toFixed(2)}
                       </strong>
                     </td>
-                    <td className="cart-inc-dsc"
+                    <td
+                      className="cart-inc-dsc"
                       style={{
                         fontSize: "13px",
                         verticalAlign: "middle",
@@ -150,7 +154,10 @@ const ContentCart = ({ openCart }) => {
                       </div>
                     </td>
                     {item.Ds > 0 && item.Ds !== null && (
-                      <td className="dis-new-con" style={{ whiteSpace: "nowrap" }}>
+                      <td
+                        className="dis-new-con"
+                        style={{ whiteSpace: "nowrap" }}
+                      >
                         {item.Ds > 0 && item.Ds !== null && (
                           <>
                             <span class="SearchFont SearchDelPrice">
