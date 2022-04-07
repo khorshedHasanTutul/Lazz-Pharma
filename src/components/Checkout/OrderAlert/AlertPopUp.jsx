@@ -14,7 +14,7 @@ const AlertPopUp = ({alertStateChangedHandler}) => {
         <div class="popup undefined">
           <div class="popup__title">
             <h2>Order Placed Successfully</h2>
-            <div style={{color:"white",fontSize:"1.5rem"}} onClick={removeButtonHandler}>✖</div>
+            <div style={{color:"white",fontSize:"1.5rem",cursor:"pointer"}} onClick={removeButtonHandler}>✖</div>
           </div>
           <div class="popup__body">
             <div>
