@@ -1485,12 +1485,18 @@
 }
 
 @media all and (max-width: 575px) {
+  .nav-mobile-buttons.prescription-order{
+    display: flex !important;
+  }
+  .nav-mobile-buttons.prescription-order .info-content ul > li > a i {
+    font-size: 12px;
+  }
   .row.custom-row {
     flex-direction: column;
   }
 
   .row.custom-row .col-xs-12.col-sm-4.col-lg-3.logo a img {
-    width: 125px !important;
+    width: 165px !important;
   }
 
   .info-content > ul > li > a span {
@@ -1514,7 +1520,7 @@
     padding: 6px 10px !important;
   }
 
-  .info-content {
+  .col-sm-3.col-lg-2 .info-content {
     display: none;
   }
 
@@ -1531,8 +1537,6 @@
     font-size: 17px;
     font-weight: bold;
   }
-}
-@media (max-width: 575px) {
   .col-xs-12.col-sm-4.col-lg-3.logo {
     display: flex;
     justify-content: flex-start;
@@ -1558,7 +1562,14 @@
   .nav-mid {
     width: 100%;
   }
+  .input-group-buttons.product_qty {
+    position: absolute;
+    top: 95%;
+  }
 }
+/* @media all and (max-width: 575px) {
+
+} */
 
 /* @media (max-width: 991px) {
   .header-search-box {
@@ -1571,3 +1582,5 @@
     margin: 0 auto;
   }
 } */
+
+

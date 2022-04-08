@@ -101,7 +101,7 @@ const ProductsInfoModel = ({ item }) => {
             </div>
           )}
         </div>
-        <div>
+       
           <div style={{ textAlign: "center" }}>
             {!visibleCartBox && (
               <div class="btn_cart" onClick={addToCartHandler.bind(this, item)}>
@@ -149,7 +149,7 @@ const ProductsInfoModel = ({ item }) => {
               </div>
             )}
           </div>
-        </div>
+        
       </div>
     </li>
   );

@@ -52,7 +52,7 @@ const NavHeader = () => {
                             <img
                               class="icon-menu hover-img"
                               alt="Lazz"
-                              src="./Contents/assets/image/medicine.png"
+                              src="./Contents/assets/image/medicine-hover.png"
                             />
                             {item.name}
                           </Link>
