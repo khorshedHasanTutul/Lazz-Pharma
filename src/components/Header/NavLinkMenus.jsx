@@ -1,6 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { urlAboutRoute, urlBranchLocationRoute, urlCarrerRoute, urlContactRoute, urlGalleryRoute, urlHomeRoute, urlRequestOrderRoute, urlReviewRoute } from "../../Service/UrlService";
+import {
+  urlAboutRoute,
+  urlBranchLocationRoute,
+  urlCarrerRoute,
+  urlContactRoute,
+  urlGalleryRoute,
+  urlHomeRoute,
+  urlRequestOrderRoute,
+  urlReviewRoute,
+} from "../../Service/UrlService";
 
 const NavLinkMenus = () => {
   const navLinksData = [
@@ -43,7 +52,9 @@ const NavLinkMenus = () => {
         {navLinksData.map((links) => (
           <li>
             <span></span>
-            <NavLink to={links.to} exact>{links.text}</NavLink>
+            <NavLink to={links.to} exact>
+              {links.text}
+            </NavLink>
           </li>
         ))}
         {/* <li class="active">

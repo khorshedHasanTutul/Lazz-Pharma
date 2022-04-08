@@ -38,11 +38,11 @@ const MiddleHeader = () => {
                   <i class="fa fa-bell-o" aria-hidden="true"></i>
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a href="tel:01704247162" title="Call to Order">
                   <i class="fa fa-volume-control-phone" aria-hidden="true"></i>
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </nav>
@@ -75,7 +75,8 @@ const MiddleHeader = () => {
             <ul>
               <li>
                 <Link to={urlRequestOrderRoute()}>
-                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  {/* <i class="fa fa-file-text-o" aria-hidden="true"></i> */}
+                  <img src="./Contents/assets/image/medical-prescription.png" alt="" srcset="" />
                   <span title="Just upload prescription to place an order">
                     Upload Prescription
                   </span>
@@ -83,6 +84,28 @@ const MiddleHeader = () => {
               </li>
             </ul>
           </div>
+        </div>
+
+        <div className="nav-mobile-buttons prescription-order">
+            <div class="info-content">
+              <ul>
+                <li>
+                  <a href>
+                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                    <span>Upload Prescription</span>
+                  </a>
+                </li>
+                <li>
+                  <a href>
+                    <i
+                      class="fa fa-volume-control-phone"
+                      aria-hidden="true"
+                    ></i>{" "}
+                    <span>Call For Order</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
         </div>
 
         <ul class="d-flex dekstop">

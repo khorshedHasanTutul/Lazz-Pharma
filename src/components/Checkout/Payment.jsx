@@ -179,7 +179,9 @@ const Payment = ({ AddressActiveHandler }) => {
           </div>
         </div>
       </div>
-      {PopUpAlert && <AlertPopUp alertStateChangedHandler={alertStateChangedHandler}/>}
+      {PopUpAlert && (
+        <AlertPopUp alertStateChangedHandler={alertStateChangedHandler} />
+      )}
     </div>
   );
 };
