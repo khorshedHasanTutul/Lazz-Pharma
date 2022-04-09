@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { storeAddressObj } from "../../Service/AddressService";
-import { urlHomeRoute } from "../../Service/UrlService";
+import { urlCheckoutRoute, urlHomeRoute } from "../../Service/UrlService";
 import addressContext from "../../store/address-context";
 import cartContext from "../../store/cart-context";
 import AddressList from "./AddressList";
@@ -17,8 +17,8 @@ import BottomActiveAddress from "./BottomActiveAddress";
 
 const Address = ({ ProceedToOrderHandler }) => {
   const { pathname } = useLocation();
-  const ctxCart=useContext(cartContext);
-  const ctxCartModal=ctxCart.getCartModel;
+  const ctxCart = useContext(cartContext);
+  const ctxCartModal = ctxCart.getCartModel;
   const ctxAddress = useContext(addressContext);
   const [clicked, setClicked] = useState(false);
   let addressObj = Object.assign({}, storeAddressObj);
@@ -39,10 +39,13 @@ const Address = ({ ProceedToOrderHandler }) => {
   };
   return (
     <div class="tab_content">
-      <div class="heading-counter warning">
-        Your shopping cart contains:
-        <span> {ctxCartModal.TotalItems} Product</span>
-      </div>
+      {pathname === urlCheckoutRoute() && (
+        <div class="heading-counter warning">
+          Your shopping cart contains:
+          <span> {ctxCartModal.TotalItems} Product</span>
+        </div>
+      )}
+
       <div
         id="Tab4"
         class="tabcontent tab-content checkout-main-tab-content"
@@ -58,16 +61,18 @@ const Address = ({ ProceedToOrderHandler }) => {
               <div class="address-info-from">
                 <form>
                   <div class="address-info-inner-content">
-                    <NameValidation clicked={clicked}/>
-                    <MobileValidation clicked={clicked}/>
-                    <EmailValidation clicked={clicked}/>
+                    <NameValidation clicked={clicked} />
+                    <MobileValidation clicked={clicked} />
+                    <EmailValidation clicked={clicked} />
                     <div class="address-inner-select-item">
-                      <Divisionvalidation clicked={clicked}/>
-                      <DistrictValidation clicked={clicked}/>
-                      <AreaValidation clicked={clicked}/>
+                      <Divisionvalidation clicked={clicked} />
+                      <DistrictValidation clicked={clicked} />
+                      <AreaValidation clicked={clicked} />
                     </div>
-                    <AddressValidation clicked={clicked}/>
-                    <BottomActiveAddress saveAddresshandler={saveAddresshandler}/>
+                    <AddressValidation clicked={clicked} />
+                    <BottomActiveAddress
+                      saveAddresshandler={saveAddresshandler}
+                    />
                   </div>
                 </form>
               </div>
@@ -75,14 +80,16 @@ const Address = ({ ProceedToOrderHandler }) => {
               <AddressList />
             </div>
           </div>
-          <div class="cart_navigation">
-            <Link class="prev-btn" to={urlHomeRoute()}>
-              Continue shopping
-            </Link>
-            <a class="next-btn" href onClick={ProceedToOrderHandler}>
-              Proceed to Order
-            </a>
-          </div>
+          {pathname === urlCheckoutRoute() && (
+            <div class="cart_navigation">
+              <Link class="prev-btn" to={urlHomeRoute()}>
+                Continue shopping
+              </Link>
+              <a class="next-btn" href onClick={ProceedToOrderHandler}>
+                Proceed to Order
+              </a>
+            </div>
+          )}
         </div>
         {/* <!-- product desc review information  --> */}
       </div>

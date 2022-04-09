@@ -28,6 +28,7 @@ import {
   urlHowToOrderRoute,
   urlPrivacyPolicy,
   urlProductDetails,
+  urlProfileRoute,
   urlRequestOrderRoute,
   urlReturnPolicy,
   urlReviewRoute,
@@ -38,6 +39,7 @@ import Checkout from "./components/pages/Checkout";
 import HowToOrder from "./components/pages/HowToOrder";
 import CategoryWiseProduct from "./components/Products/CategoryProduct/CategoryWiseProduct";
 import SubCategoryProduct from "./components/Products/SubCategoryProduct/SubCategoryProduct";
+import Profile from "./components/pages/Profile";
 
 function App() {
   return (
@@ -72,6 +74,9 @@ function App() {
           </Route>
           <Route path={urlCheckoutRoute()} exact>
             <Checkout />
+          </Route>
+          <Route path={urlProfileRoute()}>
+            <Profile />
           </Route>
           <Route path={urlReturnPolicy()} exact>
             <Returnpolicy />

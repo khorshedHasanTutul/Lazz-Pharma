@@ -1,0 +1,29 @@
+.address-btn-group{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.5rem;
+    grid-template-rows: auto;
+    margin-bottom: 0.5rem;
+}
+.address-btn-group-2{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.5rem;
+}
+@media screen and (max-width: 650px) {
+    .address-btn-group{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media screen and (max-width: 350px) {
+    .address-btn-group{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+.address-btn-group button.active{
+    background: #00382a !important;
+}
+.address-btn-group button{
+    width: 100%;
+    min-width: max-content;
+}

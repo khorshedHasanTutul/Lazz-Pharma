@@ -1,20 +1,33 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { urlHomeRoute } from "../../../Service/UrlService";
+import {
+  urlHomeRoute,
+  urlOrderRoute,
+  urlProfileRoute,
+} from "../../../Service/UrlService";
 
-const AlertPopUp = ({alertStateChangedHandler}) => {
-  let history=useHistory();
-  const removeButtonHandler=()=>{
+const AlertPopUp = ({ alertStateChangedHandler }) => {
+  let history = useHistory();
+  const removeButtonHandler = () => {
     alertStateChangedHandler();
     history.push(urlHomeRoute());
-  }
+  };
+  const viewOrderClickedHandler = () => {
+    history.push(urlProfileRoute() + urlOrderRoute());
+  };
+
   return (
     <div id="pop-up">
       <div class="overlay__popup show">
         <div class="popup undefined">
           <div class="popup__title">
             <h2>Order Placed Successfully</h2>
-            <div style={{color:"white",fontSize:"1.5rem",cursor:"pointer"}} onClick={removeButtonHandler}>✖</div>
+            <div
+              style={{ color: "white", fontSize: "1.5rem", cursor: "pointer" }}
+              onClick={removeButtonHandler}
+            >
+              ✖
+            </div>
           </div>
           <div class="popup__body">
             <div>
@@ -28,7 +41,10 @@ const AlertPopUp = ({alertStateChangedHandler}) => {
                 We'll call your number 01778772327 to reconfirm
               </h2>
               <div class="flex justify-center">
-                <button class="brick primary fill round-corner">
+                <button
+                  class="brick primary fill round-corner"
+                  onClick={viewOrderClickedHandler}
+                >
                   View Order
                 </button>
               </div>
