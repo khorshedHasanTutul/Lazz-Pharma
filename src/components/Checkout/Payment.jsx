@@ -143,13 +143,13 @@ const Payment = ({ AddressActiveHandler }) => {
         <div class="row" style={{ margin: "auto" }}>
           <div class="col-md-6 box-border">
             <label class="Method_Selector" onClick={radioButtonHandler}>
-              <input type="radio" name="radio_4" id="radio_button_5" />
+              <input type="radio" name="radio_4" id="radio_button_5" style={{width:"auto" , display:"inline"}}/>
               Cash on Delivery
             </label>
           </div>
           <div class="col-md-6 box-border">
             <label class="Method_Selector" onClick={radioButtonHandler}>
-              <input type="radio" name="radio_4" id="radio_button_6" />
+              <input type="radio" name="radio_4" id="radio_button_6" style={{width:"auto" , display:"inline"}} />
               Onlie Payments
             </label>
           </div>
