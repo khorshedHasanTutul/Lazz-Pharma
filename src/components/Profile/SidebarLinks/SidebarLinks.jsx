@@ -2,10 +2,12 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
   urlOrderRoute,
+  urlPrescriptionHistory,
   urlProfileAddressRoute,
   urlProfileComplain,
   urlProfileEditRoute,
   urlProfileRoute,
+  urlRequestHistoryRoute,
   urlSpecialOfferRoute,
 } from "../../../Service/UrlService";
 
@@ -22,6 +24,23 @@ const SidebarLinks = () => {
             Order History
           </NavLink>
         </li>
+
+        <li className="">
+          <NavLink activeClassName="active"
+          to={urlProfileRoute() + urlPrescriptionHistory()}>
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            Prescription History
+          </NavLink>
+        </li>
+
+        <li className="">
+          <NavLink activeClassName="active"
+          to={urlProfileRoute() + urlRequestHistoryRoute()}>
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            Request History
+          </NavLink>
+        </li>
+
         <li>
           <NavLink
             activeClassName="active"

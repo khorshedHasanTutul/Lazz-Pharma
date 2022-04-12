@@ -9,6 +9,7 @@ import {
   urlReturnPolicy,
   urlTermsConditionRoute,
 } from "../../Service/UrlService";
+import BacktoTop from "./BackToTop";
 
 const FooterParent = () => {
   return (
@@ -174,6 +175,7 @@ const FooterParent = () => {
           {/* <!-- /#trademark-box --> */}
         </div>
       </div>
+      <BacktoTop />
     </footer>
   );
 };
