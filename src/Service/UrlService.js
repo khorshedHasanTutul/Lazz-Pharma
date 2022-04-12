@@ -28,7 +28,11 @@ export const urlOrderDelivaringRoute = () => "/order/delivaring";
 //profile order canceled
 export const urlOrderCancelingRoute = () => "/order/cancel";
 //profile order details route
-export const urlOrderDetailsRoute = () => "/order/details/"
+export const urlOrderDetailsRoute = () => "/order/details/";
+//Prescription History
+export const urlPrescriptionHistory = ()=>"/prescription/history";
+//request History
+export const urlRequestHistoryRoute = ()=>"/prescription/request";
 //profile edit address
 export const urlProfileAddressRoute=()=>"/edit/address";
 //profile special offer

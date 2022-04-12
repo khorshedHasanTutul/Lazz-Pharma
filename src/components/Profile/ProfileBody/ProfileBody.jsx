@@ -1,9 +1,11 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { urlAllOrderRoutes, urlOrderRoute, urlProfileAddressRoute, urlProfileComplain, urlProfileEditRoute, urlProfileRoute, urlSpecialOfferRoute } from "../../../Service/UrlService";
+import { urlAllOrderRoutes, urlOrderRoute, urlPrescriptionHistory, urlProfileAddressRoute, urlProfileComplain, urlProfileEditRoute, urlProfileRoute, urlRequestHistoryRoute, urlSpecialOfferRoute } from "../../../Service/UrlService";
 import Address from "../../Checkout/Address";
 import Complain from "../Complain/Complain";
 import OrderHistory from "../OrderHistory/OrderHistory";
+import PrescriptionHistory from "../PrescriptionHistory/PrescriptionHistory";
+import RequestHistory from "../RequestHistory/RequestHistory";
 import SpecialOffer from "../Special Offer/SpecialOffer";
 import UpdateProfile from "../UpdateProfile/UpdateProfile";
 
@@ -21,6 +23,12 @@ const ProfileBody = () => {
             </Route>
             <Route path={urlProfileRoute() + urlOrderRoute()}>
               <OrderHistory />
+            </Route>
+            <Route path={urlProfileRoute() + urlPrescriptionHistory()} exact>
+              <PrescriptionHistory />
+            </Route>
+            <Route path={urlProfileRoute() + urlRequestHistoryRoute()}>
+              <RequestHistory />
             </Route>
             <Route path={urlProfileRoute() + urlProfileAddressRoute()} exact>
                 <Address />

@@ -76,7 +76,7 @@ const MiddleHeader = () => {
               <li>
                 <Link to={urlRequestOrderRoute()}>
                   {/* <i class="fa fa-file-text-o" aria-hidden="true"></i> */}
-                  <img src="./Contents/assets/image/medical-prescription.png" alt="" srcset="" />
+                  <img src="./Contents/assets/image/prescription.png" alt="" srcset="" />
                   <span title="Just upload prescription to place an order">
                     Upload Prescription
                   </span>

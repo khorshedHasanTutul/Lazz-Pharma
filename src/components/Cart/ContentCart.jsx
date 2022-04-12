@@ -60,7 +60,7 @@ const ContentCart = ({ openCart }) => {
           <div class="col-xs-8 lazz-cart-item">
             <img
               class="header-bag"
-              src="./Contents/assets/image/add-cart.png"
+              src="/Contents/assets/image/add-cart.png"
               alt="img"
             />
             <strong class="car-box-title SearchFont">
@@ -71,7 +71,7 @@ const ContentCart = ({ openCart }) => {
           <div class="col-xs-4" onClick={openCart}>
             <img
               class="pull-right cart-cross-btn"
-              src="./Contents/assets/image/x-button.png"
+              src="/Contents/assets/image/x-button.png"
               alt="cross-button"
             />
           </div>
