@@ -34,7 +34,7 @@ const OrderDetails = () => {
                          </div>
                          <div class="Steps_step__2Wic5">
                              <p class="Steps_step__counter__2y6zu false false">5</p>
-                             <div class="Steps_details__1CSho"><h5>delivered</h5></div>
+                             <div class="Steps_details__1CSho"><h5>completed</h5></div>
                          </div>
                      </div>
                  </div>

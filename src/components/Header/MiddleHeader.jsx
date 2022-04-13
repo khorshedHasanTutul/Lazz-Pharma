@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { urlHomeRoute, urlRequestOrderRoute } from "../../Service/UrlService";
 import AuthenticationModalBody from "../Authentication/AuthenticationModalBody";
 import LoginModal from "../Authentication/LoginModal";
 
 const MiddleHeader = () => {
+  const ref = useRef(null);
   const [loginPopUp, setLoginPopUp] = useState(false);
   const userHandler = () => {
     setLoginPopUp(true);
@@ -13,8 +14,18 @@ const MiddleHeader = () => {
     setLoginPopUp((prevState) => !prevState);
   };
 
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 25) {
+        ref.current.classList.add("position-fixed-to-top");
+      } else {
+        ref.current.classList.remove("position-fixed-to-top");
+      }
+    });
+  }, []);
+
   return (
-    <div class="container-fluid main-header">
+    <div class="container-fluid main-header" ref={ref}>
       <div class="row custom-row">
         <nav className="nav-mid">
           <div class="col-xs-12 col-sm-4 col-lg-3 logo">
@@ -76,7 +87,11 @@ const MiddleHeader = () => {
               <li>
                 <Link to={urlRequestOrderRoute()}>
                   {/* <i class="fa fa-file-text-o" aria-hidden="true"></i> */}
-                  <img src="./Contents/assets/image/prescription.png" alt="" srcset="" />
+                  <img
+                    src="./Contents/assets/image/prescription.png"
+                    alt=""
+                    srcset=""
+                  />
                   <span title="Just upload prescription to place an order">
                     Upload Prescription
                   </span>
@@ -87,25 +102,22 @@ const MiddleHeader = () => {
         </div>
 
         <div className="nav-mobile-buttons prescription-order">
-            <div class="info-content">
-              <ul>
-                <li>
-                  <a href>
-                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                    <span>Upload Prescription</span>
-                  </a>
-                </li>
-                <li>
-                  <a href>
-                    <i
-                      class="fa fa-volume-control-phone"
-                      aria-hidden="true"
-                    ></i>{" "}
-                    <span>Call For Order</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
+          <div class="info-content">
+            <ul>
+              <li>
+                <a href>
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  <span>Upload Prescription</span>
+                </a>
+              </li>
+              <li>
+                <a href>
+                  <i class="fa fa-volume-control-phone" aria-hidden="true"></i>{" "}
+                  <span>Call For Order</span>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <ul class="d-flex dekstop">

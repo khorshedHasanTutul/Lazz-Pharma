@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { getCategories } from "../../Service/DataService";
@@ -10,12 +10,22 @@ import {
 import NavLinkMenus from "./NavLinkMenus";
 
 const NavHeader = () => {
+  const ref = useRef(null);
   const { pathname } = useLocation();
   const getMainCategories = getCategories();
-  // console.log({ getMainCategories });
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 25) {
+        ref.current.classList.add("position-fixed-to-top-navBar");
+      } else {
+        ref.current.classList.remove("position-fixed-to-top-navBar");
+      }
+    });
+  }, []);
   return (
     <div id="nav-top-menu" class="nav-top-menu home">
-      <div class="container-fluid custom-nav-container">
+      <div class="container-fluid custom-nav-container" ref={ref}>
         <div class="row">
           {/* <!-- desktop varsion --> */}
           <div
@@ -29,61 +39,7 @@ const NavHeader = () => {
                   <i class="fa fa-bars"></i>
                 </span>
               </h4>
-              {pathname === urlHomeRoute() && (
-                <div class="vertical-menu-content is-home">
-                  <ul
-                    id="category_left_menu"
-                    class="vertical-menu-list"
-                    style={{ display: "block" }}
-                  >
-                    {getMainCategories.map((item) => {
-                      const getChildCategories = getCategories(item.id);
-                      return (
-                        <li>
-                          <Link
-                            class="parent"
-                            to={urlCategoryWiseRoute() + item.id}
-                          >
-                            <img
-                              class="icon-menu normal-img"
-                              alt="Lazz"
-                              src="./Contents/assets/image/medicine.png"
-                            />
-                            <img
-                              class="icon-menu hover-img"
-                              alt="Lazz"
-                              src="./Contents/assets/image/medicine-hover.png"
-                            />
-                            {item.name}
-                          </Link>
-                          {getChildCategories.length > 0 && (
-                            <div class="vertical-dropdown-menu">
-                              {/* <a href></a> */}
-                              <div class="vertical-groups col-sm-12">
-                                <div class="mega-group col-sm-12">
-                                  <ul class="group-link-default">
-                                    {getChildCategories.map((child) => (
-                                      <li>
-                                        <Link
-                                          to={
-                                            urlSubCategoryWiseRoute() + child.id
-                                          }
-                                        >
-                                          {child.name}
-                                        </Link>
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              )}
+              {/* //vertical manu component there  */}
             </div>
           </div>
           {/* <!-- desktop varsion --> */}
