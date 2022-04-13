@@ -1222,10 +1222,12 @@ label {
 }
 
 .cross_price {
-    color: red;
-    font-size: 13px;
-    font-weight: 500;
+	color: red;
+	font-size: 13px;
+	font-weight: 500;
+	margin-left: 0.5rem;
 }
+
 
 .product-list .main_dispaly_container .main_dispaly {
     padding: 5px;

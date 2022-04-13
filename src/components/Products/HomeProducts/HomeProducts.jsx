@@ -18,7 +18,7 @@ const HomeProducts = () => {
           <CategoryWiseProducts />
         </div>
 
-        <FeaturedProducts />
+        {/* <FeaturedProducts /> */}
 
        <ShowCasegallery />
       </div>

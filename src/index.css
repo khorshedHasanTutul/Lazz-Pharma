@@ -747,17 +747,17 @@ body {
 }
 
 .info-content > ul > li > a {
-	display: block;
-	background: #fff;
-	box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.2);
-	padding: 11px 9px;
-	border-radius: 6px;
-	color: #04432e;
-	display: flex;
-	align-items: center;
-	font-weight: 600 !important;
-	font-family: "Open Sans", sans-serif !important;
-	border: 1px solid #016449;
+  display: block;
+  background: #fff;
+  box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.2);
+  padding: 11px 9px;
+  border-radius: 6px;
+  color: #04432e;
+  display: flex;
+  align-items: center;
+  font-weight: 600 !important;
+  font-family: "Open Sans", sans-serif !important;
+  border: 1px solid #016449;
 }
 .order-detail-content {
   overflow-x: auto;
@@ -775,8 +775,8 @@ body {
 }
 
 .info-content > ul > li > a > img {
-	width: 20px;
-	margin-right: 9px;
+  width: 20px;
+  margin-right: 9px;
 }
 .info-content > ul > li > a > i {
   margin-right: 5px;
@@ -831,8 +831,8 @@ body {
 }
 
 .option2 .box-vertical-megamenus .vertical-menu-list {
-  padding-top: 4px;
-  padding-bottom: 12px !important;
+	padding-top: 10px;
+	padding-bottom: 49px !important;
 }
 
 .ticker-wrap {
@@ -2407,115 +2407,115 @@ button {
 }
 
 .prscription_card {
-	margin-top: 20px;
-	position: relative;
-	border-radius: 6px;
-	box-shadow: 0 2px 3px rgba(0,0,0,0.3);
-	padding: 15px;
-	font-family: inherit;
-	font-size: 12px;
-	font-weight: 400;
+  margin-top: 20px;
+  position: relative;
+  border-radius: 6px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  padding: 15px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
 }
 .prescription_order_section input {
-	padding: 4px;
+  padding: 4px;
 }
 .prescription_order_section__order-button {
-	background: #016449;
-	padding: 5px;
-	border-radius: 5px;
-	margin-top: 28px;
-	color: white;
-	font-size: 15px;
-	cursor: pointer;
+  background: #016449;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 28px;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
 }
 .image_previewer {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	gap: 1rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
 }
 .image_previewer .image_prev img {
-	width: 80px;
-	height: 80px;
+  width: 80px;
+  height: 80px;
 }
 .image_preview_container {
-	display: flex;
-	align-items: center;
-	gap: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 .image_preview_container .plus_icon {
-	background: whitesmoke;
-	width: 102px;
-	height: 104px;
-	text-align: center;
-	font-size: 25px;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  background: whitesmoke;
+  width: 102px;
+  height: 104px;
+  text-align: center;
+  font-size: 25px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 .prescription_founded_box {
-	padding: 10px 5px;
-	margin-top: 10px;
-	border: 1px solid #3F7764;
-	text-align: center;
-	background: #31B086;
-	color: white;
-	font-weight: 400;
+  padding: 10px 5px;
+  margin-top: 10px;
+  border: 1px solid #3f7764;
+  text-align: center;
+  background: #31b086;
+  color: white;
+  font-weight: 400;
 }
 .image_previewer_container {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	gap: 2rem;
-	margin-top: 20px;
-	flex-wrap: wrap;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 20px;
+  flex-wrap: wrap;
 }
 .item-container__image-preview {
-	padding: 10px;
-	border: 1px solid whitesmoke;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-	border-radius: 5px;
+  padding: 10px;
+  border: 1px solid whitesmoke;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
 }
 .item-container__buttons-flex {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 1.2rem;
-	margin-top: 5px;
-	border-radius: 2px;
-	cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 5px;
+  border-radius: 2px;
+  cursor: pointer;
 }
 .hover_background:hover {
-	background: #31B086;
-	color: white;
-	transition: .3s ease-in-out;
+  background: #31b086;
+  color: white;
+  transition: 0.3s ease-in-out;
 }
 .hover_background_remove:hover {
-	background: #ED2645;
-	color: white !important;
-	transition: .3s ease-in-out;
-	border: 1px solid #ED2645;
+  background: #ed2645;
+  color: white !important;
+  transition: 0.3s ease-in-out;
+  border: 1px solid #ed2645;
 }
 .button-remove.hover_background_remove {
-	color: #ED2645;
-	border: 1px solid #ED2645;
+  color: #ed2645;
+  border: 1px solid #ed2645;
 }
 .item-container__image-preview img {
-	width: 200px;
-	height: 200px;
+  width: 200px;
+  height: 200px;
 }
 .plus_icon_container p {
-	display: grid;
-	place-items: center;
+  display: grid;
+  place-items: center;
 }
 .image_prev {
-	border: 3px solid whitesmoke;
-	box-shadow: 0 2px 3px rgba(0,0,0,0.7);
+  border: 3px solid whitesmoke;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.7);
 }
 .prescription_order_section {
-	display: flex;
-	width: 100%;
-	justify-content: space-between;
-	align-items: center;
-	flex-wrap: wrap;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .container_prescription ul > li {
@@ -2525,71 +2525,96 @@ button {
   padding: 5px;
 }
 .item-container__buttons-flex > div {
-	/* background: #31B086; */
-	padding: 4px 2px;
-	border-radius: 2px;
-	color: black;
-	border: 1px solid #31B086;
+  /* background: #31B086; */
+  padding: 4px 2px;
+  border-radius: 2px;
+  color: black;
+  border: 1px solid #31b086;
 }
 .requestHistory_container {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: flex-start;
-	gap: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1.2rem;
 }
 .requestHistory__item-container {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
-	border: 1px solid #016449;
-	padding: 10px;
-	background: whitesmoke;
-	box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border: 1px solid #016449;
+  padding: 10px;
+  background: whitesmoke;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .item-container__view-Button {
-	border: 1px solid #016449;
-	padding: 4px;
-	border-radius: 3px;
-	cursor: pointer;
-	font-weight: bold;
+  border: 1px solid #016449;
+  padding: 4px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
 }
 .item-container__view-Button:hover {
-	background: #31B086;
-	color: white;
-	transition: .2s ease-in-out;
+  background: #31b086;
+  color: white;
+  transition: 0.2s ease-in-out;
 }
 
 #toTop::after {
-	color: #fff;
-	content: "\f077";
-	font-family: FontAwesome;
-	font-size: 20px;
-	font-style: normal;
-	font-weight: 400;
-	position: relative;
-	top: -15px;
+  color: #fff;
+  content: "\f077";
+  font-family: FontAwesome;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  position: relative;
+  top: -15px;
 }
 
 #toTop {
-	/* background: #ff1e1c; */
-	background: #016449;
-	border: 2px solid #fff;
-	border-radius: 50%;
-	bottom: 40px;
-	color: #fff;
-	cursor: pointer;
-	display: block;
-	font-size: 45px;
-	height: 40px;
-	line-height: 40px;
-	opacity: .8;
-	position: fixed;
-	right: 35px;
-	text-align: center;
-	transition: .6s;
-	width: 40px;
-	z-index: 99;
+  /* background: #ff1e1c; */
+  background: #016449;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  bottom: 40px;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-size: 45px;
+  height: 40px;
+  line-height: 40px;
+  opacity: 0.8;
+  position: fixed;
+  right: 35px;
+  text-align: center;
+  transition: 0.6s;
+  width: 40px;
+  z-index: 99;
+}
+
+.position-fixed-to-top {
+  position: fixed;
+  z-index: 99999;
+  width: 100%;
+  top: 0;
+  background: white;
+  /* transition: .2s ease-in-out; */
+}
+.position-fixed-to-top-navBar {
+  position: fixed;
+  z-index: 9999999;
+  width: 100%;
+  top: 13%;
+  background: white;
+  /* transition: all .5s ease-in-out; */
+}
+
+.request_product .SearchFont.SearchPrice {
+	font-size: 1.25rem;
+	background: #31B086;
+	padding: 20px;
+	color: white;
+	line-height: 1.50;
 }
