@@ -34,7 +34,7 @@ const Banner = () => {
   };
   return (
     <div>
-      <div className="banner-area">
+      <div className="banner-area" >
         <div className="container-fluid">
           <div className="row custom-slide-row">
             <div
