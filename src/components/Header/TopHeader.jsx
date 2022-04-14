@@ -1,8 +1,8 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
-const TopHeader = () => {
+const TopHeader = forwardRef((props,ref) => {
   return (
-    <div class="header-top-area">
+    <div class="header-top-area" ref={ref}>
       <div class="container-fluid">
         <div class="row top-header">
           <div class="top_header_content">
@@ -41,6 +41,6 @@ const TopHeader = () => {
       </div>
     </div>
   );
-};
+});
 
 export default TopHeader;

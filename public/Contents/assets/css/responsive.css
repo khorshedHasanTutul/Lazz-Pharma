@@ -1485,7 +1485,7 @@
 }
 
 @media all and (max-width: 575px) {
-  .nav-mobile-buttons.prescription-order{
+  .nav-mobile-buttons.prescription-order {
     display: flex !important;
   }
   .nav-mobile-buttons.prescription-order .info-content ul > li > a i {
@@ -1583,4 +1583,8 @@
   }
 } */
 
-
+@media (max-width: 1439px) {
+  .container_product {
+    max-width: 90%;
+  }
+}

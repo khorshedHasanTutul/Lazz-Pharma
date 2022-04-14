@@ -1,8 +1,7 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { Route } from "react-router-dom";
 import { Switch } from "react-router-dom";
 import "./App.css";
-import BodyParent from "./components/BodyTemplate/BodyParent";
 import ShoppingCart from "./components/Cart/ShoppingCart";
 import FooterParent from "./components/Footer/FooterParent";
 import HeaderParent from "./components/Header/HeaderParent";
@@ -40,13 +39,26 @@ import HowToOrder from "./components/pages/HowToOrder";
 import CategoryWiseProduct from "./components/Products/CategoryProduct/CategoryWiseProduct";
 import SubCategoryProduct from "./components/Products/SubCategoryProduct/SubCategoryProduct";
 import Profile from "./components/pages/Profile";
+import { useLocation } from "react-router-dom";
 
 function App() {
+  const location = useLocation();
+  const headerRef = useRef();
+  const mainRef = useRef();
+
+  useEffect(() => {
+    const headerHeight = headerRef.current?.clientHeight;
+    mainRef.current.style.paddingTop = `${headerHeight}px`;
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location]);
   return (
     <Fragment>
-      <HeaderParent />
+      <HeaderParent ref={headerRef} />
       {/* <BodyParent /> */}
-      <main class="home option2">
+      <main class="home option2" ref={mainRef}>
         <Switch>
           <Route path={urlHomeRoute()} exact>
             <Home />

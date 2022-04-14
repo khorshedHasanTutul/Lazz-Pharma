@@ -10,22 +10,22 @@ import {
 import NavLinkMenus from "./NavLinkMenus";
 
 const NavHeader = () => {
-  const ref = useRef(null);
+  // const ref = useRef(null);
   const { pathname } = useLocation();
   const getMainCategories = getCategories();
 
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 25) {
-        ref.current.classList.add("position-fixed-to-top-navBar");
-      } else {
-        ref.current.classList.remove("position-fixed-to-top-navBar");
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener("scroll", () => {
+  //     if (window.scrollY > 25) {
+  //       ref.current.classList.add("position-fixed-to-top-navBar");
+  //     } else {
+  //       ref.current.classList.remove("position-fixed-to-top-navBar");
+  //     }
+  //   });
+  // }, []);
   return (
     <div id="nav-top-menu" class="nav-top-menu home">
-      <div class="container-fluid custom-nav-container" ref={ref}>
+      <div class="container-fluid custom-nav-container">
         <div class="row">
           {/* <!-- desktop varsion --> */}
           <div
