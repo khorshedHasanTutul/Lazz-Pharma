@@ -1485,11 +1485,17 @@
 }
 
 @media all and (max-width: 575px) {
+  .add-to-cart > span{
+    font-size: 12px !important;
+  }
   .nav-mobile-buttons.prescription-order {
     display: flex !important;
   }
   .nav-mobile-buttons.prescription-order .info-content ul > li > a i {
-    font-size: 12px;
+    font-size: 15px;
+    color: white;
+    padding: 3px;
+    margin-right: 4px;
   }
   .row.custom-row {
     flex-direction: column;

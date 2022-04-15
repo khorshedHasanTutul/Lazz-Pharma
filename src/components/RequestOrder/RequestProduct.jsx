@@ -8,19 +8,21 @@ const RequestProduct = () => {
       <div class="notice">
         <h4 class="SearchFont SearchPrice">
           Note: Product availability &amp; price will be confirmed over
-          Phone/E-mail/Whatsapp.
-          <br />
-          Delivery Charge within Dhaka City 80TK &amp; outside Dhaka 120TK.
+          Phone/E-mail/Whatsapp. Delivery Charge within Dhaka City 80TK &amp;
+          outside Dhaka 120TK.
         </h4>
       </div>
       <div class="empty_style row" style={{ marginTop: "20px" }}>
         <div class="col-md-3">
+          <label htmlFor="name">Name</label>
           <input class="form-control" placeholder="Ex. Napa Tab." type="text" />
         </div>
         <div class="col-md-3">
+          <label htmlFor="strength">Strength</label>
           <input class="form-control" placeholder="Ex. 500 mg" type="text" />
         </div>
         <div class="col-md-3">
+          <label htmlFor="quantity">Quantity</label>
           <input
             class="form-control"
             placeholder="Quantity In Pcs"
@@ -40,9 +42,6 @@ const RequestProduct = () => {
       <div class="grid_container" style={{ margin: "15px" }}>
         <div class="i-grid-container">
           <div class="grid_column_selector_container">
-            {/* <div class="btn_selector_open">
-              <span class="glyphicon glyphicon-chevron-up"></span>
-            </div> */}
             <div class="selector_content_container">
               <label class="lbl_selector">
                 <input
@@ -153,131 +152,118 @@ const RequestProduct = () => {
                         </th>
                       </tr>
                     </thead>
+                    <tbody>
+                      <tr>
+                        <td>Napa</td>
+                        <td>500 gm</td>
+                        <td>50 pcs</td>
+                        <td>Delete</td>
+                      </tr>
+                      <tr>
+                        <td>Napa</td>
+                        <td>500 gm</td>
+                        <td>50 pcs</td>
+                        <td>Delete</td>
+                      </tr>
+                      <tr>
+                        <td>Napa</td>
+                        <td>500 gm</td>
+                        <td>50 pcs</td>
+                        <td>Delete</td>
+                      </tr>
+                      <tr>
+                        <td>Napa</td>
+                        <td>500 gm</td>
+                        <td>50 pcs</td>
+                        <td>Delete</td>
+                      </tr>
+                    </tbody>
                   </table>
                 </div>
               </div>
             </div>
-            <div class="i-grid-content">
-              <table>
-                <colgroup>
-                  <col />
-                  <col />
-                  <col />
-                  <col class="actions" />
-                </colgroup>
-                <tbody></tbody>
-              </table>
+          </div>
+        </div>
+      </div>
+      <div className="prscription_card" style={{ boxShadow: "none" }}>
+        <div className="image_preview_container">
+          <div className="image_previewer">
+            <div className="image_prev">
+              <img
+                src="/Contents/assets/image/banner2.jpg"
+                alt="img"
+                srcset=""
+              />
+              <p
+                style={{
+                  color: "red",
+                  textAlign: "center",
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                }}
+              >
+                Remove
+              </p>
             </div>
-            <div class="i-pager-wrap i-grid-pager i-widget">
-              <div class="pagger">
-                <ul class="i-pager-numbers i-reset"></ul>
-              </div>
-              <span class="i-pager-sizes i-label">
-                <select
-                  class="form-control input-sm"
-                  style={{ height: "auto", display: "inline" }}
-                >
-                  <option>5</option>
-                  <option>10</option>
-                  <option>20</option>
-                  <option>50</option>
-                  <option>100</option>
-                  <option>200</option>
-                  <option>300</option>
-                  <option>400</option>
-                  <option>500</option>
-                  <option selected="selected">1000</option>
-                </select>
-              </span>
-              <span class="i-pager-info i-label">
-                Showing 0 to 0 of 0 items
-              </span>
+            <div className="image_prev">
+              <img
+                src="/Contents/assets/image/banner2.jpg"
+                alt="img"
+                srcset=""
+              />
+              <p
+                style={{
+                  color: "red",
+                  textAlign: "center",
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                }}
+              >
+                Remove
+              </p>
+            </div>
+            <div className="image_prev">
+              <img
+                src="/Contents/assets/image/banner2.jpg"
+                alt="img"
+                srcset=""
+              />
+              <p
+                style={{
+                  color: "red",
+                  textAlign: "center",
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                }}
+              >
+                Remove
+              </p>
             </div>
           </div>
+          <div className="plus_icon_container">
+            <p className="plus_icon">+</p>
+          </div>
+        </div>
+
+        <div className="prescription_order_section">
+          <div className="file_uploader">
+            <label htmlFor="">Upload Prescription</label>
+            <input type="file" name="" id="" />
+          </div>
+          {/* <div className="prescription_order_section__order-button">
+            Save & Order
+          </div> */}
         </div>
       </div>
-      <div class="empty_style row">
-        <div class="col-md-4 col-sm-6">
-          <div>
-            <label>Your Name</label>
-          </div>
-          <div>
-            <input class="form-control" placeholder="Your Name" type="text" />
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-          <div>
-            <label>Your E-Mail (Optional)</label>
-          </div>
-          <div>
-            <input
-              class="form-control"
-              placeholder="Your E-Mail (Optional)"
-              type="text"
-            />
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-          <div>
-            <label>Your Number</label>
-          </div>
-          <div>
-            <input class="form-control" placeholder="Your Number" type="text" />
-          </div>
-        </div>
-        <div class="col-md-12 col-sm-12">
-          <div>
-            <label>Your Address</label>
-          </div>
-          <div>
-            <textarea
-              class="form-control"
-              placeholder="Your Address"
-            ></textarea>
-          </div>
-        </div>
-        <div class="col-md-12 col-sm-12">
-          <div>
-            <label>Description (Optional)</label>
-          </div>
-          <div>
-            <textarea
-              class="form-control"
-              placeholder="Description (Optional)"
-            ></textarea>
-          </div>
-        </div>
+      <div className="prescription_description">
+        <label htmlFor="description">Description</label>
+        <textarea name="pres_description" id="" cols="5" rows="5"></textarea>
       </div>
-      <div class="empty_style row">
-        <div class="col-md-3">
-          <div>
-            <button
-              class="btn btn_upload"
-              type="button"
-              style={{ width: "100%" }}
-            >
-              <span class="glyphicon glyphicon-plus"> </span>
-              <span> Upload Prescription Here</span>
-            </button>
-            <input
-              id="btn_image"
-              class="btn btn_upload btn-white btn-default btn-round"
-              style={{
-                position: "absolute",
-                left: "0px",
-                top: "0px",
-                opacity: "0",
-                padding: "3px",
-              }}
-              type="file"
-            />
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="img_preview row"></div>
-        </div>
-      </div>
-      <div class="" style={{ textAlign: "center", margin: "15px" }}>
+
+      <div
+        class="terms-condition-checked"
+        style={{ textAlign: "center", margin: "15px" }}
+      >
         <label>
           <input type="radio" /> I have read and agreed to the
           <Link to={urlTermsConditionRoute()}>Terms and conditions</Link>
@@ -289,7 +275,7 @@ const RequestProduct = () => {
           type="button"
           style={{ marginBottom: "15px" }}
         >
-          <span class="glyphicon glyphicon-upload"></span> Send
+          <span class=""></span> Send Product Request
         </button>
       </div>
     </div>

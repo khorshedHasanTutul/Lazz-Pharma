@@ -65,7 +65,7 @@ h2 {
 }
 
 h3 {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 a {
@@ -908,18 +908,17 @@ img.alignright {
 }
 
 .main-header .header-search-box .form-inline .btn-search {
-  width: 41px;
-  height: 41px;
-  background: #04432e url("../images/search.png") no-repeat center center;
-  border: none;
-  border-radius: 0;
-  color: #fff;
-  font-weight: bold;
-  position: absolute;
-  top: -1px;
-  right: -1px;
+	width: 41px;
+	height: 41px;
+	background: #016449 url("../images/search.png") no-repeat center center;
+	border: none;
+	border-radius: 0;
+	color: #fff;
+	font-weight: bold;
+	position: absolute;
+	top: -1px;
+	right: -1px;
 }
-
 .main-header .header-search-box .form-inline .btn-search:hover {
   opacity: 0.8;
 }
