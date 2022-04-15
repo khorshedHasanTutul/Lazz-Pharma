@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import {
   urlAboutRoute,
@@ -12,6 +12,10 @@ import {
 } from "../../Service/UrlService";
 
 const NavLinkMenus = () => {
+  const ref=useRef();
+  useEffect(()=>{
+    console.log(ref.current)
+  },[])
   const navLinksData = [
     {
       text: "Home",
@@ -50,9 +54,9 @@ const NavLinkMenus = () => {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         {navLinksData.map((links) => (
-          <li>
+          <li className={'navItem'}  ref={ref}>
             <span></span>
-            <NavLink to={links.to} exact>
+            <NavLink to={links.to} exact activeClassName="active">
               {links.text}
             </NavLink>
           </li>

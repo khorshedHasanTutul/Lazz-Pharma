@@ -16,11 +16,11 @@ const CategoryWiseProducts = () => {
     rewind: true,
     type: "slide",
     drag: "free",
-    autoplay: true,
+    autoplay: false,
     rewindSpeed: 1000,
     speed: 1000,
     pauseOnHover: true,
-    perPage: 6,
+    perPage: 5,
     width: "100%",
     breakpoints: {
       375: {
@@ -33,7 +33,7 @@ const CategoryWiseProducts = () => {
         perPage: 3,
       },
       992: {
-        perPage: 4,
+        perPage: 3,
       },
       1024: {
         perPage: 4,
@@ -82,11 +82,30 @@ const CategoryWiseProducts = () => {
             );
             return (
               <div className="product_scroll_container">
-                <div className="banner_image_category">
-                  <img src="/Contents/assets/image/LazzMalik.jpg" alt="" />
-                  <img src="/Contents/assets/image/LazzMalik.jpg" alt="" />
+                {/* <div className="banner_image_category">
+                  <Link to="/helloImage">
+                    <img src="/Contents/assets/image/LazzMalik.jpg" alt="" />
+                  </Link>
+                  <Link to="/omgImage">
+                    <img src="/Contents/assets/image/LazzMalik.jpg" alt="" />
+                  </Link>
                 </div>
-                <Slider Template={CategoryBannerDisplay} options={options2} data={Banner} />
+                <div className="banner_image_category_vertical">
+                  <Link to={"/hello vertical image"}>
+                    <img src="/Contents/assets/image/LazzMalik.jpg" alt="" />
+                  </Link>
+                  <Link to={"/hello vertical image"}>
+                    <img src="/Contents/assets/image/LazzMalik.jpg" alt="" />
+                  </Link>
+                  <Link to={"/hello vertical image"}>
+                    <img src="/Contents/assets/image/LazzMalik.jpg" alt="" />
+                  </Link>
+                </div>
+                <Slider
+                  Template={CategoryBannerDisplay}
+                  options={options2}
+                  data={Banner}
+                /> */}
 
                 <div class="common-heading">
                   <h1>{item.categoryName}</h1>

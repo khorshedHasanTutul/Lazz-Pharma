@@ -216,7 +216,7 @@ var appData={
     ],
     categoryProducts: [
         {
-          Id: "8edcd73d-f733-4552-a870-0002a314f1edc",
+          id: "8edcd73d-f733-4552-a870-0002a314f1edc",
           Nm: "Cumin",
         //   GN: "LEVOTHYROXINE SODIUM",
           St: "10 gm",
@@ -239,8 +239,8 @@ var appData={
         productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”.",
         },
         {
-          Id: "7486379c-bcbb-417f-9907-000d13ab55ccc",
-          Nm: "CISPLATIN ",
+          id: "7486379c-bcbb-417f-9907-000d13ab55ccc",
+          Nm: "Cisplatin ",
           GN: "DURCHSTECHFLASCHE IM ONCOSAFE ",
           St: "10 mg",
           Ct: "Injection",
@@ -262,8 +262,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "14496621-fa26-416e-9e62-000f7aae20fdc",
-          Nm: "ACTIKID ",
+          id: "14496621-fa26-416e-9e62-000f7aae20fdc",
+          Nm: "Acticikid ",
           GN: "VITAMIN C",
           St: "50 gm",
           Ct: "Tab",
@@ -285,8 +285,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "668f1e62-a58e-43dd-9ec0-0013dbb70d42c",
-          Nm: "LACTOGIN",
+          id: "668f1e62-a58e-43dd-9ec0-0013dbb70d42c",
+          Nm: "Lactogin",
           GN: "IMPROVE LACTATION",
           St: "100 mg",
           Ct: "Cap",
@@ -308,8 +308,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "d2605b95-b067-4170-a624-001c1f21f194c",
-          Nm: "ANXIO",
+          id: "d2605b95-b067-4170-a624-001c1f21f194c",
+          Nm: "Anxio",
           GN: "BROMAZEPAM",
           St: "300 MG",
           Ct: "Tab",
@@ -331,8 +331,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "02defa41-158b-4d2d-90bd-0024c0d8b226c",
-          Nm: "HIMALAYA ",
+          id: "02defa41-158b-4d2d-90bd-0024c0d8b226c",
+          Nm: "Himalaya ",
           GN: "BEAUTY CREAM",
           St: "50 GM",
           Ct: "CREAM (TOILETIES)",
@@ -354,8 +354,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "14bec93c-1cc1-44db-9c84-0024e74118f8c",
-          Nm: "FULSPEC",
+          id: "14bec93c-1cc1-44db-9c84-0024e74118f8c",
+          Nm: "Fulspec",
           GN: "MEROPENEM",
           St: "100 gm",
           Ct: "Injection IV",
@@ -377,8 +377,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "bfad512d-3cb1-4f67-b65c-0028485da9dfc",
-          Nm: "ONRIVA ",
+          id: "bfad512d-3cb1-4f67-b65c-0028485da9dfc",
+          Nm: "Onriva ",
           GN: "Glycopyrronium,Glicopironio",
           St: "50 GM",
           Ct: "Cap",
@@ -400,8 +400,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "f317f99e-603d-44f5-995e-002c82ca9f45c",
-          Nm: "MILAM",
+          id: "f317f99e-603d-44f5-995e-002c82ca9f45c",
+          Nm: "Milam",
           GN: "MIDAZOLAM",
           St: "150 mg",
           Ct: "Injection IM/IV",
@@ -423,8 +423,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "7c159a2d-ed4a-483f-96a9-003111c84f06c",
-          Nm: "IGLOO ",
+          id: "7c159a2d-ed4a-483f-96a9-003111c84f06c",
+          Nm: "Igloo ",
           GN: "ICE CREAM",
           St: "500 gm",
           Ct: "Toiletries",
@@ -446,8 +446,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "8edcd73d-f733-4552-a870-0002a314f1ed",
-          Nm: "ELTROXIN",
+          id: "8edcd73d-f733-4552-a870-0002a314f1ed",
+          Nm: "Electoxin",
           GN: "LEVOTHYROXINE",
           St: "50 gm",
           Ct: "Tab",
@@ -469,8 +469,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "7486379c-bcbb-417f-9907-000d13ab55cc",
-          Nm: "CISPLATIN ",
+          id: "7486379c-bcbb-417f-9907-000d13ab55cc",
+          Nm: "Cisplatin ",
           GN: "DURCHSTECHFLASCHE IM ONCOSAFE ",
           St: "10 mg",
           Ct: "Injection",
@@ -492,8 +492,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "14496621-fa26-416e-9e62-000f7aae20fd",
-          Nm: "ACTIKID ",
+          id: "14496621-fa26-416e-9e62-000f7aae20fd",
+          Nm: "Acticikid ",
           GN: "VITAMIN C",
           St: "200 gm",
           Ct: "Tab",
@@ -515,8 +515,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "668f1e62-a58e-43dd-9ec0-0013dbb70d42",
-          Nm: "LACTOGIN",
+          id: "668f1e62-a58e-43dd-9ec0-0013dbb70d42",
+          Nm: "Lactogin",
           GN: "IMPROVE LACTATION",
           St: "100 gm",
           Ct: "Cap",
@@ -538,8 +538,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "d2605b95-b067-4170-a624-001c1f21f194",
-          Nm: "ANXIO",
+          id: "d2605b95-b067-4170-a624-001c1f21f194",
+          Nm: "Anxio",
           GN: "BROMAZEPAM",
           St: "300 ml",
           Ct: "Tab",
@@ -561,7 +561,7 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "02defa41-158b-4d2d-90bd-0024c0d8b226",
+          id: "02defa41-158b-4d2d-90bd-0024c0d8b226",
           Nm: "beauty",
           GN: "BEAUTY CREAM",
           St: "50 gm",
@@ -584,8 +584,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "14bec93c-1cc1-44db-9c84-0024e74118f8",
-          Nm: "FULSPEC",
+          id: "14bec93c-1cc1-44db-9c84-0024e74118f8",
+          Nm: "Fulspec",
           GN: "MEROPENEM",
           St: "100 gm",
           Ct: "Injection IV",
@@ -607,8 +607,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "bfad512d-3cb1-4f67-b65c-0028485da9df",
-          Nm: "ONRIVA BEXICAP",
+          id: "bfad512d-3cb1-4f67-b65c-0028485da9df",
+          Nm: "Onriva",
           GN: "Glycopyrronium,Glicopironio",
           St: "50 gm",
           Ct: "Cap",
@@ -630,8 +630,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "f317f99e-603d-44f5-995e-002c82ca9f45",
-          Nm: "MILAM",
+          id: "f317f99e-603d-44f5-995e-002c82ca9f45",
+          Nm: "Milam",
           GN: "MIDAZOLAM",
           St: "15 mg",
           Ct: "Injection IM/IV",
@@ -653,8 +653,8 @@ var appData={
            productInfo:"Kasundi is a protein-rich, spicy relish made from mustard seeds. A condiment and a taste-enhancer. Kasundi brings out the best taste in whatever it is paired up with: seasonal green fruits, snacks such as “shingara” & “pakora”."
         },
         {
-          Id: "7c159a2d-ed4a-483f-96a9-003111c84f06",
-          Nm: "IGLOO ",
+          id: "7c159a2d-ed4a-483f-96a9-003111c84f06",
+          Nm: "Igloo ",
           GN: "ICE CREAM",
           St: "200 mg",
           Ct: "Toiletries",

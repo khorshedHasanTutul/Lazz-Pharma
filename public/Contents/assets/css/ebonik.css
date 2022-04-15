@@ -304,7 +304,7 @@ label {
     z-index: 1000;
     position: fixed;
     right: 0;
-    top: 125px;
+    top: 200px;
     /* display: none; */
 }
 
@@ -502,7 +502,7 @@ label {
 
 .notice {
     text-align: center;
-    margin-top: 4%;
+    /* margin-top: 4%; */
     border-bottom: 1px dashed black;
     border-top: 1px dashed black;
 }
