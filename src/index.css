@@ -2462,6 +2462,14 @@ button {
 .prescription_description {
 	padding: 15px;
 }
+.Validation {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	flex-wrap: wrap;
+}
+
 .image_preview_container .plus_icon {
 	background: whitesmoke;
 	min-width: 8rem;
@@ -2656,11 +2664,18 @@ main {
 	border: 1px solid aqua;
 	font-weight: 400 !important;
 }
-.empty_style.row {
-	display: flex;
-	justify-content: center;
+.empty_style {
+	display: grid;
+	grid-template-columns: repeat(4,1fr);
 	align-items: end;
-	flex-wrap: wrap;
+	gap: 1rem;
+}
+.box_no-item-added {
+	text-align: center;
+	border: 2px solid #016449;
+	padding: 12px;
+	background: #016449;
+	color: white;
 }
 .image_prev img {
 	max-width: 100%;
