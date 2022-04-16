@@ -39,7 +39,7 @@ const Banner = () => {
           <div className="row custom-slide-row">
             <div
               id="box-vertical-megamenus"
-              class="nav_top_category_container nav_top_category_container-desktop col-sm-3"
+              class="nav_top_category_container nav_top_category_container-desktop col-md-0 col-lg-3"
             >
               <div class="box-vertical-megamenus" style={{ left: "0px" }}>
                   {pathname === urlHomeRoute() && (
@@ -102,7 +102,7 @@ const Banner = () => {
               </div>
             </div>
 
-            <div className="col-md-9">
+            <div className="col-md-12 col-lg-9">
               <div className="banner-slider">
                 <Slider
                   Template={BannerTemplate}
