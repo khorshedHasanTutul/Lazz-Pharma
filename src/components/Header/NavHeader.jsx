@@ -1,28 +1,8 @@
-import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import { getCategories } from "../../Service/DataService";
-import {
-  urlCategoryWiseRoute,
-  urlHomeRoute,
-  urlSubCategoryWiseRoute,
-} from "../../Service/UrlService";
+import React from "react";
+
 import NavLinkMenus from "./NavLinkMenus";
 
 const NavHeader = () => {
-  // const ref = useRef(null);
-  const { pathname } = useLocation();
-  const getMainCategories = getCategories();
-
-  // useEffect(() => {
-  //   window.addEventListener("scroll", () => {
-  //     if (window.scrollY > 25) {
-  //       ref.current.classList.add("position-fixed-to-top-navBar");
-  //     } else {
-  //       ref.current.classList.remove("position-fixed-to-top-navBar");
-  //     }
-  //   });
-  // }, []);
   return (
     <div id="nav-top-menu" class="nav-top-menu home">
       <div class="container-fluid custom-nav-container">
