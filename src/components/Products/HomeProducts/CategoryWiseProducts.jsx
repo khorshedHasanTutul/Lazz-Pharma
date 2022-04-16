@@ -82,6 +82,8 @@ const CategoryWiseProducts = () => {
             );
             return (
               <div className="product_scroll_container">
+                {/* THis commented lines are essential  */}
+
                 {/* <div className="banner_image_category">
                   <Link to="/helloImage">
                     <img src="/Contents/assets/image/LazzMalik.jpg" alt="" />

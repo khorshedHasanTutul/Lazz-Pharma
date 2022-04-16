@@ -5,7 +5,6 @@ import { urlHomeRoute } from "../../Service/UrlService";
 import addressContext from "../../store/address-context";
 import cartContext from "../../store/cart-context";
 import AlertPopUp from "./OrderAlert/AlertPopUp";
-import alert from "./OrderAlert/AlertPopUp";
 
 const Payment = ({ AddressActiveHandler }) => {
   const [PopUpAlert, setPopUpAlert] = useState(false);
@@ -29,7 +28,7 @@ const Payment = ({ AddressActiveHandler }) => {
       ctxCart.clearCart();
     } else {
       // alertPaymentRadioStateChangeHandler();
-      alert("Please select a payment method.");
+      alert("Please Select a payment method");
     }
   };
   return (

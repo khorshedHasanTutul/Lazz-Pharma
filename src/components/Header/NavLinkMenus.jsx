@@ -12,17 +12,14 @@ import {
 } from "../../Service/UrlService";
 
 const NavLinkMenus = () => {
-  const ref=useRef();
-  useEffect(()=>{
-    console.log(ref.current)
-  },[])
+  const ref = useRef();
   const navLinksData = [
     {
       text: "Home",
       to: urlHomeRoute(),
     },
     {
-      text: "Order Us",
+      text: "Request Order",
       to: urlRequestOrderRoute(),
     },
     {
@@ -54,9 +51,15 @@ const NavLinkMenus = () => {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         {navLinksData.map((links) => (
-          <li className={'navItem'}  ref={ref}>
-            <span></span>
-            <NavLink to={links.to} exact activeClassName="active">
+          <li className={"navItem"} ref={ref}>
+            {/* <span></span> */}
+            <NavLink
+              to={links.to}
+              exact
+              activeStyle={{
+                textDecoration:"underline"
+              }}
+            >
               {links.text}
             </NavLink>
           </li>
