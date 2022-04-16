@@ -35,12 +35,13 @@ const RequestProductForm = ({ addToProduct }) => {
     if (name.length !== 0 && strength.length !== 0 && quantity.length !== 0) {
       addToProduct({ name, strength, quantity, id: uuidv4() });
       setName("");
+      setNameIsTouched(false);
+      setNameIsValid(false);
       setStrength("");
       setQuantity("");
-      setNameIsTouched(false);
       setQuantityIsTouched(false);
-      setNameIsValid(false);
       setQuantityIsValid(false);
+      setClicked(false);
 
     }
   };
