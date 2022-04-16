@@ -72,7 +72,7 @@ const SearchTemplate = ({ item, closeSearch, lowerSearchvalue, setalert }) => {
     <div class="search-result__items">
       <div class="result-card">
         <div class="result-card__img">
-          <img src={item.image} alt="product_image" />
+          <img src="/Contents/assets/image/koko.jpeg" alt="product_image" />
         </div>
         <div class="result-card__details">
           <Link
