@@ -138,18 +138,18 @@ const FooterParent = () => {
               <li id="payment-methods">Accepted Payment Methods</li>
               <li>
                 <a href="https://www.lazzpharma.com/#">
-                  <img src="./Lazz Pharma Limited_files/card4.png" alt="Lazz" />
+                  <img src="/Contents/assets/image/card4.png" alt="Lazz" />
                 </a>
               </li>
 
               <li>
                 <a href="https://www.lazzpharma.com/#">
-                  <img src="./Lazz Pharma Limited_files/card6.png" alt="Lazz" />
+                  <img src="/Contents/assets/image/card4.png" alt="Lazz" />
                 </a>
               </li>
               <li>
                 <a href="https://www.lazzpharma.com/#">
-                  <img src="./Lazz Pharma Limited_files/card7.png" alt="Lazz" />
+                  <img src="/Contents/assets/image/card7.png" alt="Lazz" />
                 </a>
               </li>
             </div>

@@ -1204,11 +1204,18 @@ label {
 }
 
 .btn_add_to_cart {
+    background: transparent;
     border-radius: 5px;
-    color: #fff;
-    padding: 8px;
-    background-color: #31b086;
-    line-height: 35px;
+    padding: 6px 20px;
+    transition: 0.3s;
+    opacity: 1;
+    margin: 0px 10px;
+    margin-bottom: 0px;
+    position: relative;
+    border: 1px solid #016449;
+    cursor: pointer;
+    margin-bottom: 10px;
+    display: block;
 }
 
 .btn_add_to_cart img {
@@ -1222,10 +1229,10 @@ label {
 }
 
 .cross_price {
-	color: red;
-	font-size: 13px;
-	font-weight: 500;
-	margin-left: 0.5rem;
+    color: red;
+    font-size: 13px;
+    font-weight: 500;
+    margin-left: 0.5rem;
 }
 
 
@@ -1277,7 +1284,8 @@ label {
 }
 
 .product-container:hover .btn_add_to_cart {
-    background-color: #04432e;
+    background-color: #016449;
+    color: #fff;
 }
 
 .tit-contain a,
