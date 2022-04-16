@@ -1,17 +1,27 @@
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, { forwardRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { urlHomeRoute, urlRequestOrderRoute } from "../../Service/UrlService";
 import AuthenticationModalBody from "../Authentication/AuthenticationModalBody";
 import LoginModal from "../Authentication/LoginModal";
+import SearchProduct from "../SearchPortal/SearchProduct";
 
-const MiddleHeader = forwardRef((props,ref) => {
+const MiddleHeader = forwardRef((props, ref) => {
   const [loginPopUp, setLoginPopUp] = useState(false);
+  const [searchValue, setSearchValuye] = useState("");
   const userHandler = () => {
     setLoginPopUp(true);
   };
   const closeAuthModalHandler = () => {
     setLoginPopUp((prevState) => !prevState);
   };
+  const textChangeHandler = ({ target }) => {
+    setSearchValuye(target.value);
+  };
+  const closeSearchHandler = () => {
+    setSearchValuye("");
+  };
+
+
 
   return (
     <div class="container-fluid main-header" ref={ref}>
@@ -54,6 +64,8 @@ const MiddleHeader = forwardRef((props,ref) => {
                 id="txt_product_search"
                 autocomplete="off"
                 type="text"
+                value={searchValue}
+                onChange={textChangeHandler}
                 placeholder="Search by Trade or Generic Name..."
                 style={{ fontSize: "16px" }}
               />
@@ -61,6 +73,12 @@ const MiddleHeader = forwardRef((props,ref) => {
             <button type="button" class="pull-right btn-search">
               <i class="fa fa-search"></i>
             </button>
+            {searchValue && (
+                <SearchProduct
+                  searchValue={searchValue}
+                  closeSearchHandler={closeSearchHandler}
+                />
+              )}
             <table
               cellspacing="0"
               class="table table-bordered table-striped SearchTable"
@@ -82,7 +100,9 @@ const MiddleHeader = forwardRef((props,ref) => {
                     srcset=""
                   /> */}
                   {/* <img src="/Contents/assets/image/prescription-svgrepo-com.svg" alt="prescription" srcset="" /> */}
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M176 240H128v32h48C184.9 272 192 264.9 192 256S184.9 240 176 240zM256 0v128h128L256 0zM224 128L224 0H48C21.49 0 0 21.49 0 48v416C0 490.5 21.49 512 48 512h288c26.51 0 48-21.49 48-48V160h-127.1C238.3 160 224 145.7 224 128zM292.5 315.5l11.38 11.25c6.25 6.25 6.25 16.38 0 22.62l-29.88 30L304 409.4c6.25 6.25 6.25 16.38 0 22.62l-11.25 11.38c-6.25 6.25-16.5 6.25-22.75 0L240 413.3l-30 30c-6.249 6.25-16.48 6.266-22.73 .0156L176 432c-6.25-6.25-6.25-16.38 0-22.62l29.1-30.12L146.8 320H128l.0078 48.01c0 8.875-7.125 16-16 16L96 384c-8.875 0-16-7.125-16-16v-160C80 199.1 87.13 192 96 192h80c35.38 0 64 28.62 64 64c0 24.25-13.62 45-33.5 55.88L240 345.4l29.88-29.88C276.1 309.3 286.3 309.3 292.5 315.5z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                    <path d="M176 240H128v32h48C184.9 272 192 264.9 192 256S184.9 240 176 240zM256 0v128h128L256 0zM224 128L224 0H48C21.49 0 0 21.49 0 48v416C0 490.5 21.49 512 48 512h288c26.51 0 48-21.49 48-48V160h-127.1C238.3 160 224 145.7 224 128zM292.5 315.5l11.38 11.25c6.25 6.25 6.25 16.38 0 22.62l-29.88 30L304 409.4c6.25 6.25 6.25 16.38 0 22.62l-11.25 11.38c-6.25 6.25-16.5 6.25-22.75 0L240 413.3l-30 30c-6.249 6.25-16.48 6.266-22.73 .0156L176 432c-6.25-6.25-6.25-16.38 0-22.62l29.1-30.12L146.8 320H128l.0078 48.01c0 8.875-7.125 16-16 16L96 384c-8.875 0-16-7.125-16-16v-160C80 199.1 87.13 192 96 192h80c35.38 0 64 28.62 64 64c0 24.25-13.62 45-33.5 55.88L240 345.4l29.88-29.88C276.1 309.3 286.3 309.3 292.5 315.5z" />
+                  </svg>
                   <span title="Just upload prescription to place an order">
                     Upload Prescription
                   </span>

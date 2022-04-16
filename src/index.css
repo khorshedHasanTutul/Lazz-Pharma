@@ -2670,6 +2670,16 @@ button {
   padding-top: 0px;
 }
 
+
+.Validation {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	flex-wrap: wrap;
+}
+
+
 .image_preview_container .plus_icon {
   background: whitesmoke;
   min-width: 8rem;
@@ -2899,11 +2909,18 @@ main {
   margin: 0px 15px;
 }
 
-.empty_style.row {
-  display: flex;
-  justify-content: center;
-  align-items: end;
-  flex-wrap: wrap;
+.empty_style {
+	display: grid;
+	grid-template-columns: repeat(4,1fr);
+	align-items: end;
+	gap: 1rem;
+}
+.box_no-item-added {
+	text-align: center;
+	border: 2px solid #016449;
+	padding: 12px;
+	background: #016449;
+	color: white;
 }
 
 .image_prev img {
