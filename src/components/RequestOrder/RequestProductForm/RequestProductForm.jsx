@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-const RequestProductForm = ({ addToProduct }) => {
+const RequestProductForm = forwardRef((props, ref,inputRefFocus) => {
   const [clicked, setClicked] = useState(false);
   const [name, setName] = useState("");
   const [nameIsTouched, setNameIsTouched] = useState(false);
@@ -33,7 +33,7 @@ const RequestProductForm = ({ addToProduct }) => {
   const addToProductHandler = () => {
     setClicked(true);
     if (name.length !== 0 && strength.length !== 0 && quantity.length !== 0) {
-      addToProduct({ name, strength, quantity, id: uuidv4() });
+      props.addToProduct({ name, strength, quantity, id: uuidv4() });
       setName("");
       setNameIsTouched(false);
       setNameIsValid(false);
@@ -42,7 +42,6 @@ const RequestProductForm = ({ addToProduct }) => {
       setQuantityIsTouched(false);
       setQuantityIsValid(false);
       setClicked(false);
-
     }
   };
   useEffect(() => {
@@ -68,13 +67,14 @@ const RequestProductForm = ({ addToProduct }) => {
   }, [nameIsTouched, name.length, quantityIsTouched, quantity.length, clicked]);
 
   return (
-    <div class="empty_style" style={{ marginTop: "20px" }}>
+    <div class="empty_style" style={{ marginTop: "20px" }} ref={ref}>
       <div className="Validation">
         <div>
           <label htmlFor="name">Name</label>
           <input
             class="form-control"
             placeholder="Ex. Napa Tab."
+            ref={inputRefFocus}
             type="text"
             value={name}
             onChange={nameOnChangeHandler}
@@ -138,6 +138,6 @@ const RequestProductForm = ({ addToProduct }) => {
       </div>
     </div>
   );
-};
+});
 
 export default RequestProductForm;

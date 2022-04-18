@@ -1,15 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Fragment } from "react/cjs/react.production.min";
 import { urlTermsConditionRoute } from "../../Service/UrlService";
+import PopAlert from "../utilities/alert/PopAlert";
 import RequestOrderTable from "./requestOrdertable/RequestOrderTable";
+import RequestProductAlert from "./RequestProductAlert/RequestProductAlert";
 import RequestProductForm from "./RequestProductForm/RequestProductForm";
 
 const RequestProduct = () => {
   const fileRef = useRef();
+  const inputFieldsRef = useRef();
+  const inputRefFocus = useRef();
+  const [isChecked, setIsChecked] = useState(false);
   const [product, setProduct] = useState([]);
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
+  const [openAlert , setOpenAlert] = useState(false);
+
+  const checkedHandler = () => {
+    setIsChecked((prevState) => !prevState);
+  };
 
   const addToProductHandler = (product) => {
     setProduct((prevState) => [...prevState, product]);
@@ -21,6 +30,9 @@ const RequestProduct = () => {
   const fileUploaderHandler = () => {
     fileRef.current.click();
   };
+  const removeButtonHandler=()=>{
+    setOpenAlert(prevState => !prevState);
+  }
   const setSelectedFileHandler = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
       setSelectedFile(undefined);
@@ -28,19 +40,39 @@ const RequestProduct = () => {
     }
     setSelectedFile(e.target.files[0]);
   };
+  const imageRemoverhandler = () => {
+    setPreview("");
+  };
 
-  const imageRemoverhandler=()=>{
-    setPreview('')
-  }
-  useEffect(()=>{
-    if(!selectedFile){
-      setPreview(undefined);
-      return ; 
+  const submitButtonHandler = () => {
+    !isChecked &&
+      alert("Please agree with out terms and condition to request the order");
+    if (isChecked && product.length === 0) {
+      console.log(inputFieldsRef.current);
+      alert("Please add product names and quantity to request");
+      inputFieldsRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+      console.log(inputFieldsRef.current.children[0]);
     }
-    const objectUrl= URL.createObjectURL(selectedFile);
+
+    if (isChecked && product.length > 0) {
+      //api request goes here
+      setOpenAlert(true)
+    }
+  };
+
+  useEffect(() => {
+    if (!selectedFile) {
+      setPreview(undefined);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(selectedFile);
     setPreview(objectUrl);
-    return ()=>URL.revokeObjectURL(objectUrl)
-  },[selectedFile])
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedFile]);
 
   return (
     <div class="request_product">
@@ -52,7 +84,11 @@ const RequestProduct = () => {
         </h4>
       </div>
 
-      <RequestProductForm addToProduct={addToProductHandler} />
+      <RequestProductForm
+        addToProduct={addToProductHandler}
+        ref={inputFieldsRef}
+        inputRefFocus={inputRefFocus}
+      />
       <RequestOrderTable
         product={product}
         productRemoverHandler={productRemoverHandler}
@@ -60,28 +96,24 @@ const RequestProduct = () => {
 
       <div className="prscription_card" style={{ boxShadow: "none" }}>
         <div className="image_preview_container">
-          {
-            preview && (
-              <div className="image_previewer">
-            <div className="image_prev">
-              <img
-                src={preview}
-                alt="img"
-                srcset=""
-              />
-              <p
-                style={{
-                  color: "red",
-                  textAlign: "center",
-                  textDecoration: "underline",
-                  cursor: "pointer",
-                }}
-                onClick ={imageRemoverhandler}
-              >
-                Remove
-              </p>
-            </div>
-            {/* <div className="image_prev">
+          {preview && (
+            <div className="image_previewer">
+              <div className="image_prev">
+                <img src={preview} alt="img" srcset="" />
+                <p
+                  style={{
+                    color: "red",
+                    textAlign: "center",
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                    marginTop: "10px",
+                  }}
+                  onClick={imageRemoverhandler}
+                >
+                  Remove
+                </p>
+              </div>
+              {/* <div className="image_prev">
               <img
                 src="/Contents/assets/image/banner2.jpg"
                 alt="img"
@@ -115,10 +147,9 @@ const RequestProduct = () => {
                 Remove
               </p>
             </div> */}
-          </div>
-            )
-          }
-          
+            </div>
+          )}
+
           <div className="plus_icon_container" onClick={fileUploaderHandler}>
             <p className="plus_icon">+</p>
           </div>
@@ -150,8 +181,14 @@ const RequestProduct = () => {
         style={{ textAlign: "center", margin: "15px" }}
       >
         <label>
-          <input type="radio" /> I have read and agreed to the
-          <Link to={urlTermsConditionRoute()}>Terms and conditions</Link>
+          <input type="checkbox" onClick={checkedHandler} /> I have read and
+          agreed to the
+          <Link
+            to={urlTermsConditionRoute()}
+            style={{ color: "red", marginLeft: "10px" }}
+          >
+            Terms and conditions
+          </Link>
         </label>
       </div>
       <div class="text-center formFooter FooterFormMenu">
@@ -159,10 +196,16 @@ const RequestProduct = () => {
           class="btn btn-success btn-default btn-round"
           type="button"
           style={{ marginBottom: "15px" }}
+          onClick={submitButtonHandler}
         >
           <span class=""></span> Send Product Request
         </button>
       </div>
+      {
+        openAlert && (
+          <RequestProductAlert removeButtonHandler={removeButtonHandler}/>
+        )
+      }
     </div>
   );
 };
