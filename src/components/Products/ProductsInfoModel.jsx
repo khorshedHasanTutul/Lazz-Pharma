@@ -69,38 +69,38 @@ const ProductsInfoModel = ({ item }) => {
           </div>
         )}
         <Link to={urlProductDetails() + item.id}>
-        <div class="product-top-area">
-          <div class="product-img">
-            <img src="/Contents/assets/image/koko.jpeg" alt="product" />
-          </div>
-          <div class="product-content">
-            <div className="product_heading_info">
-            <h3>{item.Nm} &nbsp; </h3>
-           
-            <span>{item.St} Tab</span>
+          <div class="product-top-area">
+            <div class="product-img">
+              <img src="/Contents/assets/image/koko.jpeg" alt="product" />
             </div>
-            <span>Vitamin C</span>
+            <div class="product-content">
+              <div className="product_heading_info">
+                <h3>{item.Nm} &nbsp; </h3>
 
-            <div class="basket-add">
-              {item.Ds === 0 && (
-                <span class="item__price item__price--now">৳{item.MRP}</span>
-              )}
+                <span>{item.St} Tab</span>
+              </div>
+              <span>Vitamin C</span>
 
-              {item.Ds > 0 && (
-                <>
-                  <span class="item__price item__price--now">
-                    ৳{(item.MRP - (item.MRP * item.Ds) / 100).toFixed(2)}
-                  </span>
-                  <span class="price product-price">
-                    <del class="cross_price"> ৳{item.MRP}</del>
-                  </span>
-                </>
-              )}
+              <div class="basket-add">
+                {item.Ds === 0 && (
+                  <span class="item__price item__price--now">৳{item.MRP}</span>
+                )}
+
+                {item.Ds > 0 && (
+                  <>
+                    <span class="item__price item__price--now">
+                      ৳{(item.MRP - (item.MRP * item.Ds) / 100).toFixed(2)}
+                    </span>
+                    <span class="price product-price">
+                      <del class="cross_price"> ৳{item.MRP}</del>
+                    </span>
+                  </>
+                )}
+              </div>
             </div>
           </div>
-        </div>
         </Link>
-       
+
         {!visibleCartBox && (
           <div
             class="add-to-cart d-flex al-center j-center"
