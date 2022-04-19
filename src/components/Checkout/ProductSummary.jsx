@@ -85,7 +85,7 @@ const ProductSummary = ({proceedToAddressHandler,AddressActiveHandler}) => {
                 </td>
                 <td class="cart_description">
                   <p class="product-name">
-                    <a href>{item.name}</a>
+                    <a href>{item.Nm}</a>
                   </p>
                   <small class="cart_ref">Type : {item.category}</small>
                   <br />

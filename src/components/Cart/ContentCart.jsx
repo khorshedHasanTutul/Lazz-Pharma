@@ -95,7 +95,7 @@ const ContentCart = ({ openCart }) => {
                     <td className="card-title-product">
                       <a href="/ProductArea/Product/Details/f8ccb3df-f11d-483b-8f8d-b5212e7c23c5">
                         <span class="SearchProductName SearchFont">
-                          {item.name}
+                          {item.Nm}
                         </span>
                       </a>
                       <br />

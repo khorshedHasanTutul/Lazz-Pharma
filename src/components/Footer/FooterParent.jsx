@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {
   urlBranchLocationRoute,
+  urlCarrerRoute,
   urlContactRoute,
   urlHowToOrderRoute,
   urlPrivacyPolicy,
@@ -88,6 +89,12 @@ const FooterParent = () => {
               <div class="col-sm-6">
                 <div class="introduce-title">Support</div>
                 <ul id="introduce-support" class="introduce-list">
+                <li>
+                    <i class="fa fa-angle-double-right"></i>
+                    <Link to={urlCarrerRoute()} style={{ color: "white" }}>
+                      Carrer
+                    </Link>
+                  </li>
                   <li>
                     <i class="fa fa-angle-double-right"></i>
                     <Link to={urlContactRoute()} style={{ color: "white" }}>

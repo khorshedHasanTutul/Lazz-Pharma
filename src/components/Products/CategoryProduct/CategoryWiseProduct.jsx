@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import appData from "../../../Service/DataSource/appData";
 import { urlHomeRoute } from "../../../Service/UrlService";
-import ProductModelCategoryWise from "../ProductModelCategoryWise";
+import ProductsInfoModel from "../ProductsInfoModel";
 
 const CategoryWiseProduct = () => {
   return (
@@ -13,16 +14,21 @@ const CategoryWiseProduct = () => {
               Home
             </Link>
             <span class="navigation-pipe"> </span>
-            <a href>ProductCategory</a>
+            <a href>Category</a>
+            <span class="navigation-pipe"> </span>
+            <a href>Medicine</a>
           </div>
         </div>
       </div>
-      <div class="result_container row">
-        <div id="view-product-list" class="view-product-list">
-          <ul class="row product-list grid">
-            <li class="col-xs-6 col-sm-2 col-md-2">
-             <ProductModelCategoryWise />
-            </li>
+      <div class="row">
+        <div id="view-product-list" style={{padding:"0px 20px"}}>
+          <ul>
+            {appData.categoryProducts.map((item) => (
+              <li class="col-xs-6 col-sm-2 col-md-2">
+                {/* <ProductModelCategoryWise /> */}
+                <ProductsInfoModel item={item} />
+              </li>
+            ))}
           </ul>
         </div>
       </div>

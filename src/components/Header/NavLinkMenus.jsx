@@ -9,6 +9,7 @@ import {
   urlHomeRoute,
   urlRequestOrderRoute,
   urlReviewRoute,
+  urlSpecialOfferRoute,
 } from "../../Service/UrlService";
 
 const NavLinkMenus = () => {
@@ -23,6 +24,10 @@ const NavLinkMenus = () => {
       to: urlRequestOrderRoute(),
     },
     {
+      text:"Special Offer",
+      to:urlSpecialOfferRoute(),
+    },
+    {
       text: "Branch & Location",
       to: urlBranchLocationRoute(),
     },
@@ -30,10 +35,10 @@ const NavLinkMenus = () => {
       text: "Review",
       to: urlReviewRoute(),
     },
-    {
-      text: "Carrer",
-      to: urlCarrerRoute(),
-    },
+    // {
+    //   text: "Carrer",
+    //   to: urlCarrerRoute(),
+    // },
     {
       text: "Gallery",
       to: urlGalleryRoute(),

@@ -31,6 +31,7 @@ import {
   urlRequestOrderRoute,
   urlReturnPolicy,
   urlReviewRoute,
+  urlSpecialOfferRoute,
   urlSubCategoryWiseRoute,
   urlTermsConditionRoute,
 } from "./Service/UrlService";
@@ -40,6 +41,7 @@ import CategoryWiseProduct from "./components/Products/CategoryProduct/CategoryW
 import SubCategoryProduct from "./components/Products/SubCategoryProduct/SubCategoryProduct";
 import Profile from "./components/pages/Profile";
 import { useLocation } from "react-router-dom";
+import SpecialOffer from "./components/Profile/Special Offer/SpecialOffer";
 
 function App() {
   const location = useLocation();
@@ -54,7 +56,7 @@ function App() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location]);
-  
+
   return (
     <Fragment>
       <HeaderParent ref={headerRef} />
@@ -69,6 +71,9 @@ function App() {
           </Route>
           <Route path={urlReviewRoute()} exact>
             <Review />
+          </Route>
+          <Route path={urlSpecialOfferRoute()} exact>
+            <SpecialOffer />
           </Route>
           <Route path={urlCarrerRoute()} exact>
             <Carrer />

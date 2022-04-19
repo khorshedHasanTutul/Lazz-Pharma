@@ -2704,6 +2704,7 @@ button {
 	box-shadow: 0 1px 3px rgba(0, 0, 0.2);
 	padding: 6px;
 }
+
 .popup.undefined.request-history {
   min-width: 450px;
   width: max-content;
@@ -2715,6 +2716,7 @@ button {
   left: 50%;
   transform: translate(-50%);
 }
+
 .item_found {
 	font-size: 1.25rem;
 	margin-top: 5px;
@@ -3157,6 +3159,7 @@ ul {
 
 .product-content {
   padding: 10px 0px;
+  text-align: center;
 }
 
 .product-content > span {
@@ -3182,7 +3185,7 @@ ul {
   font-weight: 400;
 }
 
-.add-to-cart {
+/* .add-to-cart {
   background: transparent;
   border-radius: 5px;
   padding: 6px 20px;
@@ -3192,6 +3195,18 @@ ul {
   position: relative;
   border: 2px solid #016449;
   cursor: pointer;
+} */
+.product-full .product-image img {
+	max-width: 100%;
+	object-fit: cover;
+	object-position: bottom;
+}
+.product-full .product-image img:hover {
+	transform: scale(1.2);
+	transition: 0.5s all ease-in-out;
+	padding: 10px;
+	max-width: 100%;
+	object-fit: cover;
 }
 
 .j-center {
@@ -3481,6 +3496,11 @@ ul {
   margin-bottom: 10px;
   display: flex;
   align-items: center;
+}
+.cash-content p {
+	color: #016449;
+	font-size: 1.2rem;
+	font-weight: bold;
 }
 
 .result-card__details--actions > button > svg {
