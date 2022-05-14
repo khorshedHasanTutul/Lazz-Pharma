@@ -18,7 +18,7 @@ export const getCategories = (parentId) => {
       .map((a) => ({ id: a[0], name: a[1], rank: a[2], parentId: a[3] }));
   }
 
-  return APP_DATA[0].map((a) => ({ id: a[0], name: a[1], rank: a[2] }));
+  return APP_DATA[0].map((a) => ({ id: a[0], name: a[1], rank: a[2] , img:a[3] , hovImg:a[4] }));
 };
 
 export const getMedicineTypes = () => {

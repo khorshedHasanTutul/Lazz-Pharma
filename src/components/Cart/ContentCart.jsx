@@ -69,11 +69,12 @@ const ContentCart = ({ openCart }) => {
             </strong>
           </div>
           <div class="col-xs-4" onClick={openCart}>
-            <img
+            {/* <img
               class="pull-right cart-cross-btn"
               src="/Contents/assets/image/x-button.png"
               alt="cross-button"
-            />
+            /> */}
+           <i class="fa fa-times pull-right cart-cross-btn" aria-hidden="true"></i>
           </div>
         </div>
         <div class="cart-body text-center">
@@ -194,7 +195,7 @@ const ContentCart = ({ openCart }) => {
             </table>
           </div>
         </div>
-        <div class="cart-footer">
+        {/* <div class="cart-footer">
           <button
             id="checkout-button"
             style={{ borderRadius: "6px 0 0 6px" }}
@@ -229,7 +230,49 @@ const ContentCart = ({ openCart }) => {
               </button>
             </a>
           </a>
-        </div>
+        </div> */}
+         <div className="product_items__count__container">
+            <div className="cmn-class-items-calc total__items">
+              <p>Total Items</p>
+              <span>{cartCtxModal.TotalItems}</span>
+            </div>
+            <div className="cmn-class-items-calc total__ammount">
+              <p>Total Ammount</p>
+              <span>{cartCtxModal.TotalAmmount.toFixed(2)}tk</span>
+            </div>
+          </div>
+          <div class="cart-footer">
+            {/* <div class="card-footer-inner">
+              <Link to={urlCheckoutRoute()}>
+                <button class="cart-cmn-btn" onClick={orderNowHandler}>
+                  Order Now
+                </button>
+              </Link>
+
+              <span class="cart-cmn-btn cart-cmn-btn2">
+                ৳ <span>{getCartContextModel.TotalAmmount.toFixed(2)}</span>
+              </span>
+            </div>
+
+            <a href class="block-btn-card" onClick={clearCartHandler}>
+              <button class="cart-cmn-btn">Clear Cart</button>
+            </a> */}
+
+            <div className="cart-footer__orderNow" onClick={orderNowButtonPressedHandler}>
+              <a href>
+                <p>
+                  <span>Order Now</span>
+                </p>
+              </a>
+            </div>
+            <div
+              className="cart-footer__orderNow"
+              style={{ background: "#E62D3F" }}
+              onClick={clearCartHandler}
+            >
+              <p>Clear Cart</p>
+            </div>
+          </div>
       </div>
     </div>
   );

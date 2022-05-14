@@ -301,11 +301,15 @@ label {
 }
 
 .cart-box-view {
-    z-index: 1000;
-    position: fixed;
-    right: 0;
-    top: 200px;
-    /* display: none; */
+	z-index: 999999;
+	position: fixed;
+	right: 0;
+	top: 50%;
+	max-width: 408px;
+	min-width: 30%;
+	transform: translateY(-50%);
+	box-shadow: 0 0 3px rgba(0,0,0.3);
+    overflow-x: hidden;
 }
 
 .cart-items.text-center>span {
@@ -327,15 +331,16 @@ label {
 }
 
 .cart-header {
-    padding: 5px 0;
-    background: #016449;
+	padding: 5px 0;
+	background: #31B086;
 }
 
 .cart-body {
     background: #ddd;
     border-bottom: 1px solid #000;
     overflow-y: auto;
-    height: 260px;
+    height: 408px;
+    overflow-x: hidden;
 }
 
 .cart-table-wrap {

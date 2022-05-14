@@ -8,6 +8,14 @@ const UpdateProfile = () => {
   const [nameIsTouched, setNameIsTouched] = useState(false);
   const [nameIsValid, setNameIsValid] = useState(false);
   //end
+  //email state
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  //file state
+  const [files, setFiles] = useState();
+  //image preview
+  const [selectedFile, setSelectedFile] = useState();
+  const [preview, setPreview] = useState();
 
   //name Handlers
   const nameChangeHandler = ({ target }) => {
@@ -17,6 +25,17 @@ const UpdateProfile = () => {
     setNameIsTouched(true);
   };
   //   end
+  const emailChangeHandler = ({ target }) => {
+    setEmail(target.value);
+  };
+  const fileUploadHandler = (e) => {
+    setFiles(e.target.files[0]);
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile(undefined);
+      return;
+    }
+    setSelectedFile(e.target.files[0]);
+  };
 
   //save button handler
   const saveButtonHandler = (e) => {
@@ -24,7 +43,6 @@ const UpdateProfile = () => {
     setClicked(true);
   };
   //end
-
 
   useEffect(() => {
     if (clicked) {
@@ -37,10 +55,20 @@ const UpdateProfile = () => {
     }
   }, [clicked, name.length, nameIsTouched]);
 
+  useEffect(() => {
+    if (!selectedFile) {
+      setPreview(undefined);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(selectedFile);
+    setPreview(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedFile]);
+
   return (
     <div class="edit-profile-main-flex">
-      <form>
-        <div class="edit-profile-main-form">
+      <form className="form-parrent">
+        <div class="edit-profile-main-form first-column">
           <div class="custom-input">
             <label for="name">Name</label>
             <input
@@ -61,6 +89,17 @@ const UpdateProfile = () => {
             )}
           </div>
           <div class="custom-input">
+            <label for="name">Email</label>
+            <input
+              type="email"
+              name=""
+              id="name"
+              required=""
+              value={email}
+              onChange={emailChangeHandler}
+            />
+          </div>
+          <div class="custom-input">
             <label for="name">Phone Number</label>
             <input
               type="text"
@@ -68,24 +107,36 @@ const UpdateProfile = () => {
               name=""
               id="name"
               disabled
-              value={"01704247162"}
+              value="01704247162"
             />
           </div>
         </div>
-        <div class="edit-profile-main-form">
-          <div class="custom-input">
-            <label for="name">Email</label>
-            <input type="text" name="" id="name" required="" />
+        <div class="edit-profile-main-form second-column">
+          <div className="image_preview">
+            {preview && <img src={preview} alt="" />}
           </div>
-          <div class="custom-input">
-            <label for="name">Upload Photo</label>
-            <input type="file" name="" id="name" required="" />
-            {/* <div class="alert alert-error">Photo is required.</div> */}
+          <div className="container-file-button">
+            <div class="custom-input">
+              <label for="name">Upload Photo</label>
+              <input
+                type="file"
+                name=""
+                id="name"
+                required=""
+                onChange={fileUploadHandler}
+              />
+              {/* <div class="alert alert-error">Photo is required.</div> */}
+            </div>
+            <button
+              type="submit"
+              onClick={saveButtonHandler}
+              style={{ position: "relative", top: "14px", height: "36px" }}
+            >
+              Save
+              {/* <i class="fa fa-floppy-o" aria-hidden="true"></i> */}
+            </button>
           </div>
         </div>
-        <button type="submit" onClick={saveButtonHandler}>
-          Save <i class="fa fa-floppy-o" aria-hidden="true"></i>
-        </button>
       </form>
     </div>
   );
