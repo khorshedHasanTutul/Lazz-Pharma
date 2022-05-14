@@ -24,7 +24,8 @@ const SubCategoryProduct = () => {
         <div id="view-product-list" style={{padding:"0px 20px"}}>
           <ul>
             {appData.categoryProducts.map((item) => (
-              <li class="col-xs-6 col-sm-2 col-md-2">
+              // col-xs-6 col-sm-2 col-md-2
+              <li class="">
                 {/* <ProductModelCategoryWise /> */}
                 <ProductsInfoModel item={item} />
               </li>

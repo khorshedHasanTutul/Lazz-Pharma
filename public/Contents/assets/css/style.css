@@ -1167,7 +1167,7 @@ span.notify-right {
  [ 3.4 Main menu]
  */
 .nav-top-menu {
-  background: #eee;
+  background: #016449;
 }
 
 /*-----------------
@@ -1252,7 +1252,7 @@ span.notify-right {
 }
 
 .box-vertical-megamenus .vertical-menu-list > li:hover {
-  background: linear-gradient(to left, #d2cfcf 0, #04432e 50%) !important;
+  background: #04432e;
   color: #fff;
   opacity: 1;
   height: 40px;
@@ -1273,19 +1273,19 @@ span.notify-right {
   display: block;
 }
 
-.box-vertical-megamenus .vertical-menu-content ul > li > a.parent:before {
-  display: inline-block;
-  font-family: FontAwesome;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content: "\f105";
-  position: absolute;
-  top: 10px;
-  right: 8px;
-  color: #666;
+.box-vertical-megamenus .vertical-menu-content ul > li > a.parent::before {
+	display: inline-block;
+	font-family: FontAwesome;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	content: "\f105";
+	position: absolute;
+	top: 14px;
+	right: 8px !important;
+	color: #666;
 }
 
 .box-vertical-megamenus .vertical-menu-content ul > li > a.parent:after {
@@ -4167,6 +4167,7 @@ span.notify-right {
 .table-bordered > thead > tr > td,
 .table-bordered > thead > tr > th {
   border-bottom-width: 0px;
+  text-align: center;
 }
 
 .page-order .cart_navigation a {
@@ -4247,7 +4248,7 @@ span.notify-right {
 
 .cart_summary td {
   vertical-align: middle !important;
-  padding: 20px;
+  padding: 8px;
 }
 
 .cart_summary .table > tbody > tr > td,
@@ -4256,11 +4257,11 @@ span.notify-right {
 .table > tfoot > tr > th,
 .cart_summary .table > thead > tr > td,
 .table > thead > tr > th {
-  padding: 15px;
+  padding: 8px;
 }
 
 .cart_summary img {
-  max-width: 100px;
+  max-width: 60px;
 }
 
 .cart_summary td.cart_product {
@@ -4274,17 +4275,15 @@ span.notify-right {
 
 .cart_summary .qty {
   text-align: center;
-  width: 100px;
+  width: 150px;
 }
 
 .cart_summary .qty input {
-  text-align: center;
-  max-width: 64px;
-  margin: 0 auto;
-  border-radius: 0px;
-  border: 1px solid #eaeaea;
+	text-align: center;
+	max-width: 64px;
+	border-radius: 0px;
+	border: 1px solid #cec3c3;
 }
-
 .cart_summary .qty a {
   padding: 8px 10px 5px 10px;
   border: 1px solid #eaeaea;

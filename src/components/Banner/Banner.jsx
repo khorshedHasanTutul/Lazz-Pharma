@@ -60,12 +60,12 @@ const Banner = () => {
                                 <img
                                   class="icon-menu normal-img"
                                   alt="Lazz"
-                                  src="./Contents/assets/image/medicine.png"
+                                  src={item.img}
                                 />
                                 <img
                                   class="icon-menu hover-img"
                                   alt="Lazz"
-                                  src="./Contents/assets/image/medicine-hover.png"
+                                  src={item.hovImg}
                                 />
                                 {item.name}
                               </Link>

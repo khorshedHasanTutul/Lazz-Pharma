@@ -1597,7 +1597,7 @@ pre code {
   }
 }
 .container-fluid {
-  padding-right: 15px;
+  /* padding-right: 3px; */
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
@@ -2356,8 +2356,8 @@ th {
 .table > tfoot > tr > th,
 .table > thead > tr > td,
 .table > thead > tr > th {
-  padding: 8px;
-  line-height: 1.42857143;
+  padding: 4px;
+  line-height: 1.2;
   vertical-align: top;
   border-top: 1px solid #ddd;
 }
@@ -2790,7 +2790,7 @@ fieldset[disabled] .radio label {
   padding-left: 0;
 }
 .input-sm {
-  height: 30px;
+  height: 32px;
   padding: 5px 10px;
   font-size: 12px;
   line-height: 1.5;

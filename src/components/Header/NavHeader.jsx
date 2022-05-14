@@ -59,7 +59,9 @@ const NavHeader = () => {
                     style={{ display: "block" }}
                   >
                     {getMainCategories.map((item) => {
+                      console.log({item})
                       const getChildCategories = getCategories(item.id);
+                      // const getCatImage = 
                       return (
                         <li>
                           <Link
@@ -69,12 +71,12 @@ const NavHeader = () => {
                             <img
                               class="icon-menu normal-img"
                               alt="Lazz"
-                              src="/Contents/assets/image/medicine.png"
+                              src={item.img}
                             />
                             <img
                               class="icon-menu hover-img"
                               alt="Lazz"
-                              src="/Contents/assets/image/medicine-hover.png"
+                              src={item.hovImg}
                             />
                             {item.name}
                           </Link>

@@ -3,12 +3,13 @@ import { useHistory } from "react-router-dom";
 import addressContext from "../../store/address-context";
 import cartContext from "../../store/cart-context";
 
-const ProductSummary = ({proceedToAddressHandler,AddressActiveHandler}) => {
+const ProductSummary = ({ proceedToAddressHandler, AddressActiveHandler }) => {
   let history = useHistory();
   const cartCtx = useContext(cartContext);
   const ctxAddress = useContext(addressContext);
   const getCtxStoreAddress = ctxAddress.getStoreAddressCtx;
   const getCtxAddressActiveType = ctxAddress.getActiveType;
+
   const findActiveAddress = getCtxStoreAddress.find(
     (item) => item.type === getCtxAddressActiveType
   );
@@ -39,6 +40,7 @@ const ProductSummary = ({proceedToAddressHandler,AddressActiveHandler}) => {
     }
     cartCtx.updateEditableQuantity(item, target.value);
   };
+
   const blurHandler = (item) => {
     if (qty === 0) {
       alert("Quantity can't be less than 1.");
@@ -68,8 +70,8 @@ const ProductSummary = ({proceedToAddressHandler,AddressActiveHandler}) => {
               <th>Description</th>
               <th>Unit price</th>
               <th>Qty</th>
-              <th>Total</th>
-              <th class="action"></th>
+              <th>Amount</th>
+              <th class="action">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -93,7 +95,7 @@ const ProductSummary = ({proceedToAddressHandler,AddressActiveHandler}) => {
                   <br />
                   <small>Company: {item.suplier} </small>
                 </td>
-                <td class="price" style={{ textAlign: "center" }}>
+                <td class="price" style={{ textAlign: "center",width:"15%" }}>
                   {item.Ds > 0 && item.Ds !== null ? (
                     <span>
                       ৳ {(item.MRP - (item.MRP * item.Ds) / 100).toFixed(2)}
@@ -103,6 +105,10 @@ const ProductSummary = ({proceedToAddressHandler,AddressActiveHandler}) => {
                   )}
                 </td>
                 <td class="qty">
+               <div class="pro_qty">
+               <a href onClick={qtyIncHandler.bind(this, item)}>
+                    <i class="fa fa-caret-up"></i>
+                  </a>
                   <input
                     class="form-control input-sm"
                     type="text"
@@ -110,14 +116,13 @@ const ProductSummary = ({proceedToAddressHandler,AddressActiveHandler}) => {
                     onChange={qtyChangeHandler.bind(null, item)}
                     onBlur={blurHandler.bind(null, item)}
                   />
-                  <a href onClick={qtyIncHandler.bind(this, item)}>
-                    <i class="fa fa-caret-up"></i>
-                  </a>
+                  
                   <a href onClick={qtyDecHandler.bind(this, item)}>
                     <i class="fa fa-caret-down"></i>
                   </a>
+               </div>
                 </td>
-                <td class="price" style={{ textAlign: "center" }}>
+                <td class="price" style={{ textAlign: "center",width:"18%" }}>
                   {item.Ds === 0 && item.Ds !== null && (
                     <span>৳ {item.MRP * item.quantity.toFixed(2)}</span>
                   )}
@@ -186,46 +191,37 @@ const ProductSummary = ({proceedToAddressHandler,AddressActiveHandler}) => {
             </label>
           </div>
         </div> */}
-        {getCtxStoreAddress.length > 0 &&
-              findActiveAddress?.name.length > 0 && (
-                <div class="shaping-address-saveing-row">
-                  <div class="shapping-address-inner-content">
-                    <div class="location-ad-icon">
-                      <i class="fa fa-map-marker" aria-hidden="true"></i>
-                    </div>
-                    <div class="saving-address-content">
-                      <small>
-                        {findActiveAddress && findActiveAddress.name}
-                      </small>
-                      <small>
-                        {findActiveAddress && findActiveAddress.mobile}
-                      </small>
-                      <span>
-                        <aside>
-                          {findActiveAddress && findActiveAddress.type}
-                        </aside>
-                      </span>
-                      <span>
-                        {findActiveAddress && findActiveAddress.email}
-                      </span>
-                      &nbsp;
-                      <span>
-                        {findActiveAddress &&
-                          findActiveAddress.division +
-                            "-" +
-                            findActiveAddress.district +
-                            "-" +
-                            findActiveAddress.area +
-                            "-" +
-                            findActiveAddress.address}
-                      </span>
-                    </div>
-                  </div>
-                  <div class="saving-ad-btn" onClick={AddressActiveHandler}>
-                    <button>Change</button>
-                  </div>
-                </div>
-              )}
+        {getCtxStoreAddress.length > 0 && findActiveAddress?.name.length > 0 && (
+          <div class="shaping-address-saveing-row">
+            <div class="shapping-address-inner-content">
+              <div class="location-ad-icon">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+              </div>
+              <div class="saving-address-content">
+                <small>{findActiveAddress && findActiveAddress.name}</small>
+                <small>{findActiveAddress && findActiveAddress.mobile}</small>
+                <span>
+                  <aside>{findActiveAddress && findActiveAddress.type}</aside>
+                </span>
+                <span>{findActiveAddress && findActiveAddress.email}</span>
+                &nbsp;
+                <span>
+                  {findActiveAddress &&
+                    findActiveAddress.division +
+                      "-" +
+                      findActiveAddress.district +
+                      "-" +
+                      findActiveAddress.area +
+                      "-" +
+                      findActiveAddress.address}
+                </span>
+              </div>
+            </div>
+            <div class="saving-ad-btn" onClick={AddressActiveHandler}>
+              <button>Change</button>
+            </div>
+          </div>
+        )}
         {/* <div>
           <p class="OrderNotice" style={{ marginTop: "50px" }}>
             *** সকাল ১০ টা থেকে ৭ টার মধ্যে অর্ডার করলে ২৪ থেকে ৪৮ ঘন্টার মধ্যে
@@ -238,7 +234,9 @@ const ProductSummary = ({proceedToAddressHandler,AddressActiveHandler}) => {
             <a class="prev-btn" href="https://www.lazzpharma.com/">
               Continue shopping
             </a>
-            <a onClick={proceedToAddressHandler} class="next-btn" href>Proceed to checkout</a>
+            <a onClick={proceedToAddressHandler} class="next-btn" href>
+              Proceed to checkout
+            </a>
           </div>
         </div>
       </div>
