@@ -750,8 +750,8 @@ body {
 
 .popup {
   min-width: 320px;
-  width: -webkit-max-content;
-  width: max-content;
+  /* width: -webkit-max-content;
+  width: max-content; */
   background: #f5f5f5;
   border-radius: 0.25rem;
   overflow: hidden;
@@ -1035,13 +1035,36 @@ textarea {
   font-size: 16px;
   width: 100%;
   height: 36px;
-  line-height: 40px;
+  /* line-height: 40px; */
 }
 #view-product-list ul {
 	display: grid;
 	justify-content: center;
 	align-items: center;
 	grid-template-columns: repeat(auto-fill,225px);
+}
+.upload-Handler {
+	border: 1px solid #016449;
+	padding: 10px 15px;
+	border-radius: 6px;
+	/* box-shadow: 0 0px 2px rgba(0,0,0.1); */
+}
+.auto-order-container p {
+	margin-top: 10px;
+	font-weight: bold;
+}
+.order-group {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	gap: 1rem;
+	flex-wrap: wrap;
+	border: 1px solid #016449;
+	border-radius: 6px;
+	padding: 10px;
+	background: transparent;
+	border-block-color: #016449;
+	color: #016449;
 }
 .input-group-buttons > button {
   background: #31b086;
@@ -1217,6 +1240,7 @@ width: 100%;
   .icon-menu.hover-img {
   display: inline-block;
   width: 40px;
+  margin-bottom: 6px;
 }
   .box-vertical-megamenus
   .vertical-menu-list
@@ -1224,6 +1248,13 @@ width: 100%;
   > a
   .icon-menu.normal-img {
   display: none;
+}
+.qty-holder2 .qty-dec-btn2 {
+	font-size: 3.25rem;
+	font-weight: 400;
+	position: relative;
+	right: 5px;
+	bottom: 4px;
 }
 
 .shaping-address-saveing-row {
@@ -2762,7 +2793,7 @@ button {
 }
 
 .popup.undefined.request-history {
-  min-width: 450px;
+  min-width: 340px;
   width: max-content;
   background: #f5f5f5;
   border-radius: 0.25rem;
@@ -2771,6 +2802,13 @@ button {
   top: 17%;
   left: 50%;
   transform: translate(-50%);
+}
+.grid-3.mb-16.g-8 {
+	grid-gap: 8px;
+	display: grid;
+	gap: 8px;
+	grid-template-columns: repeat(3,1fr);
+	margin-bottom: 16px;
 }
 
 .item_found {
@@ -3368,7 +3406,7 @@ ul {
 }
 
 .wishlist-btn .qty-dec-btn2 {
-  padding-right: 15px;
+  padding-right: 6px;
 }
 
 .qty-dec-btn2,

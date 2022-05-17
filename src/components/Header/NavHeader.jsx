@@ -41,7 +41,7 @@ const NavHeader = () => {
             id="box-vertical-megamenus"
             class="nav_top_category_container nav_top_category_container-desktop col-sm-3"
             onMouseEnter={categoryTogglerOpenHandler}
-            onMouseLeave = {categoryTogglerCloseHandler}
+            onMouseLeave={categoryTogglerCloseHandler}
           >
             <div class="box-vertical-megamenus" style={{ left: "0px" }}>
               <h4 class="title">
@@ -59,9 +59,8 @@ const NavHeader = () => {
                     style={{ display: "block" }}
                   >
                     {getMainCategories.map((item) => {
-                      console.log({item})
                       const getChildCategories = getCategories(item.id);
-                      // const getCatImage = 
+                      // const getCatImage =
                       return (
                         <li>
                           <Link

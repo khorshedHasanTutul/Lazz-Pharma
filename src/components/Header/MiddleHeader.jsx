@@ -1,16 +1,30 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { urlHomeRoute, urlRequestOrderRoute } from "../../Service/UrlService";
+import {
+  urlHomeRoute,
+  urlProfileRoute,
+  urlRequestOrderRoute,
+} from "../../Service/UrlService";
+import authContext from "../../store/auth-context";
 import AuthenticationModalBody from "../Authentication/AuthenticationModalBody";
 import LoginModal from "../Authentication/LoginModal";
 import SearchProduct from "../SearchPortal/SearchProduct";
 
 const MiddleHeader = forwardRef((props, ref) => {
+  const authCtx = useContext(authContext);
+  let history = useHistory();
   const [loginPopUp, setLoginPopUp] = useState(false);
   const [searchValue, setSearchValuye] = useState("");
+
   const userHandler = () => {
-    setLoginPopUp(true);
+    if (authCtx.isLoggedIn) {
+      history.push(urlProfileRoute());
+    } else {
+      setLoginPopUp(true);
+    }
   };
+
   const closeAuthModalHandler = () => {
     setLoginPopUp((prevState) => !prevState);
   };
@@ -20,8 +34,6 @@ const MiddleHeader = forwardRef((props, ref) => {
   const closeSearchHandler = () => {
     setSearchValuye("");
   };
-
-
 
   return (
     <div class="container-fluid main-header" ref={ref}>
@@ -74,11 +86,11 @@ const MiddleHeader = forwardRef((props, ref) => {
               <i class="fa fa-search"></i>
             </button>
             {searchValue && (
-                <SearchProduct
-                  searchValue={searchValue}
-                  closeSearchHandler={closeSearchHandler}
-                />
-              )}
+              <SearchProduct
+                searchValue={searchValue}
+                closeSearchHandler={closeSearchHandler}
+              />
+            )}
             <table
               cellspacing="0"
               class="table table-bordered table-striped SearchTable"

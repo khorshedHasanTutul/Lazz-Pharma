@@ -1,63 +1,96 @@
-import React, { useContext, useEffect, useState } from "react";
-import { getDivision, storeAddressObj } from "../../../Service/AddressService";
-import addressContext from "../../../store/address-context";
+import React, { useEffect, useState } from "react";
+import { GET_PROVINCE } from "../../../lib/endpoints";
+import { http } from "../../../Service/httpService";
+import Select from "../../utilities/select/Select";
 
+const Divisionvalidation = ({
+  clicked,
+  getDistrictHandler,
+  fixDivision,
+  setDivisionId,
+}) => {
+  const [divisionList, setDivisionList] = useState([]);
+  const [selectedDivision, setSelectedDivision] = useState({});
+  const [selectedValue, setSelectedValue] = useState("");
+  const [divisionIsTouched, setDivisionIsTouched] = useState(false);
+  const [divisionIsValid, setDivisionIsValid] = useState(false);
+  console.log({ divisionList });
 
-const Divisionvalidation = ({clicked}) => {
-    const addressCtx=useContext(addressContext)
-    const[divisions,setDivisions]=useState([]);
-    const[divisionIsTouched,setDivisionIsTouched]=useState(false)
-    const[divisionValid,setDivisionIsValid]=useState(false)
-    // const divisionChangeHandler=({target})=>{
-    //     setDivision(target.value)
-    // }
-    const divisionIsTouchedHandler=()=>{
-        setDivisionIsTouched(true)
+  const divisionSelectHandler = (divisionList) => {
+    setSelectedDivision(divisionList);
+    getDistrictHandler(divisionList.id);
+  };
+  const divisionBlurHandler = () => {
+    setDivisionIsTouched(true);
+  };
+
+  //api request for get divisions
+  const getDivisionsHttp = () => {
+    http.get({
+      url: GET_PROVINCE,
+      before: () => {},
+      successed: (data) => {
+        const transformedDivision = [];
+
+        data.Data[0].forEach((division) => {
+          transformedDivision.push({
+            id: division[1],
+            name: division[0],
+          });
+        });
+        setDivisionList(transformedDivision);
+      },
+      failed: () => {},
+      always: () => {},
+    });
+  };
+
+  //effect for get divisions function call
+  useEffect(() => {
+    getDivisionsHttp();
+  }, []);
+
+  //effect for validation rules
+  useEffect(() => {
+    if (clicked) {
+      if (
+        (divisionIsTouched && !selectedDivision?.name) ||
+        (!divisionIsTouched && !selectedDivision?.name)
+      ) {
+        setDivisionIsValid(true);
+      } else setDivisionIsValid(false);
     }
-    const getDivisionHandler=()=>{
-        setDivisions(getDivision)
-    }
-    const selectDivisionHandler=(item)=>{
-        addressCtx.storeDivision(item)
-        storeAddressObj.division=(item.name)
-    }
+  }, [divisionIsTouched, selectedDivision?.name, clicked]);
 
-    useEffect(()=>{
-      if(clicked){
-        if((divisionIsTouched && divisions.length===0)|| (!divisionIsTouched && divisions.length===0)){
-            setDivisionIsValid(true)
-        }
-        else
-        setDivisionIsValid(false)
-      }
-
-    },[divisions.length,divisionIsTouched,clicked])
+  //effect for  set database division value
+  useEffect(() => {
+    if (fixDivision) {
+      setSelectedValue(fixDivision);
+      setSelectedDivision(fixDivision);
+      setDivisionId(fixDivision.id);
+    }
+  }, [fixDivision, setDivisionId]);
 
   return (
-    <div class="custom-input">
-      <label for="district">Select Division</label>
-      <select 
-      id="district"
-    //   onChange={divisionChangeHandler}
-      onBlur={divisionIsTouchedHandler}
-      onClick={getDivisionHandler}
-      >
-          {
-              divisions.map(item=>(
-                <option value={item.id} onClick={selectDivisionHandler.bind(null,item)}>{item.name}</option>
-              ))
-          }
-        {/* <option value="">Dhake</option>
-        <option value="">Rangpur</option>
-        <option value="">Dinajpur</option> */}
-      </select>
-      {
-          (divisionValid)&& <div class="alert alert-error">Division is required.</div>
+    <Select
+      label="Select Region"
+      name="division"
+      options={divisionList || []}
+      onSelect={divisionSelectHandler}
+      config={{ searchPath: "name", keyPath: "id", textPath: "name" }}
+      selectedOption={selectedDivision}
+      // previewText={
+      //   districtStatus === "pending" ? "Loading data..." : ""
+      // }
+      error={
+        divisionIsValid
+          ? "Region is required"
+          : divisionIsTouched && !selectedDivision?.name && !divisionIsValid
+          ? "Region is required"
+          : ""
       }
-      {
-          (divisionIsTouched && divisions.length===0 && !divisionValid)&& <div class="alert alert-error">Division is required.</div>
-      }
-    </div>
+      onBlur={divisionBlurHandler}
+    />
   );
 };
 

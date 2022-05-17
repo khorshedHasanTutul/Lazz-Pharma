@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Fragment } from "react/cjs/react.production.min";
+import { WEB_UPDATE_PASSWORD } from "../../lib/endpoints";
+import { http } from "../../Service/httpService";
+import authContext from "../../store/auth-context";
 import AuthenticationModalBody from "./AuthenticationModalBody";
 import OtpCodeModal from "./OtpCodeModal";
 
 const ForgotModal = ({ closeModal, closeLoginModalhandler }) => {
+  const authCtx = useContext(authContext);
+  const [forgotPassPressed, setForgotPassPressed] = useState(false);
   ///validation state defined
   const [phone, setPhone] = useState("");
   const [phoneIsTouched, setPhoneIsTouched] = useState(false);
@@ -56,10 +61,37 @@ const ForgotModal = ({ closeModal, closeLoginModalhandler }) => {
   const submitNextButtonHandler = (evt) => {
     evt.preventDefault();
     setClicked(true);
+    const user = {
+      phone: phone,
+      password: password,
+    };
     ///success codes go here
-    
-    //if success all condition then state update bellow code
-    setOtpCodeModal(true);
+    if (
+      phone.length !== 0 &&
+      phone.length === 11 &&
+      password.length !== 0 &&
+      password === retypePassword
+    ) {
+      http.post({
+        url: WEB_UPDATE_PASSWORD,
+        payload: {
+          ActivityId: "00000000-0000-0000-0000-000000000000",
+          Phone: phone,
+        },
+        before: () => {},
+        successed: (data) => {
+          authCtx.userOtpId.id = data.Id;
+          setOtpCodeModal(true);
+          authCtx.registration(user);
+          setForgotPassPressed(true);
+        },
+        failed: () => {},
+        always: () => {},
+        map: (data) => {
+          return data;
+        },
+      });
+    }
   };
   //#endregion end heres
 
@@ -166,12 +198,14 @@ const ForgotModal = ({ closeModal, closeLoginModalhandler }) => {
                         Confirm Password is required.
                       </div>
                     )}
-                  {password !== retypePassword && !retypePasswordIsValid && retypePassword.length!==0 && (
-                    <div class="alert alert-error">
-                      {" "}
-                      Password is mismatched.
-                    </div>
-                  )}
+                  {password !== retypePassword &&
+                    !retypePasswordIsValid &&
+                    retypePassword.length !== 0 && (
+                      <div class="alert alert-error">
+                        {" "}
+                        Password is mismatched.
+                      </div>
+                    )}
                 </div>
                 <div class="login-submit">
                   {/* <!-- <input type="submit" value="Reset Password"> --> */}
@@ -196,6 +230,7 @@ const ForgotModal = ({ closeModal, closeLoginModalhandler }) => {
           Template={OtpCodeModal}
           closeModal={closeOtpModalHandler}
           closeLoginModalhandler={closeLoginModalhandler}
+          forgotPassPressed={forgotPassPressed}
         />
       )}
     </Fragment>

@@ -1,21 +1,22 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { GET_SAVED_ADDRESS } from "../../lib/endpoints";
 import { storeAddressObj } from "../../Service/AddressService";
+import { http } from "../../Service/httpService";
 import addressContext from "../../store/address-context";
-import cartContext from "../../store/cart-context";
+import authContext from "../../store/auth-context";
 import Address from "../Checkout/Address";
 import CheckoutHeader from "../Checkout/CheckoutHeader";
 import Payment from "../Checkout/Payment";
 import ProductSummary from "../Checkout/ProductSummary";
 
 const Checkout = () => {
-  const ctxCart = useContext(cartContext);
+  const authCtx = useContext(authContext);
   const ctxAddress = useContext(addressContext);
-  // const [alert, setAlert] = useState(false);
-  // const [qtyAlert, setQtyAlert] = useState(false);
-  const getStoreCtxAddress = ctxAddress.getStoreAddressCtx;
   const getActiveTypeAddress = ctxAddress.getActiveType;
-  const findActiveAddress = getStoreCtxAddress.find(
-    (item) => item.type === getActiveTypeAddress
+  //store addresses from database state
+  const [addresses, setAddresses] = useState([]);
+  const findActiveAddress = addresses.find(
+    (item) => item.Type === getActiveTypeAddress.type
   );
   const ProSummaryRef = useRef(null);
   const [isActiveProductSummary, setActiveProductSummary] = useState(true);
@@ -26,6 +27,7 @@ const Checkout = () => {
     setActiveProductSummary(true);
     setActiveAddress(false);
     setActivePayment(false);
+    getAddressHttp();
   };
 
   const AddressActiveHandler = () => {
@@ -41,13 +43,15 @@ const Checkout = () => {
       setActivePayment(true);
     } else {
       // setAlert(true);
-        alert("Please Enter Valid Address!");
+      alert("Please Enter Valid Address!");
     }
   };
 
+  //check whether to go to payment model or not
   const okToProceed = () => {
     if (
-      (getStoreCtxAddress.length > 0 && findActiveAddress) ||
+      findActiveAddress !== undefined ||
+      findActiveAddress?.Name !== null ||
       (storeAddressObj.name.length > 0 &&
         storeAddressObj.mobile.length > 0 &&
         storeAddressObj.division.length > 0 &&
@@ -60,7 +64,7 @@ const Checkout = () => {
   };
 
   const proceedToAddressHandler = () => {
-    if (getStoreCtxAddress.length > 0 && findActiveAddress) {
+    if (findActiveAddress !== undefined) {
       paymentActiveHandler();
     } else AddressActiveHandler();
   };
@@ -70,7 +74,7 @@ const Checkout = () => {
       paymentActiveHandler();
     } else {
       // setAlert(true);
-        alert("Please Enter Valid Address!");
+      alert("Please Enter Valid Address!");
     }
   };
 
@@ -95,6 +99,37 @@ const Checkout = () => {
       );
     }
   }, [isActiveProductSummary, isActiveAddress, isActivePayment]);
+
+  const getAddressHttp = () => {
+    http.post({
+      url: GET_SAVED_ADDRESS,
+      payload: {
+        PageNumber: 1,
+        PageSize: 3,
+        filter: [
+          {
+            field: "CustomerId",
+            value: authCtx.user.id,
+            Operation: 0,
+          },
+        ],
+      },
+      before: () => {
+        // setIsLoading(true);
+      },
+      successed: (res) => {
+        setAddresses(res.Data);
+      },
+      failed: () => {},
+      always: () => {
+        // setIsLoading(false);
+      },
+    });
+  };
+
+  useEffect(() => {
+    getAddressHttp();
+  }, []);
 
   return (
     <div id="body_parent">
@@ -127,10 +162,18 @@ const Checkout = () => {
                 <ProductSummary
                   AddressActiveHandler={AddressActiveHandler}
                   proceedToAddressHandler={proceedToAddressHandler}
+                  addresses={addresses}
                 />
               )}
-              {isActiveAddress && <Address ProceedToOrderHandler={ProceedToOrderHandler}/>}
-              {isActivePayment && <Payment AddressActiveHandler={AddressActiveHandler}/>}
+              {isActiveAddress && (
+                <Address ProceedToOrderHandler={ProceedToOrderHandler} />
+              )}
+              {isActivePayment && (
+                <Payment
+                  AddressActiveHandler={AddressActiveHandler}
+                  addresses={addresses}
+                />
+              )}
             </div>
           </div>
         </div>

@@ -1,17 +1,19 @@
 // import Home from "../../pages/Home";
 
+import { addressType } from "../utilities/dictionaries";
+
 var appData = {
   BottomActiveAddress: [
     {
-      id: 1,
+      id: addressType.Home,
       type: "Home",
     },
     {
-      id: 2,
+      id: addressType.Office,
       type: "Office",
     },
     {
-      id: 3,
+      id: addressType.HomeTown,
       type: "Home Town",
     },
   ],

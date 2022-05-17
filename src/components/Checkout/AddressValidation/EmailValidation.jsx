@@ -1,29 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { storeAddressObj } from "../../../Service/AddressService";
-import addressContext from "../../../store/address-context";
 
-
-const EmailValidation = () => {
-  const ctxAddress = useContext(addressContext);
-  const getCtxStoreAddress = ctxAddress?.getStoreAddressCtx;
-  const getIfFindActiveType = getCtxStoreAddress?.find(
-    (item) => item.type === ctxAddress.getActiveType
-  );
+const EmailValidation = ({ setEmailP, fixEmail }) => {
   const [email, setEmail] = useState("");
 
   const emailChangeHandler = ({ target }) => {
     setEmail(target.value);
     storeAddressObj.email = target.value;
+    setEmailP(target.value);
   };
-  useEffect(()=>{
-    if(getIfFindActiveType){
-      setEmail(getIfFindActiveType.email)
+  useEffect(() => {
+    if (fixEmail) {
+      setEmail(fixEmail);
+      setEmailP(fixEmail);
+    } else {
+      setEmail("");
     }
-    else{
-      setEmail('')
-    }
-  },[getIfFindActiveType])
-
+  }, [fixEmail, setEmailP]);
   return (
     <div class="custom-input">
       <label for="email">Email</label>
