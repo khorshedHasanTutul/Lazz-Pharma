@@ -2,36 +2,32 @@ import React, { useContext, useEffect, useState } from "react";
 import addressContext from "../../store/address-context";
 import appData from "../DataSource/appData";
 
-const AddressList = () => {
+const AddressList = ({ addresses }) => {
   const getBottomActiveAddress = appData.BottomActiveAddress;
   const ctxAddress = useContext(addressContext);
-  const getCtxStoreAddress = ctxAddress.getStoreAddressCtx;
-  // const getIfFindActiveType = getCtxStoreAddress?.find(
-  //   (item) => item.type === ctxAddress.getActiveType
-  // );
-  const [activeAddress, setActiveAddress] = useState(ctxAddress.getActiveType);
-
+  const [activeAddress, setActiveAddress] = useState(
+    ctxAddress.getActiveType.type
+  );
   const addressActiveHandler = (item) => {
     ctxAddress.setActiveType(item);
   };
-
   useEffect(() => {
-    if (activeAddress !== ctxAddress.getActiveType) {
-      setActiveAddress(ctxAddress.getActiveType);
+    if (activeAddress !== ctxAddress.getActiveType.type) {
+      setActiveAddress(ctxAddress.getActiveType.type);
     }
-  }, [activeAddress, ctxAddress.getActiveType]);
+  }, [activeAddress, ctxAddress.getActiveType.type]);
 
   return (
     <div class="address-info-right-default">
       <h3>Saved Addresses</h3>
       <h2>Select Your Shipping Address</h2>
       {getBottomActiveAddress.map((item) => {
-        const findCtxStoreItem = getCtxStoreAddress?.find(
-          (item2) => item2.type === item.type
+        const findCtxStoreItem = addresses?.find(
+          (item2) => item2.Type === item.type
         );
         return (
           <>
-            {findCtxStoreItem && (
+            {findCtxStoreItem !== undefined && findCtxStoreItem?.Name !== null && (
               <div
                 class={
                   item.type === activeAddress
@@ -50,17 +46,17 @@ const AddressList = () => {
 
                 <h3>{item.type}</h3>
                 <p>
-                  {findCtxStoreItem.name}-{findCtxStoreItem.mobile}
+                  {findCtxStoreItem?.Name}-{findCtxStoreItem?.Mobile}
                 </p>
-                <p>{findCtxStoreItem?.email}</p>
+                <p>{findCtxStoreItem?.Email}</p>
                 <p>
-                  {findCtxStoreItem.division},{findCtxStoreItem.district},
-                  {findCtxStoreItem.area}
+                  {findCtxStoreItem?.Province},{findCtxStoreItem?.District},
+                  {findCtxStoreItem?.Upazila}
                 </p>
-                <p>{findCtxStoreItem.address}</p>
+                <p>{findCtxStoreItem?.Remarks}</p>
               </div>
             )}
-            {!findCtxStoreItem && (
+            {findCtxStoreItem === undefined && (
               <div class="address-home-default-single">
                 <h3>{item.type}</h3>
                 <p>No Address Saved In {item.type} Slot</p>
@@ -69,23 +65,6 @@ const AddressList = () => {
           </>
         );
       })}
-
-      {/* <div class="address-home-default-single">
-        <h3>Office</h3>
-        <p>No Address Saved In Office Slot</p>
-      </div>
-
-      <div class="address-home-default-single active">
-        <div class="selected-address">
-          <p>
-            <i class="fa fa-check" aria-hidden="true"></i>Selected
-          </p>
-        </div>
-        <h3>Home Town</h3>
-        <p>Jak ma (01792855468)</p>
-        <p>Mirpur 12,Dhaka City,Dhaka</p>
-        <p>House 1005,Road 12,Avenue 3,Mirpur DOSH</p>
-      </div> */}
     </div>
   );
 };

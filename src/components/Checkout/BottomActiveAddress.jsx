@@ -28,7 +28,7 @@ const BottomActiveAddress = ({ saveAddresshandler }) => {
         <ul>
           {getAddressList.map((item) => (
             <li
-              class={item.type === activeType && "active"}
+              class={item.type === activeType.type && "active"}
               onClick={activeTypeHandler.bind(null, item)}
             >
               <a href>{item.type}</a>

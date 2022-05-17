@@ -1,64 +1,103 @@
-import React, { useContext, useEffect, useState } from "react";
-import { getAreas, storeAddressObj } from "../../../Service/AddressService";
-import addressContext from "../../../store/address-context";
+import React, { useEffect, useState } from "react";
+import { GET_AREA } from "../../../lib/endpoints";
+import { http } from "../../../Service/httpService";
+import Select from "../../utilities/select/Select";
 
+const AreaValidation = ({
+  clicked,
+  districtId,
+  getSelectAreaHandler,
+  fixArea,
+  setAreaId,
+}) => {
+  const [areaList, setAreaList] = useState([]);
+  const [selectedArea, setSelectedArea] = useState();
+  const [selectedValue, setSelectedValue] = useState("");
+  const [upazilaIsTouched, setUpazilaIsTouched] = useState(false);
+  const [isUpazilaValid, setIsUpazilaValid] = useState(false);
+  const areaSelectHandler = (areaList) => {
+    setSelectedArea(areaList);
+    getSelectAreaHandler(areaList.id);
+  };
+  const upzilaBlurHandler = () => {
+    setUpazilaIsTouched(true);
+  };
 
-const AreaValidation = ({clicked}) => {
-    const ctxAddress=useContext(addressContext)
-    const getAreaCtx=ctxAddress.getDistrict
-    const[areas,setAreas]=useState([]);
-    const[areaIsTouched,setAreaIsTouched]=useState(false)
-    const[areaValid,setAreaIsValid]=useState(false)
+  const getAreaHttp = (districtId) => {
+    http.post({
+      url: GET_AREA,
+      payload: {
+        PageNumber: 1,
+        PageSize: 1000,
+        filter: [{ Operation: 0, field: "DistrictId", value: districtId }],
+      },
+      before: () => {},
+      successed: (data) => {
+        const transformedAreas = [];
 
-    // const areaChangeHandler=({target})=>{
-    //     setArea(target.value)
-    // }
-    const areaIsTouchedHandler=()=>{
-        setAreaIsTouched(true)
+        data.Data[0].forEach((area) => {
+          transformedAreas.push({
+            id: area[1],
+            name: area[0],
+            charge: area[2],
+          });
+        });
+        setAreaList(transformedAreas);
+      },
+      failed: () => {
+        console.log("failed");
+      },
+      always: () => {},
+    });
+  };
+
+  useEffect(() => {
+    getAreaHttp(districtId);
+  }, [districtId]);
+  
+  useEffect(() => {
+    if (fixArea) {
+      setSelectedValue(fixArea);
+      setSelectedArea(fixArea);
+      setAreaId(fixArea.id);
     }
-    const getAreaHandler=()=>{
-        setAreas(getAreas(getAreaCtx.districtId))
-    }
-    const selectAreaHandler=(item)=>{
-        ctxAddress.storeArea(item)
-        storeAddressObj.area=(item.name)
-    }
-    useEffect(()=>{
-      if(clicked){
-        if((areaIsTouched && areas.length===0)|| (!areaIsTouched && areas.length===0)){
-            setAreaIsValid(true)
-        }
-        else
-        setAreaIsValid(false)
+  }, [fixArea, setAreaId]);
+
+  useEffect(() => {
+    if (clicked) {
+      if (
+        (upazilaIsTouched && !selectedArea?.name) ||
+        (!upazilaIsTouched && !selectedArea?.name)
+      ) {
+        setIsUpazilaValid(true);
+      } else {
+        setIsUpazilaValid(false);
       }
-        
-    },[areas.length,areaIsTouched,clicked])
+    }
+  }, [clicked, upazilaIsTouched, selectedArea?.name]);
 
   return (
-    <div class="custom-input">
-      <label for="district">Select Area</label>
-      <select 
-      id="district"
-    //   onChange={areaChangeHandler}
-      onBlur={areaIsTouchedHandler}
-      onClick={getAreaHandler}
-      >
-          {
-              areas.map(item=>(
-                <option value={item.areaId} onClick={selectAreaHandler.bind(null,item)}>{item.name}</option>
-              ))
-          }
-        {/* <option value="">Dhake</option>
-        <option value="">Rangpur</option>
-        <option value="">Dinajpur</option> */}
-      </select>
-      {
-          (areaValid)&& <div class="alert alert-error">Area is required.</div>
+    <Select
+      label="Select Area"
+      name="area"
+      options={areaList || []}
+      onSelect={areaSelectHandler}
+      config={{ searchPath: "name", keyPath: "id", textPath: "name" }}
+      selectedOption={selectedArea}
+      onBlur={upzilaBlurHandler}
+      error={
+        isUpazilaValid
+          ? "Area is required"
+          : upazilaIsTouched && !selectedArea?.name && !isUpazilaValid
+          ? "Area is required"
+          : ""
       }
-      {
-          (areaIsTouched && areas.length===0 && !areaValid)&& <div class="alert alert-error">Area is required.</div>
-      }
-    </div>
+      // previewText={
+      //   upzilaStatus === "pending"
+      //     ? "Loading data..."
+      //     : "Select City First"
+      // }
+    />
   );
 };
 

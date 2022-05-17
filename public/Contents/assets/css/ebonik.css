@@ -327,7 +327,7 @@ label {
 
 .cart-box-inner-view {
     display: block;
-    max-width: 408px;
+    /* max-width: 408px; */
 }
 
 .cart-header {

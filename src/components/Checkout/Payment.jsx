@@ -6,15 +6,15 @@ import addressContext from "../../store/address-context";
 import cartContext from "../../store/cart-context";
 import AlertPopUp from "./OrderAlert/AlertPopUp";
 
-const Payment = ({ AddressActiveHandler }) => {
+const Payment = ({ AddressActiveHandler,addresses }) => {
   const [PopUpAlert, setPopUpAlert] = useState(false);
   const ctxAddress = useContext(addressContext);
   const ctxCart = useContext(cartContext);
   const [clickedRadio, setClickedRadio] = useState(false);
   const getStoreCartCtx = ctxCart.getCartModel;
   const getActiveAddressType = ctxAddress.getActiveType;
-  const getSelectedAddress = ctxAddress.getStoreAddressCtx.find(
-    (item) => item.type === getActiveAddressType
+  const getSelectedAddress = addresses.find(
+    (item) => item.Type === getActiveAddressType.type
   );
   const radioButtonHandler = () => {
     setClickedRadio(true);
@@ -49,7 +49,7 @@ const Payment = ({ AddressActiveHandler }) => {
         </form>
       </div>
       <div class="order-detail-content">
-        {(getSelectedAddress || storeAddressObj.name.length !== 0) && (
+        {(getSelectedAddress!==undefined || storeAddressObj.name.length !== 0) && (
           <Fragment>
             <h3 class="sip-add">Shipping Address</h3>
             <div class="shaping-address-saveing-row">
@@ -60,36 +60,36 @@ const Payment = ({ AddressActiveHandler }) => {
                 <div class="saving-address-content">
                   <small>
                     {getSelectedAddress
-                      ? getSelectedAddress.name
+                      ? getSelectedAddress.Name
                       : storeAddressObj.name}
                   </small>
                   <small>
                     {getSelectedAddress
-                      ? getSelectedAddress.mobile
+                      ? getSelectedAddress.Mobile
                       : storeAddressObj.mobile}
                   </small>
                   <span>
                     <aside>
                       {getSelectedAddress
-                        ? getSelectedAddress.type
+                        ? getSelectedAddress.Type
                         : storeAddressObj.type}
                     </aside>
                   </span>
                   <span>
                     {getSelectedAddress
-                      ? getSelectedAddress.email
+                      ? getSelectedAddress.Email
                       : storeAddressObj.email}
                   </span>
                   &nbsp;
                   <span>
-                    {getSelectedAddress &&
-                      getSelectedAddress.division +
+                    {getSelectedAddress!==undefined &&
+                      getSelectedAddress.Province +
                         "-" +
-                        getSelectedAddress.district +
+                        getSelectedAddress.District +
                         "-" +
-                        getSelectedAddress.area +
+                        getSelectedAddress.Upazila +
                         "-" +
-                        getSelectedAddress.address}
+                        getSelectedAddress.Remarks}
                   </span>
                   <span>
                     {!getSelectedAddress &&
@@ -152,7 +152,7 @@ const Payment = ({ AddressActiveHandler }) => {
                   position: "absolute",
                   top: "-2px",
                   left: "0px",
-                  outline:"0px"
+                  outline: "0px",
                 }}
               />
               Cash on Delivery
@@ -170,7 +170,7 @@ const Payment = ({ AddressActiveHandler }) => {
                   position: "absolute",
                   top: "-2px",
                   left: "0px",
-                  outline:"0px"
+                  outline: "0px",
                 }}
               />
               Onlie Payments

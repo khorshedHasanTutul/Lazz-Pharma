@@ -1,17 +1,25 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { urlHomeRoute } from "../../Service/UrlService";
 import addressContext from "../../store/address-context";
 import cartContext from "../../store/cart-context";
 
-const ProductSummary = ({ proceedToAddressHandler, AddressActiveHandler }) => {
+const ProductSummary = ({
+  proceedToAddressHandler,
+  AddressActiveHandler,
+  addresses,
+}) => {
+  const fileRef = useRef();
   let history = useHistory();
   const cartCtx = useContext(cartContext);
   const ctxAddress = useContext(addressContext);
-  const getCtxStoreAddress = ctxAddress.getStoreAddressCtx;
+  const [selectedFile, setSelectedFile] = useState();
+  const [preview, setPreview] = useState();
   const getCtxAddressActiveType = ctxAddress.getActiveType;
 
-  const findActiveAddress = getCtxStoreAddress.find(
-    (item) => item.type === getCtxAddressActiveType
+  const findActiveAddress = addresses.find(
+    (item) => item.Type === getCtxAddressActiveType.type
   );
   const [qty, setQty] = useState("");
   const cartCtxModal = cartCtx.getCartModel;
@@ -48,6 +56,29 @@ const ProductSummary = ({ proceedToAddressHandler, AddressActiveHandler }) => {
       setQty(1);
     }
   };
+  const setSelectedFileHandler = (e) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile(undefined);
+      return;
+    }
+    setSelectedFile(e.target.files[0]);
+  };
+  const fileUploaderHandler = () => {
+    fileRef.current.click();
+  };
+  const imageRemoverhandler = () => {
+    setPreview("");
+  };
+
+  useEffect(() => {
+    if (!selectedFile) {
+      setPreview(undefined);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(selectedFile);
+    setPreview(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedFile]);
 
   useEffect(() => {
     if (cartCtxModal.Items.length === 0) {
@@ -95,7 +126,7 @@ const ProductSummary = ({ proceedToAddressHandler, AddressActiveHandler }) => {
                   <br />
                   <small>Company: {item.suplier} </small>
                 </td>
-                <td class="price" style={{ textAlign: "center",width:"15%" }}>
+                <td class="price" style={{ textAlign: "center", width: "15%" }}>
                   {item.Ds > 0 && item.Ds !== null ? (
                     <span>
                       ৳ {(item.MRP - (item.MRP * item.Ds) / 100).toFixed(2)}
@@ -105,24 +136,24 @@ const ProductSummary = ({ proceedToAddressHandler, AddressActiveHandler }) => {
                   )}
                 </td>
                 <td class="qty">
-               <div class="pro_qty">
-               <a href onClick={qtyIncHandler.bind(this, item)}>
-                    <i class="fa fa-caret-up"></i>
-                  </a>
-                  <input
-                    class="form-control input-sm"
-                    type="text"
-                    value={item.quantity}
-                    onChange={qtyChangeHandler.bind(null, item)}
-                    onBlur={blurHandler.bind(null, item)}
-                  />
-                  
-                  <a href onClick={qtyDecHandler.bind(this, item)}>
-                    <i class="fa fa-caret-down"></i>
-                  </a>
-               </div>
+                  <div class="pro_qty">
+                    <a href onClick={qtyIncHandler.bind(this, item)}>
+                      <i class="fa fa-caret-up"></i>
+                    </a>
+                    <input
+                      class="form-control input-sm"
+                      type="text"
+                      value={item.quantity}
+                      onChange={qtyChangeHandler.bind(null, item)}
+                      onBlur={blurHandler.bind(null, item)}
+                    />
+
+                    <a href onClick={qtyDecHandler.bind(this, item)}>
+                      <i class="fa fa-caret-down"></i>
+                    </a>
+                  </div>
                 </td>
-                <td class="price" style={{ textAlign: "center",width:"18%" }}>
+                <td class="price" style={{ textAlign: "center", width: "18%" }}>
                   {item.Ds === 0 && item.Ds !== null && (
                     <span>৳ {item.MRP * item.quantity.toFixed(2)}</span>
                   )}
@@ -152,19 +183,6 @@ const ProductSummary = ({ proceedToAddressHandler, AddressActiveHandler }) => {
             ))}
           </tbody>
           <tfoot>
-            {/* <tr>
-              <td colspan="2" rowspan="2"></td>
-              <td colspan="3">Total Amount (tax incl.)</td>
-              <td colspan="2">
-                ৳ <span>3, 430.09</span>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="3">Delivery Charge</td>
-              <td colspan="2">
-                ৳ <span>0</span>
-              </td>
-            </tr> */}
             <tr>
               <td colspan="4">
                 <strong>Total</strong>
@@ -177,43 +195,30 @@ const ProductSummary = ({ proceedToAddressHandler, AddressActiveHandler }) => {
             </tr>
           </tfoot>
         </table>
-        {/* <div class="row" style={{ margin: "auto" }}>
-          <div class="col-md-6 box-border">
-            <label class="Method_Selector">
-              <input type="radio" name="radio_5" id="radio_button_7" />
-              Inside Dhaka
-            </label>
-          </div>
-          <div class="col-md-6 box-border">
-            <label class="Method_Selector">
-              <input type="radio" name="radio_5" id="radio_button_8" />
-              Outside Dhaka
-            </label>
-          </div>
-        </div> */}
-        {getCtxStoreAddress.length > 0 && findActiveAddress?.name.length > 0 && (
+
+        {findActiveAddress !== undefined && findActiveAddress?.Name !== null && (
           <div class="shaping-address-saveing-row">
             <div class="shapping-address-inner-content">
               <div class="location-ad-icon">
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
               </div>
               <div class="saving-address-content">
-                <small>{findActiveAddress && findActiveAddress.name}</small>
-                <small>{findActiveAddress && findActiveAddress.mobile}</small>
+                <small>{findActiveAddress && findActiveAddress?.Name}</small>
+                <small>{findActiveAddress && findActiveAddress?.Mobile}</small>
                 <span>
-                  <aside>{findActiveAddress && findActiveAddress.type}</aside>
+                  <aside>{findActiveAddress && findActiveAddress?.Type}</aside>
                 </span>
-                <span>{findActiveAddress && findActiveAddress.email}</span>
+                <span>{findActiveAddress && findActiveAddress?.Email}</span>
                 &nbsp;
                 <span>
                   {findActiveAddress &&
-                    findActiveAddress.division +
+                    findActiveAddress?.Province +
                       "-" +
-                      findActiveAddress.district +
+                      findActiveAddress?.District +
                       "-" +
-                      findActiveAddress.area +
+                      findActiveAddress?.Upazila +
                       "-" +
-                      findActiveAddress.address}
+                      findActiveAddress?.Remarks}
                 </span>
               </div>
             </div>
@@ -229,11 +234,81 @@ const ProductSummary = ({ proceedToAddressHandler, AddressActiveHandler }) => {
             ***শুক্রবারে সকল ডেলিভারি কার্যক্রম বন্ধ থাকে।
           </p>
         </div> */}
+        <div className="upload-Handler">
+          {preview && (
+            <div className="image_preview_container">
+              <div className="image_previewer">
+                <div className="image_prev">
+                  <img src={preview} alt="img" srcset="" />
+                  <p
+                    style={{
+                      color: "red",
+                      textAlign: "center",
+                      textDecoration: "underline",
+                      cursor: "pointer",
+                      marginTop: "10px",
+                    }}
+                    onClick={imageRemoverhandler}
+                  >
+                    Remove
+                  </p>
+                </div>
+              </div>
+
+              <div
+                className="plus_icon_container"
+                onClick={fileUploaderHandler}
+              >
+                <p className="plus_icon">+</p>
+              </div>
+            </div>
+          )}
+          <div className="prescription_order_section">
+            <div className="file_uploader" style={{ maxWidth: "33.33%" }}>
+              <label htmlFor="">Upload Prescription</label>
+              <input
+                type="file"
+                name=""
+                id=""
+                ref={fileRef}
+                onChange={setSelectedFileHandler}
+              />
+            </div>
+            {/* <div className="prescription_order_section__note">
+            <label htmlFor="">Note</label>
+            <input type="text" onChange={noteOnChangeHandler} />
+          </div> */}
+            {/* <div
+            className="prescription_order_section__order-button"
+            onClick={submittedButtonHandler}
+          >
+            Save & Order
+          </div> */}
+          </div>
+        </div>
+        <div className="auto-order-container">
+          <p>Auto Order</p>
+          <div className="order-group">
+            <input
+              type="checkbox"
+              name="select_order"
+              id=""
+              style={{
+                width: "auto",
+                display: "inline",
+                position: "relative",
+                outline: "currentcolor none 0px",
+              }}
+            />
+            <p>Auto Order after 28 days</p>
+          </div>
+        </div>
+
         <div class="row" style={{ margin: "auto" }}>
           <div class="cart_navigation">
-            <a class="prev-btn" href="https://www.lazzpharma.com/">
+            <Link class="prev-btn" to={urlHomeRoute()}>
               Continue shopping
-            </a>
+            </Link>
             <a onClick={proceedToAddressHandler} class="next-btn" href>
               Proceed to checkout
             </a>

@@ -1528,6 +1528,8 @@
 }
 
 @media all and (max-width: 767px) {
+  
+
   .shaping-address-saveing-row {
     flex-direction: column;
     justify-content: flex-start;
@@ -1665,6 +1667,9 @@
   /* .cart-box-view{
     min-width: 80% !important;
   } */
+  .image_previewer_container {
+    flex-direction: column;
+  }
 }
 @media (max-width: 992px) and (min-width: 768px) {
   .navbar-toggle {

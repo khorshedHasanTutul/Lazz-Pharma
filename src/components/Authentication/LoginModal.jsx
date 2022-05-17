@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { CREATE_LOGIN } from "../../lib/endpoints";
+import { http } from "../../Service/httpService";
+import { urlCheckoutRoute, urlHomeRoute } from "../../Service/UrlService";
+import authContext from "../../store/auth-context";
 import AuthenticationModalBody from "./AuthenticationModalBody";
 import ForgotModal from "./ForgotModal";
 import RegistrationModal from "./RegistrationModal";
 
-const LoginModal = ({ closeModal }) => {
+const LoginModal = ({ closeModal, isOrderNowPressed }) => {
+  const authCtx = useContext(authContext);
+  let history = useHistory();
 
   ///validation state defined
   const [phone, setPhone] = useState("");
@@ -16,10 +23,10 @@ const LoginModal = ({ closeModal }) => {
 
   const [clicked, setClicked] = useState(false);
   ///end
-  
 
   const [forgotPopUpModal, setForgotPopUpModal] = useState(false);
   const [registerPopUpModal, setregisterPopUpModal] = useState(false);
+  const [isFailedLogin, setIsLoginFailed] = useState(false);
 
   const phoneChangeHandler = ({ target }) => {
     setPhone(target.value);
@@ -39,6 +46,42 @@ const LoginModal = ({ closeModal }) => {
     evt.preventDefault();
     setClicked(true);
     ///success codes go here
+    if (
+      phone.length !== 0 &&
+      phone.length === 11 &&
+      password.length !== 0 &&
+      password.length >= 4
+    ) {
+      http.post({
+        url: CREATE_LOGIN,
+        payload: {
+          UserName: phone,
+          Password: password,
+        },
+        before: () => {},
+        successed: (data) => {
+          authCtx.login({
+            id: data.Id,
+            name: data.Name,
+            token: data.datacontent,
+            image: data.Icon,
+            email: data.Email,
+            phone: data.Phone,
+          });
+          isOrderNowPressed
+            ? history.push(urlCheckoutRoute())
+            : history.push(urlHomeRoute());
+          closeModal();
+        },
+        failed: () => {
+          setIsLoginFailed(true);
+          // setIsLoading(false);
+        },
+        always: () => {
+          // setIsLoading(false);
+        },
+      });
+    }
   };
 
   //#region modal functionality Handler
@@ -128,8 +171,13 @@ const LoginModal = ({ closeModal }) => {
                       <div class="alert alert-error">Password is required.</div>
                     )}
                 </div>
-                <a class="forgot-pass" href onClick={forgotModalHandler}>
-                  Forgot Password?
+                {isFailedLogin && (
+                  <div class="alert alert-error login-failed">
+                    Login failed, Phone or Password is wrong!
+                  </div>
+                )}
+                <a class="forgot-pass" href>
+                  <span onClick={forgotModalHandler}>Forgot Password?</span>
                 </a>
                 <div class="login-submit" onClick={submitButtonHandler}>
                   <input type="submit" value="Login" />

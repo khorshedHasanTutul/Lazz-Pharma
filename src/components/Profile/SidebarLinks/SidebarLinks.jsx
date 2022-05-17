@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { Link, NavLink } from "react-router-dom";
 import {
+  urlHomeRoute,
   urlOrderRoute,
   urlPrescriptionHistory,
   urlProfileAddressRoute,
@@ -10,8 +12,15 @@ import {
   urlRequestHistoryRoute,
   urlSpecialOfferRoute,
 } from "../../../Service/UrlService";
+import authContext from "../../../store/auth-context";
 
 const SidebarLinks = () => {
+  const authCtx = useContext(authContext);
+  let history = useHistory();
+  const logoutHandler = () => {
+    authCtx.logout();
+    history.push(urlHomeRoute());
+  };
   return (
     <div class="profile-nav">
       <ul>
@@ -26,16 +35,20 @@ const SidebarLinks = () => {
         </li>
 
         <li className="">
-          <NavLink activeClassName="active"
-          to={urlProfileRoute() + urlPrescriptionHistory()}>
+          <NavLink
+            activeClassName="active"
+            to={urlProfileRoute() + urlPrescriptionHistory()}
+          >
             <i class="fa fa-angle-double-right" aria-hidden="true"></i>
             Prescription History
           </NavLink>
         </li>
 
         <li className="">
-          <NavLink activeClassName="active"
-          to={urlProfileRoute() + urlRequestHistoryRoute()}>
+          <NavLink
+            activeClassName="active"
+            to={urlProfileRoute() + urlRequestHistoryRoute()}
+          >
             <i class="fa fa-angle-double-right" aria-hidden="true"></i>
             Request History
           </NavLink>
@@ -82,9 +95,9 @@ const SidebarLinks = () => {
           </NavLink>
         </li>
         <li>
-          <Link to="/">
+          <a href onClick={logoutHandler}>
             <i class="fa fa-angle-double-right" aria-hidden="true"></i>Logout
-          </Link>
+          </a>{" "}
         </li>
       </ul>
     </div>

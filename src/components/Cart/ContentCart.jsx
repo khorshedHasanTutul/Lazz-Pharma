@@ -1,9 +1,15 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { urlCheckoutRoute } from "../../Service/UrlService";
+import authContext from "../../store/auth-context";
 import cartContext from "../../store/cart-context";
 
-const ContentCart = ({ openCart }) => {
+const ContentCart = ({
+  openCart,
+  setIsOrderNowPressed,
+  closeAuthModalHandler,
+}) => {
+  const authCtx = useContext(authContext);
   const cartCtx = useContext(cartContext);
   const [qty, setQty] = useState("");
   const history = useHistory();
@@ -48,8 +54,23 @@ const ContentCart = ({ openCart }) => {
     }
   };
 
-  const orderNowButtonPressedHandler = () => {
-    history.push(urlCheckoutRoute());
+  const orderNowButtonPressedHandler = (evt) => {
+    if (cartCtxModal.Items.length === 0) {
+      evt.preventDefault();
+      alert("Please select at least one product")
+      openCart();
+      return false;
+    }
+    if (authCtx.isLoggedIn === false) {
+      evt.preventDefault();
+      closeAuthModalHandler();
+      openCart();
+      setIsOrderNowPressed(true);
+      return false;
+    }
+    if (cartCtxModal.Items.length > 0 && authCtx.isLoggedIn === true) {
+      history.push(urlCheckoutRoute());
+    }
     openCart();
   };
 
@@ -74,7 +95,10 @@ const ContentCart = ({ openCart }) => {
               src="/Contents/assets/image/x-button.png"
               alt="cross-button"
             /> */}
-           <i class="fa fa-times pull-right cart-cross-btn" aria-hidden="true"></i>
+            <i
+              class="fa fa-times pull-right cart-cross-btn"
+              aria-hidden="true"
+            ></i>
           </div>
         </div>
         <div class="cart-body text-center">
@@ -231,18 +255,18 @@ const ContentCart = ({ openCart }) => {
             </a>
           </a>
         </div> */}
-         <div className="product_items__count__container">
-            <div className="cmn-class-items-calc total__items">
-              <p>Total Items</p>
-              <span>{cartCtxModal.TotalItems}</span>
-            </div>
-            <div className="cmn-class-items-calc total__ammount">
-              <p>Total Ammount</p>
-              <span>{cartCtxModal.TotalAmmount.toFixed(2)}tk</span>
-            </div>
+        <div className="product_items__count__container">
+          <div className="cmn-class-items-calc total__items">
+            <p>Total Items</p>
+            <span>{cartCtxModal.TotalItems}</span>
           </div>
-          <div class="cart-footer">
-            {/* <div class="card-footer-inner">
+          <div className="cmn-class-items-calc total__ammount">
+            <p>Total Ammount</p>
+            <span>{cartCtxModal.TotalAmmount.toFixed(2)}tk</span>
+          </div>
+        </div>
+        <div class="cart-footer">
+          {/* <div class="card-footer-inner">
               <Link to={urlCheckoutRoute()}>
                 <button class="cart-cmn-btn" onClick={orderNowHandler}>
                   Order Now
@@ -258,21 +282,24 @@ const ContentCart = ({ openCart }) => {
               <button class="cart-cmn-btn">Clear Cart</button>
             </a> */}
 
-            <div className="cart-footer__orderNow" onClick={orderNowButtonPressedHandler}>
-              <a href>
-                <p>
-                  <span>Order Now</span>
-                </p>
-              </a>
-            </div>
-            <div
-              className="cart-footer__orderNow"
-              style={{ background: "#E62D3F" }}
-              onClick={clearCartHandler}
-            >
-              <p>Clear Cart</p>
-            </div>
+          <div
+            className="cart-footer__orderNow"
+            onClick={orderNowButtonPressedHandler}
+          >
+            <a href>
+              <p>
+                <span>Order Now</span>
+              </p>
+            </a>
           </div>
+          <div
+            className="cart-footer__orderNow"
+            style={{ background: "#E62D3F" }}
+            onClick={clearCartHandler}
+          >
+            <p>Clear Cart</p>
+          </div>
+        </div>
       </div>
     </div>
   );
