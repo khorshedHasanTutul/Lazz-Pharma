@@ -1,36 +1,150 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { COUPON_CHECK, CREATE_ORDER } from "../../lib/endpoints";
 import { storeAddressObj } from "../../Service/AddressService";
+import { http } from "../../Service/httpService";
 import { urlHomeRoute } from "../../Service/UrlService";
 import addressContext from "../../store/address-context";
 import cartContext from "../../store/cart-context";
 import AlertPopUp from "./OrderAlert/AlertPopUp";
 
-const Payment = ({ AddressActiveHandler,addresses }) => {
+const Payment = ({ AddressActiveHandler, addresses }) => {
   const [PopUpAlert, setPopUpAlert] = useState(false);
   const ctxAddress = useContext(addressContext);
   const ctxCart = useContext(cartContext);
+  const [order, setOrder] = useState("");
+
+  const [coupon, setCoupon] = useState("");
+  const [couponClicked, setCouponClicked] = useState(false);
+  const [couponIsTouched, setcouponIsTouched] = useState(false);
+  const [couponIsValid, setCouponIsValid] = useState(false);
+  const [failedCoupon, setFailedCoupon] = useState(false);
+  const [discounted, setDiscounted] = useState({ Id: "", Data: 0 });
+  const [successedDiscount, setSuccessedDiscount] = useState(false);
+
+  const [delivaryCharge, setDelivaryCharge] = useState("");
   const [clickedRadio, setClickedRadio] = useState(false);
+
   const getStoreCartCtx = ctxCart.getCartModel;
   const getActiveAddressType = ctxAddress.getActiveType;
   const getSelectedAddress = addresses.find(
     (item) => item.Type === getActiveAddressType.type
   );
+  // Creating variable to store the sum
+  let sum = 0;
+  // Running the for loop
+  for (let i = 0; i < getStoreCartCtx.Items.length; i++) {
+    sum += getStoreCartCtx.Items[i].quantity;
+  }
+  let products = [];
+  getStoreCartCtx.Items.map(function (element) {
+    return products.push({ ProductId: element.id, Quantity: element.quantity });
+  });
+
+  console.log({ getSelectedAddress });
   const radioButtonHandler = () => {
     setClickedRadio(true);
   };
   const alertStateChangedHandler = () => {
     setPopUpAlert((prevState) => !prevState);
   };
+  const couponSubmitHandler = (evt) => {
+    evt.preventDefault();
+    setCouponClicked(true);
+    if (coupon.length !== 0) {
+      http.post({
+        url: COUPON_CHECK,
+        payload: {
+          CouponCode: coupon,
+          OrderAmount: getStoreCartCtx.TotalAmmount,
+          OrderDiscount: 0,
+          ActivityId: "00000000-0000-0000-0000-000000000000",
+        },
+        before: () => {},
+        successed: (res) => {
+          setDiscounted(res);
+          setFailedCoupon(false);
+          setSuccessedDiscount(true);
+        },
+        failed: () => {
+          setFailedCoupon(true);
+          setSuccessedDiscount(false);
+        },
+        always: () => {},
+      });
+    }
+  };
+  const couponChangeHandler = ({ target }) => {
+    setCoupon(target.value);
+    setFailedCoupon(false);
+  };
+  const couponTouchedHandler = () => {
+    setcouponIsTouched(true);
+  };
+  console.log({ discounted });
   const proceedOrderHandler = () => {
     if (clickedRadio) {
-      setPopUpAlert(true);
-      ctxCart.clearCart();
+      //create Order
+      http.post({
+        url: CREATE_ORDER,
+        payload: {
+          TotalItem: getStoreCartCtx.TotalItem,
+          TotalQuantity: sum,
+          TotalAmount: getStoreCartCtx.TotalAmmount,
+          ShippingCharge: delivaryCharge,
+          PayableAmount:
+            getStoreCartCtx.TotalAmmount + delivaryCharge - discounted.Data,
+          From: "Cart Order",
+          DistrictId: getSelectedAddress.DistrictId,
+          AddressId: getSelectedAddress.Id,
+          Items: products,
+          ActivityId: "00000000-0000-0000-0000-000000000000",
+          Remarks: getSelectedAddress.Remarks,
+          autoOrderIsActive: false,
+          // CoupenAmount: discounted.Data,
+          // CouponId: discounted.Id,
+          ImgId: [],
+          Cashback: 0,
+          fineCash: 0,
+        },
+        before: () => {},
+        successed: (res) => {
+          console.log(res);
+          setOrder(res.Data);
+          setPopUpAlert(true);
+          ctxCart.clearCart();
+        },
+        failed: () => {},
+        always: () => {},
+      });
     } else {
       // alertPaymentRadioStateChangeHandler();
       alert("Please Select a payment method");
     }
   };
+
+  useEffect(() => {
+    if (couponClicked) {
+      if (
+        (couponIsTouched && coupon.length === 0) ||
+        (!couponIsTouched && coupon.length === 0)
+      ) {
+        setCouponIsValid(true);
+      } else setCouponIsValid(false);
+    }
+  }, [couponClicked, couponIsTouched, coupon.length]);
+  useEffect(() => {
+    if (getStoreCartCtx.TotalAmmount >= getSelectedAddress.MaxAmount) {
+      setDelivaryCharge(getSelectedAddress.MinChargeAmount);
+    } else {
+      setDelivaryCharge(getSelectedAddress.ChargeAmount);
+    }
+  }, [
+    getSelectedAddress.ChargeAmount,
+    getStoreCartCtx.TotalAmmount,
+    getSelectedAddress.MaxAmount,
+    getSelectedAddress.MinChargeAmount,
+  ]);
   return (
     <div class="tab_content">
       <div class="heading-counter warning">
@@ -44,12 +158,27 @@ const Payment = ({ AddressActiveHandler,addresses }) => {
             type="text"
             id="discount_code"
             placeholder="Discount Code..."
+            onChange={couponChangeHandler}
+            onBlur={couponTouchedHandler}
           />
-          <button type="submit">Apply</button>
+          <button type="submit" onClick={couponSubmitHandler}>
+            Apply
+          </button>
         </form>
       </div>
+      {!failedCoupon && successedDiscount && (
+        <div class="alert alert-success" style={{ display: "inline-block" }}>
+          You will receive {discounted.Data} tk Discount.
+        </div>
+      )}
+      {failedCoupon && <div class="alert alert-error">Invalid Coupon.</div>}
+      {couponIsValid && <div class="alert alert-error">Coupon is Empty.</div>}
+      {couponIsTouched && coupon.length === 0 && !couponIsValid && (
+        <div class="alert alert-error">Coupon is Empty.</div>
+      )}
       <div class="order-detail-content">
-        {(getSelectedAddress!==undefined || storeAddressObj.name.length !== 0) && (
+        {(getSelectedAddress !== undefined ||
+          storeAddressObj.name.length !== 0) && (
           <Fragment>
             <h3 class="sip-add">Shipping Address</h3>
             <div class="shaping-address-saveing-row">
@@ -82,7 +211,7 @@ const Payment = ({ AddressActiveHandler,addresses }) => {
                   </span>
                   &nbsp;
                   <span>
-                    {getSelectedAddress!==undefined &&
+                    {getSelectedAddress !== undefined &&
                       getSelectedAddress.Province +
                         "-" +
                         getSelectedAddress.District +
@@ -113,7 +242,7 @@ const Payment = ({ AddressActiveHandler,addresses }) => {
           <tbody>
             <tr>
               <td colspan="3">Amount (tax incl.)</td>
-              <td colspan="2">{getStoreCartCtx.TotalAmmount.toFixed(2)}</td>
+              <td colspan="2">{getStoreCartCtx.TotalAmmount.toFixed(2)} tk</td>
             </tr>
             <tr>
               <td colspan="3">Special Discount</td>
@@ -121,11 +250,11 @@ const Payment = ({ AddressActiveHandler,addresses }) => {
             </tr>
             <tr>
               <td colspan="3">Cupon Discount</td>
-              <td colspan="2">0</td>
+              <td colspan="2">{discounted.Data ? discounted.Data : 0} tk</td>
             </tr>
             <tr>
               <td colspan="3">Delivery Charge</td>
-              <td colspan="2">80</td>
+              <td colspan="2">{delivaryCharge} tk</td>
             </tr>
             <tr>
               <td colspan="3">
@@ -133,7 +262,12 @@ const Payment = ({ AddressActiveHandler,addresses }) => {
               </td>
               <td colspan="2">
                 <strong>
-                  {(getStoreCartCtx.TotalAmmount + 80).toFixed(2)}
+                  {(
+                    getStoreCartCtx.TotalAmmount +
+                    delivaryCharge -
+                    discounted.Data
+                  ).toFixed(2)}{" "}
+                  tk
                 </strong>
               </td>
             </tr>
@@ -203,7 +337,11 @@ const Payment = ({ AddressActiveHandler,addresses }) => {
         </div>
       </div>
       {PopUpAlert && (
-        <AlertPopUp alertStateChangedHandler={alertStateChangedHandler} />
+        <AlertPopUp
+          alertStateChangedHandler={alertStateChangedHandler}
+          order={order}
+          mobile={getSelectedAddress?.Mobile}
+        />
       )}
     </div>
   );

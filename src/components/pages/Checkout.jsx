@@ -99,6 +99,7 @@ const Checkout = () => {
       );
     }
   }, [isActiveProductSummary, isActiveAddress, isActivePayment]);
+  console.log({addresses})
 
   const getAddressHttp = () => {
     http.post({
@@ -118,7 +119,8 @@ const Checkout = () => {
         // setIsLoading(true);
       },
       successed: (res) => {
-        setAddresses(res.Data);
+        console.log({res})
+        setAddresses(res.Data.Data);
       },
       failed: () => {},
       always: () => {

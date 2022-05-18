@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { GET_CURRENT_INFO } from "../../lib/endpoints";
+import { http } from "../../Service/httpService";
 import { urlHomeRoute } from "../../Service/UrlService";
 import addressContext from "../../store/address-context";
 import cartContext from "../../store/cart-context";
@@ -14,15 +16,18 @@ const ProductSummary = ({
   let history = useHistory();
   const cartCtx = useContext(cartContext);
   const ctxAddress = useContext(addressContext);
+  const cartCtxModal = cartCtx.getCartModel;
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
+  const [currentInfo, setCurrentInfo] = useState([]);
   const getCtxAddressActiveType = ctxAddress.getActiveType;
-
+  const products = [];
+  cartCtxModal.Items.map((item) => products.push(item.id));
   const findActiveAddress = addresses.find(
     (item) => item.Type === getCtxAddressActiveType.type
   );
   const [qty, setQty] = useState("");
-  const cartCtxModal = cartCtx.getCartModel;
+  // cartCtx.updateProductsPrice(currentInfo);
 
   const qtyDecHandler = (findItem, e) => {
     e.preventDefault();
@@ -56,6 +61,7 @@ const ProductSummary = ({
       setQty(1);
     }
   };
+
   const setSelectedFileHandler = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
       setSelectedFile(undefined);
@@ -63,6 +69,7 @@ const ProductSummary = ({
     }
     setSelectedFile(e.target.files[0]);
   };
+
   const fileUploaderHandler = () => {
     fileRef.current.click();
   };
@@ -86,6 +93,28 @@ const ProductSummary = ({
     }
   }, [cartCtxModal.Items.length, history]);
 
+  const getCurrentInfo = () => {
+    http.post({
+      url: GET_CURRENT_INFO,
+      payload: {
+        productIds: products,
+      },
+      before: () => {},
+      successed: (res) => {
+        setCurrentInfo(res.Data);
+        cartCtx.updateProductsPrice(res.Data);
+      },
+      failed: () => {},
+      always: () => {},
+    });
+  };
+
+  useEffect(() => {
+    getCurrentInfo();
+  }, []);
+
+  console.log({ currentInfo });
+
   return (
     <div class="tab_content">
       <div class="heading-counter warning">
@@ -106,7 +135,7 @@ const ProductSummary = ({
             </tr>
           </thead>
           <tbody>
-            {cartCtxModal.Items.map((item) => (
+            {cartCtxModal.Items.map((item, index) => (
               <tr>
                 <td class="cart_product">
                   <a href>
@@ -127,12 +156,19 @@ const ProductSummary = ({
                   <small>Company: {item.suplier} </small>
                 </td>
                 <td class="price" style={{ textAlign: "center", width: "15%" }}>
-                  {item.Ds > 0 && item.Ds !== null ? (
+                  {currentInfo[index]?.Discount > 0 &&
+                  currentInfo[index]?.Discount !== null ? (
                     <span>
-                      ৳ {(item.MRP - (item.MRP * item.Ds) / 100).toFixed(2)}
+                      ৳{" "}
+                      {(
+                        currentInfo[index]?.UnitSalePrice -
+                        (currentInfo[index]?.UnitSalePrice *
+                          currentInfo[index]?.Discount) /
+                          100
+                      ).toFixed(2)}
                     </span>
                   ) : (
-                    <span>৳ {item.MRP}</span>
+                    <span>৳ {currentInfo[index]?.UnitSalePrice}</span>
                   )}
                 </td>
                 <td class="qty">
@@ -154,14 +190,23 @@ const ProductSummary = ({
                   </div>
                 </td>
                 <td class="price" style={{ textAlign: "center", width: "18%" }}>
-                  {item.Ds === 0 && item.Ds !== null && (
-                    <span>৳ {item.MRP * item.quantity.toFixed(2)}</span>
-                  )}
-                  {item.Ds > 0 && (
+                  {currentInfo[index]?.Discount === 0 &&
+                    currentInfo[index]?.Discount !== null && (
+                      <span>
+                        ৳{" "}
+                        {(
+                          currentInfo[index]?.UnitSalePrice * item.quantity
+                        ).toFixed(2)}
+                      </span>
+                    )}
+                  {currentInfo[index]?.Discount > 0 && (
                     <span>
                       ৳
                       {(
-                        (item.MRP - (item.MRP * item.Ds) / 100) *
+                        (currentInfo[index]?.UnitSalePrice -
+                          (currentInfo[index]?.UnitSalePrice *
+                            currentInfo[index]?.Discount) /
+                            100) *
                         item.quantity
                       ).toFixed(2)}
                     </span>

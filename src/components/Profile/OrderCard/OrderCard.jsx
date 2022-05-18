@@ -1,15 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { urlOrderDetailsRoute, urlProfileRoute } from "../../../Service/UrlService";
+import {
+  urlOrderDetailsRoute,
+  urlProfileRoute,
+} from "../../../Service/UrlService";
 
-const OrderCard = ({order}) => {
+const OrderCard = ({ order }) => {
+  let created_at = new Date(order.CreatedAt);
+  console.log({ order });
   return (
     <div id="Tab6" class="tabcontent tab-content detalis-page-tab-content">
       {/* <!-- product desc review information --> */}
       <div class="profile-order-tab">
-        <Link to={urlProfileRoute()+urlOrderDetailsRoute()+order.id}>
+        <Link to={urlProfileRoute() + urlOrderDetailsRoute() + order.Id}>
           <div class="order-id display-flex jc-s-b">
-            <span> Order ID #2566</span>
+            <span> Order ID #{order.OrderNo}</span>
             <aside>Cancel Order</aside>
           </div>
           <div class="order-dsc display-flex jc-s-b">
@@ -18,18 +23,20 @@ const OrderCard = ({order}) => {
           </div>
           <div class="order-dsc display-flex jc-s-b">
             <span> Payable Amount</span>
-            <aside>Awaiting For Feedback</aside>
+            <aside>{order.PayableAmount} tk</aside>
           </div>
           <div class="order-dsc display-flex jc-s-b">
             <span>Shipping Address</span>
-            <aside>59 BDT</aside>
+            <aside>
+              {order.Remarks} {order.Upazila} {order.District} {order.Province}
+            </aside>
           </div>
-          <p>
+          {/* <p>
             Lorem ipsum dolor sit amet consectetur , adipisicing elit.
             Necessitatibus fugit, soluta dicta obcaecati eos voluptatibus iste
             culpa, provident est nihil voluptas exercitationem possimus, a
             suscipit?
-          </p>
+          </p> */}
         </Link>
       </div>
       {/* <!-- product desc review information --> */}

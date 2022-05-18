@@ -32,10 +32,10 @@ const AreaValidation = ({
         filter: [{ Operation: 0, field: "DistrictId", value: districtId }],
       },
       before: () => {},
-      successed: (data) => {
+      successed: (res) => {
         const transformedAreas = [];
 
-        data.Data[0].forEach((area) => {
+        res.Data.Data[0].forEach((area) => {
           transformedAreas.push({
             id: area[1],
             name: area[0],
@@ -56,7 +56,7 @@ const AreaValidation = ({
   }, [districtId]);
   
   useEffect(() => {
-    if (fixArea) {
+    if (fixArea.is!==undefined) {
       setSelectedValue(fixArea);
       setSelectedArea(fixArea);
       setAreaId(fixArea.id);

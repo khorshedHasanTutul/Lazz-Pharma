@@ -6,7 +6,8 @@ import {
   urlProfileRoute,
 } from "../../../Service/UrlService";
 
-const AlertPopUp = ({ alertStateChangedHandler }) => {
+const AlertPopUp = ({ alertStateChangedHandler,order,mobile }) => {
+  console.log({order})
   let history = useHistory();
   const removeButtonHandler = () => {
     alertStateChangedHandler();
@@ -35,10 +36,10 @@ const AlertPopUp = ({ alertStateChangedHandler }) => {
                 Your order has been placed
               </h1>
               <h1 class="t-20 t-bold t-center mb-16 t-primary">
-                Your order number is "#0406000"
+                Your order number is "#{order.OrderNo}"
               </h1>
               <h2 class="t-18 t-bold t-center mb-16 t-secondary">
-                We'll call your number 01778772327 to reconfirm
+                We'll call your number {mobile} to reconfirm
               </h2>
               <div class="flex justify-center">
                 <button

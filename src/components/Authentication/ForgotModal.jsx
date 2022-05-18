@@ -80,6 +80,7 @@ const ForgotModal = ({ closeModal, closeLoginModalhandler }) => {
         },
         before: () => {},
         successed: (data) => {
+          console.log(data);
           authCtx.userOtpId.id = data.Id;
           setOtpCodeModal(true);
           authCtx.registration(user);

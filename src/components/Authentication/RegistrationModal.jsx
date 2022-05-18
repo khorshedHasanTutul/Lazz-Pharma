@@ -65,8 +65,9 @@ const RegistrationModal = ({ closeModal, closeLoginModalhandler }) => {
           Phone: phone,
         },
         before: () => {},
-        successed: (data) => {
-          authCtx.userOtpId.id = data.Id;
+        successed: (res) => {
+          console.log(res)
+          authCtx.userOtpId.id = res.Id;
           setOtpCodeModal(true);
           authCtx.registration(user);
         },
