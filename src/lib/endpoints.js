@@ -13,3 +13,15 @@ export const CREATE_LOGIN = "CustomerArea/AppCustomer/Login";
 export const WEB_UPDATE_PASSWORD =
   "/MessagingArea/OtpMessage/WebUpdatePassword";
 export const UPDATE_PASSWORD = "/CustomerArea/Customer/UpdatePassword";
+
+//Product Related
+export const GET_CURRENT_INFO = "/ProductArea/Product/GetCurrentInfo";
+// export const DISCOUNT_OFFER = "/OfferArea/DiscountOffer/Order";
+export const COUPON_CHECK = "/PromotionalArea/Coupon/Check";
+export const CREATE_ORDER = "/ProductOrderArea/ProductOrder/Add";
+
+
+
+//Order related
+export const GET_ALL_ORDER ="/ProductOrderArea/ProductOrder/Get";
+export const GET_ORDER_DETAILS = "/ProductOrderArea/ProductOrder/Details/"

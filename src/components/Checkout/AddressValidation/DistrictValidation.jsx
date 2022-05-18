@@ -30,10 +30,10 @@ const DistrictValidation = ({
         filter: [{ Operation: 0, field: "ProvinceId", value: divisionID }],
       },
       before: () => {},
-      successed: (data) => {
+      successed: (res) => {
         const transformedDistricts = [];
 
-        data.Data[0].forEach((district) => {
+        res.Data.Data[0].forEach((district) => {
           transformedDistricts.push({
             id: district[1],
             name: district[0],
@@ -57,7 +57,7 @@ const DistrictValidation = ({
   }, [divisionID]);
   //effect for set database information
   useEffect(() => {
-    if (fixDistrict) {
+    if (fixDistrict.id!==undefined) {
       setSelectedValue(fixDistrict);
       setSelectedDistrict(fixDistrict);
       setDistrictId(fixDistrict.id);

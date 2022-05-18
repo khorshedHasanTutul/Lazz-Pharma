@@ -84,14 +84,14 @@ const OtpCodeModal = ({
                     Password: getAuthCtxRegistrationValue.password,
                   },
                   before: () => {},
-                  successed: (data) => {
+                  successed: (res) => {
                     authCtx.login({
-                      id: data.Id,
-                      name: data.Name,
-                      token: data.datacontent,
-                      image: data.Icon,
-                      email: data.Email,
-                      phone: data.Phone,
+                      id: res.Data.Id,
+                      name: res.Data.Name,
+                      token: res.Data.datacontent,
+                      image: res.Data.Icon,
+                      email: res.Data.Email,
+                      phone: res.Data.Phone,
                     });
                     closeModal();
                     history.push(urlHomeRoute());
@@ -145,14 +145,14 @@ const OtpCodeModal = ({
                     Password: getAuthCtxRegistrationValue.password,
                   },
                   before: () => {},
-                  successed: (data) => {
+                  successed: (res) => {
                     authCtx.login({
-                      id: data.Id,
-                      name: data.Name,
-                      token: data.datacontent,
-                      image: data.Icon,
-                      email: data.Email,
-                      phone: data.Phone,
+                      id: res.Data.Id,
+                      name: res.Data.Name,
+                      token: res.Data.datacontent,
+                      image: res.Data.Icon,
+                      email: res.Data.Email,
+                      phone: res.Data.Phone,
                     });
                     closeModal();
                     history.push(urlHomeRoute());
@@ -189,9 +189,9 @@ const OtpCodeModal = ({
         Phone: getAuthCtxRegistrationValue.phone,
       },
       before: () => {},
-      successed: (data) => {
+      successed: (res) => {
         //spinner off here
-        authCtx.userOtpId.id = data.Id;
+        authCtx.userOtpId.id = res.Id;
       },
       failed: () => {},
       always: () => {},

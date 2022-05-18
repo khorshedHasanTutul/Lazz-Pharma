@@ -14,7 +14,6 @@ const Divisionvalidation = ({
   const [selectedValue, setSelectedValue] = useState("");
   const [divisionIsTouched, setDivisionIsTouched] = useState(false);
   const [divisionIsValid, setDivisionIsValid] = useState(false);
-  console.log({ divisionList });
 
   const divisionSelectHandler = (divisionList) => {
     setSelectedDivision(divisionList);
@@ -29,10 +28,10 @@ const Divisionvalidation = ({
     http.get({
       url: GET_PROVINCE,
       before: () => {},
-      successed: (data) => {
+      successed: (res) => {
         const transformedDivision = [];
 
-        data.Data[0].forEach((division) => {
+        res.Data.Data[0].forEach((division) => {
           transformedDivision.push({
             id: division[1],
             name: division[0],
@@ -64,7 +63,7 @@ const Divisionvalidation = ({
 
   //effect for  set database division value
   useEffect(() => {
-    if (fixDivision) {
+    if (fixDivision.id!==undefined) {
       setSelectedValue(fixDivision);
       setSelectedDivision(fixDivision);
       setDivisionId(fixDivision.id);

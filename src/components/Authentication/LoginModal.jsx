@@ -59,14 +59,15 @@ const LoginModal = ({ closeModal, isOrderNowPressed }) => {
           Password: password,
         },
         before: () => {},
-        successed: (data) => {
+        successed: (res) => {
+          console.log(res)
           authCtx.login({
-            id: data.Id,
-            name: data.Name,
-            token: data.datacontent,
-            image: data.Icon,
-            email: data.Email,
-            phone: data.Phone,
+            id: res.Data.Id,
+            name: res.Data.Name,
+            token: res.Data.datacontent,
+            image: res.Data.Icon,
+            email: res.Data.Email,
+            phone: res.Data.Phone,
           });
           isOrderNowPressed
             ? history.push(urlCheckoutRoute())

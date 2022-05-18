@@ -109,9 +109,9 @@ const Address = ({ ProceedToOrderHandler }) => {
       },
       successed: (res) => {
         console.log(res);
-        setAddresses(res.Data);
+        setAddresses(res.Data.Data);
         setActiveTypeAddress(
-          res.Data.find((item) => item.Type === activeType.type)
+          res.Data.Data.find((item) => item.Type === activeType.type)
         );
       },
       failed: () => {},

@@ -10,7 +10,7 @@ export const post = async ({
   failed = (data) => {},
   always = (data) => {},
   map = (data) => {
-    return data.Data;
+    return data;
   },
   dataPath = "",
 }) => {
@@ -25,7 +25,7 @@ export const post = async ({
     method: "POST",
     headers: {
       "content-type": "application/json",
-      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Origin": "*",
       ...headers,
     },
     body: JSON.stringify(payload),
@@ -60,7 +60,7 @@ export const get = async ({
   failed = (data) => {},
   always = (data) => {},
   map = (data) => {
-    return data.Data;
+    return data;
   },
 }) => {
   const token = await getToken();
@@ -74,7 +74,7 @@ export const get = async ({
     method: "GET",
     headers: {
       "content-type": "application/json",
-      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Origin": "*",
       ...headers,
     },
   });
