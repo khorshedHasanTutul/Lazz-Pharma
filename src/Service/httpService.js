@@ -109,7 +109,7 @@ export const file = async ({
   failed = (data) => {},
   always = (data) => {},
   map = (data) => {
-    return data.Data;
+    return data;
   },
 }) => {
   before();
@@ -146,7 +146,7 @@ export const file = async ({
 
   always(data);
   successed(transformData);
-  return data.Data;
+  return data;
 };
 
 export const http = { post, get, file };

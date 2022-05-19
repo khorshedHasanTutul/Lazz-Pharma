@@ -1760,7 +1760,7 @@ label {
   background: #fff;
   border-radius: 4px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-  margin-top: 50px;
+  /* margin-top: 50px; */
   max-width: 90%;
   padding: 0 1em 1em;
   position: relative;
@@ -2156,7 +2156,7 @@ p {
   display: flex;
   gap: 1.2rem;
   justify-content: space-between;
-  margin-top: 35px;
+  margin-top: 42px;
 }
 .edit-profile-main-form .custom-input input {
   height: 35px;
@@ -2859,6 +2859,14 @@ button {
   align-items: center;
   gap: 2rem;
   flex-wrap: wrap;
+  cursor: pointer;
+}
+.login-main-area .login-info-from {
+	padding: 32px 0px;
+	text-align: center;
+	color: #016449;
+	font-weight: bold;
+	font-size: 1.25rem;
 }
 
 .prescription_description {

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { GET_ORDER_DETAILS } from "../../../lib/endpoints";
+import { GET_CURRENT_INFO, GET_ORDER_DETAILS } from "../../../lib/endpoints";
 import { http } from "../../../Service/httpService";
 import authContext from "../../../store/auth-context";
 
@@ -8,16 +8,21 @@ const OrderDetails = () => {
   let { id } = useParams();
   const authCtx = useContext(authContext);
   const [orderDetails, setOrderDetails] = useState();
+  const [currentInfo, setCurrentInfo] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   let getDate = new Date(orderDetails?.createdAt);
+  const products = [];
 
   const getOrderDetailsHttp = () => {
     http.get({
       url: GET_ORDER_DETAILS + id,
       before: () => {},
       successed: (res) => {
-        console.log(res);
-        setOrderDetails(res.Data.Order);
+        setOrderDetails(res.Data);
+        res.Data.Products.map(function (element) {
+          return products.push(element.ProductId);
+        });
+        getCurrentInfo();
         // setIsLoading(false);
       },
       failed: () => {
@@ -28,9 +33,28 @@ const OrderDetails = () => {
       },
     });
   };
+
+  const getCurrentInfo = () => {
+    http.post({
+      url: GET_CURRENT_INFO,
+      payload: {
+        productIds: products,
+      },
+      before: () => {},
+      successed: (res) => {
+        setCurrentInfo(res.Data);
+      },
+      failed: () => {},
+      always: () => {},
+    });
+  };
+
   useEffect(() => {
     getOrderDetailsHttp();
   }, []);
+
+  console.log({ orderDetails });
+
   return (
     <div>
       {/* <!-- Tab links -->
@@ -84,13 +108,18 @@ const OrderDetails = () => {
         <div class="shaping-address-saveing-row">
           <div class="shapping-address-inner-content">
             <div class="saving-address-content">
-              <small>jakma</small>
-              <small>01725740820</small>
+              <small>{orderDetails?.Order.ComtactName}</small>
+              <small>{orderDetails?.Order.ComtactPhone}</small>
               <span>
-                <aside>Office</aside>
+                <aside>{orderDetails?.Order.AddressType}</aside>
               </span>
-              <span>jakma@outlook.com</span>
-              <span>Dhaka-Dhaka-Mirpur-Mirpur Block C Road 12</span>
+              <span>{orderDetails?.Order.ComtactEmail} &nbsp;</span>
+              <span>
+                {" "}
+                {orderDetails?.Order.Remarks}&nbsp;{orderDetails?.Order.Upazila}
+                &nbsp; {orderDetails?.Order.District}&nbsp;
+                {orderDetails?.Order.Province}
+              </span>
             </div>
           </div>
         </div>
@@ -130,19 +159,19 @@ const OrderDetails = () => {
                         <td class="pull-right">
                           <strong>Name</strong>
                         </td>
-                        <td>{orderDetails?.ComtactName}</td>
+                        <td>{orderDetails?.Order.ComtactName}</td>
                       </tr>
                       <tr>
                         <td class="pull-right">
                           <strong>Order ID</strong>
                         </td>
-                        <td>#{orderDetails?.OrderNo}</td>
+                        <td>#{orderDetails?.Order.OrderNo}</td>
                       </tr>
                       <tr>
                         <td class="pull-right">
                           <strong>Mobile</strong>
                         </td>
-                        <td>{orderDetails?.ComtactPhone}</td>
+                        <td>{orderDetails?.Order.ComtactPhone}</td>
                       </tr>
                       <tr>
                         <td class="pull-right">
@@ -170,23 +199,30 @@ const OrderDetails = () => {
                       <tr>
                         <th>sl</th>
                         <th>Product</th>
-                        <th>Description</th>
+                        <th>Prescription</th>
+                        <th>Price</th>
                         <th>Quantity</th>
                         <th>Discount</th>
                         <th>Amount</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {/* {orderDetails?.Products.map((item, index) => (
+                      {orderDetails?.Products.map((item, index) => (
                         <tr>
-                          <td>0{index+1}</td>
+                          <td>0{index + 1}</td>
                           <td>{item?.Name}</td>
-                          <td>www.swaransoft.com</td>
-                          <td>8 Months</td>
-                          <td>0</td>
-                          <td>1000</td>
+                          <td>
+                            {currentInfo[index]?.IsPrescriptionRequired ===
+                            false
+                              ? "Not Required"
+                              : "Required"}
+                          </td>
+                          <td>{item.UnitPrice}</td>
+                          <td>{item.Quantity}</td>
+                          <td>{item.Discount}</td>
+                          <td>{item.TotalAmount}</td>
                         </tr>
-                      ))} */}
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -196,31 +232,31 @@ const OrderDetails = () => {
                       <tr>
                         <td>SubTotal</td>
                         <td class="SubTotal-tab">
-                          <span>1.51</span>
+                          <span>{orderDetails?.Order.TotalAmount}</span>
                         </td>
                       </tr>
-                      <tr>
+                      {/* <tr>
                         <td>Rounding Off</td>
                         <td class="SubTotal-tab">
                           <span>0.51</span>
                         </td>
-                      </tr>
+                      </tr> */}
                       <tr>
                         <td>Coupon Discount</td>
                         <td class="SubTotal-tab">
-                          <span>55</span>
+                          <span>{orderDetails?.Order.CouponDiscount}</span>
                         </td>
                       </tr>
-                      <tr>
+                      {/* <tr>
                         <td>Total order value</td>
                         <td class="SubTotal-tab">
                           <span>1.00</span>
                         </td>
-                      </tr>
+                      </tr> */}
                       <tr>
-                        <td>Delivery charge (Inside Dhaka)</td>
+                        <td>Delivery charge</td>
                         <td class="SubTotal-tab">
-                          <span>29</span>
+                          <span>{orderDetails?.Order.ShippingCharge}</span>
                         </td>
                       </tr>
                       <tr>
@@ -228,7 +264,7 @@ const OrderDetails = () => {
                           <strong>Amount Payable</strong>
                         </td>
                         <td class="SubTotal-tab">
-                          <strong>30.00</strong>
+                          <strong>{orderDetails?.Order.PayableAmount}</strong>
                         </td>
                       </tr>
                     </tbody>
@@ -237,7 +273,10 @@ const OrderDetails = () => {
               </div>
               <div class="footer-row">
                 <div class="cask-rewarded">
-                  <span>0 Taka Cashback Rewarded For This Order</span>
+                  <span>
+                    {orderDetails?.Order.CashBack} Taka Cashback Rewarded For
+                    This Order
+                  </span>
                   <p>
                     *** N.B: This cashback will be applicable at your next Order
                   </p>
