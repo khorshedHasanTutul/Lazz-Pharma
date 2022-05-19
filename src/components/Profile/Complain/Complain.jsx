@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { POST_COMPLAIN } from "../../../lib/endpoints";
+import { http } from "../../../Service/httpService";
+import Suspense from "../../Suspense/Suspense";
+import PopAlert from "../../utilities/alert/PopAlert";
 import Select from "../../utilities/select/Select";
 
 const Complain = () => {
@@ -8,17 +12,17 @@ const Complain = () => {
   const [complainIsInvalid, setComplainIsInvalid] = useState(false);
   const [selectedComplain, setSelectedComplain] = useState({});
 
-  //title validation start
-  const [title, setTitle] = useState("");
-  const [titleIsTouched, setTitleIsTouched] = useState(false);
-  const [titleIsValid, setTitleIsValid] = useState(false);
-  //end
-
   //Remarks validation start
   const [remark, setRemark] = useState("");
   const [remarkIsTouched, setRemarkIsTouched] = useState(false);
   const [remarkIsValid, setRemarkIsValid] = useState(false);
-  //end
+
+  //Alert PopUp
+  const [isAlertHidden, setIsAlertHidden] = useState(false);
+  //Loading Snippet
+  const [isLoading, setIsLoading] = useState(false);
+  //respond failed
+  const [isFailedRes, setIsFailedRes] = useState(false);
 
   //object of complain Type
   const complainList = [
@@ -44,13 +48,6 @@ const Complain = () => {
     },
   ];
 
-  const titleChangeHandler = ({ target }) => {
-    setTitle(target.value);
-  };
-  const titleTouchedHandler = () => {
-    setTitleIsTouched(true);
-  };
-
   const remarkChangeHandler = ({ target }) => {
     setRemark(target.value);
   };
@@ -64,11 +61,49 @@ const Complain = () => {
   const complainBlurHandler = () => {
     setComplainIsTouched(true);
   };
+  const closeAlertHandler = () => {
+    setIsAlertHidden((prevState) => !prevState);
+  };
+  const closeResAlerthandler = () => {
+    setIsFailedRes((prevState) => !prevState);
+  };
 
   const submitButtonHandler = (e) => {
     e.preventDefault();
     setClicked(true);
+    if (remark.length > 0 && selectedComplain.name) {
+      http.post({
+        url: POST_COMPLAIN,
+        payload: {
+          ContentTitle: selectedComplain.name,
+          Content: remark,
+          ActivityId: "00000000-0000-0000-0000-000000000000",
+          Remarks: selectedComplain.name,
+        },
+        before: () => {
+          setIsLoading(true);
+        },
+        successed: (res) => {
+          setIsAlertHidden(true);
+          setClicked(false);
+          setRemark("");
+          setRemarkIsValid(false);
+          setRemarkIsTouched(false);
+          setSelectedComplain({});
+          setIsFailedRes(false);
+          setComplainIsTouched(false);
+        },
+        failed: () => {
+          setIsFailedRes(true);
+          setIsLoading(false);
+        },
+        always: () => {
+          setIsLoading(false);
+        },
+      });
+    }
   };
+
   useEffect(() => {
     if (clicked) {
       if (
@@ -87,80 +122,79 @@ const Complain = () => {
         setComplainIsInvalid(false);
       }
     }
-  }, [ complainIsTouched,selectedComplain,remarkIsTouched, remark.length, clicked]);
+  }, [
+    complainIsTouched,
+    selectedComplain,
+    remarkIsTouched,
+    remark.length,
+    clicked,
+  ]);
 
   return (
-    <div class="submit-compline-main-flex edit-profile-main-flex">
-      <form>
-        {/* <div class="custom-input">
-          <label for="name">Title</label>
-          <input
-            type="text"
-            name=""
-            id="name"
-            required=""
-            onChange={titleChangeHandler}
-            onBlur={titleTouchedHandler}
-          />
-          {titleIsValid && (
-            <div class="alert alert-error">Title is required.</div>
-          )}
-          {titleIsTouched && title.length === 0 && !titleIsValid && (
-            <div class="alert alert-error">Title is required.</div>
-          )}
-        </div> */}
-
-        <div class="custom-input">
-          <label for="msg">Describe Your Complain</label>
-          <textarea
-            name=""
-            id="msg"
-            value={remark}
-            onChange={remarkChangeHandler}
-            onBlur={remarkTouchedHandler}
-          ></textarea>
-          {remarkIsValid && (
-            <div class="alert alert-error">Complain Text is required.</div>
-          )}
-          {remarkIsTouched && remark.length === 0 && !remarkIsValid && (
-            <div class="alert alert-error">Complain Text is required.</div>
-          )}
-        </div>
-        <div className="group-complain_type">
-          <Select
-            label="Select Complain"
-            name="complain"
-            options={complainList || []}
-            onSelect={complainSelectHandler}
-            config={{ searchPath: "name", keyPath: "id", textPath: "name" }}
-            error={
-              complainIsInvalid
-                ? "Complain Type is required."
-                : complainIsTouched &&
-                  !selectedComplain.name &&
-                  !complainIsInvalid
-                ? "Complain Type is required."
-                : ""
-            }
-            onBlur={complainBlurHandler}
-            selectedOption={selectedComplain}
-          />
-          <div className="complain_button">
-            <button
-              type="submit"
-              onClick={submitButtonHandler}
-              style={{ height: "40px",width:"100%" }}
-            >
-              Send <i class="fa fa-paper-plane" aria-hidden="true"></i>
-            </button>
+    <>
+      <div class="submit-compline-main-flex edit-profile-main-flex">
+        <form>
+          <div class="custom-input">
+            <label for="msg">Describe Your Complain</label>
+            <textarea
+              name=""
+              id="msg"
+              value={remark}
+              onChange={remarkChangeHandler}
+              onBlur={remarkTouchedHandler}
+            ></textarea>
+            {remarkIsValid && (
+              <div class="alert alert-error">Complain Text is required.</div>
+            )}
+            {remarkIsTouched && remark.length === 0 && !remarkIsValid && (
+              <div class="alert alert-error">Complain Text is required.</div>
+            )}
           </div>
-        </div>
-
-        {/* <button type="submit" onClick={submitButtonHandler}>
-          Send <i class="fa fa-paper-plane" aria-hidden="true"></i>
-        </button> */}
-      </form>
-    </div>
+          <div className="group-complain_type">
+            <Select
+              label="Select Complain"
+              name="complain"
+              options={complainList || []}
+              onSelect={complainSelectHandler}
+              config={{ searchPath: "name", keyPath: "id", textPath: "name" }}
+              error={
+                complainIsInvalid
+                  ? "Complain Type is required."
+                  : complainIsTouched &&
+                    !selectedComplain.name &&
+                    !complainIsInvalid
+                  ? "Complain Type is required."
+                  : ""
+              }
+              onBlur={complainBlurHandler}
+              selectedOption={selectedComplain}
+            />
+            <div className="complain_button">
+              <button
+                type="submit"
+                onClick={submitButtonHandler}
+                style={{ height: "37px", width: "100%" }}
+              >
+                Send <i class="fa fa-paper-plane" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      {isAlertHidden && (
+        <PopAlert
+          content={"Submit Complain Successfully."}
+          closeModal={closeAlertHandler}
+        />
+      )}
+      {isFailedRes && (
+        <PopAlert
+          content={"Something went wrong."}
+          closeModal={closeResAlerthandler}
+        />
+      )}
+      {isLoading && <Suspense />}
+    </>
   );
 };
 

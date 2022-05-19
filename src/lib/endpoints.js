@@ -20,8 +20,12 @@ export const GET_CURRENT_INFO = "/ProductArea/Product/GetCurrentInfo";
 export const COUPON_CHECK = "/PromotionalArea/Coupon/Check";
 export const CREATE_ORDER = "/ProductOrderArea/ProductOrder/Add";
 
-
-
 //Order related
-export const GET_ALL_ORDER ="/ProductOrderArea/ProductOrder/Get";
-export const GET_ORDER_DETAILS = "/ProductOrderArea/ProductOrder/Details/"
+export const GET_ALL_ORDER = "/ProductOrderArea/ProductOrder/Get";
+export const GET_ORDER_DETAILS = "/ProductOrderArea/ProductOrder/Details/";
+
+//Prescription Related
+export const POST_PRESCRIPTION = "/ProductOrderArea/Prescription/Add";
+export const POST_COMPLAIN = "/CommonArea/Complain/Add";
+export const GET_USER_INFO = "/CustomerArea/Customer/GetInfo";
+export const UPDATE_USER_INFO = "/CustomerArea/Customer/UpdateInfo";

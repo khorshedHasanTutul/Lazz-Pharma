@@ -56,7 +56,7 @@ const AreaValidation = ({
   }, [districtId]);
   
   useEffect(() => {
-    if (fixArea.is!==undefined) {
+    if (fixArea.id!==undefined) {
       setSelectedValue(fixArea);
       setSelectedArea(fixArea);
       setAreaId(fixArea.id);
