@@ -2021,10 +2021,10 @@ label {
   margin-top: 6px;
 }
 p {
-	color: #000;
-	font-size: 15px;
-	font-weight: 400;
-	line-height: 1.5;
+  color: #000;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 .tabbed.niiceeTabContent.profile-tab {
@@ -2861,13 +2861,13 @@ button {
   flex-wrap: wrap;
   cursor: pointer;
 }
-.login-main-area .login-info-from {
+/* .login-main-area .login-info-from {
 	padding: 32px 0px;
 	text-align: center;
 	color: #016449;
 	font-weight: bold;
 	font-size: 1.25rem;
-}
+} */
 
 .prescription_description {
   padding: 15px;
@@ -2980,10 +2980,8 @@ button {
 
 .item-container__image-preview img {
   max-width: 100%;
-  height: auto;
-  min-height: 150px;
+  height: 150px;
 }
-
 .plus_icon_container p {
   display: grid;
   place-items: center;
@@ -3147,10 +3145,8 @@ main {
 
 .image_prev img {
   max-width: 100%;
-  max-height: 100%;
-  height: auto;
-  object-fit: cover;
-  /* margin-top: 10px; */
+  height: 90%;
+  object-fit: contain;
 }
 .image_previewer_container .item-container {
   max-width: 25%;
@@ -3738,4 +3734,17 @@ textarea:focus {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+
+.group-of-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+.group-of-buttons > li .button-order {
+  background: #016449;
+  color: white;
+  border-radius: 6px;
+  padding: 6px;
 }

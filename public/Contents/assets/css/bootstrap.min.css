@@ -5024,6 +5024,7 @@ a.thumbnail:hover {
 	border: 1px solid transparent;
 	border-radius: 4px;
 	color: red;
+  /* position: absolute; */
 }
 .alert h4 {
   margin-top: 0;

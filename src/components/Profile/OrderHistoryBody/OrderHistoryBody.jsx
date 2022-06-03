@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { GET_ALL_ORDER } from "../../../lib/endpoints";
 import { http } from "../../../Service/httpService";
@@ -12,6 +12,7 @@ import {
   urlOrderRoute,
   urlProfileRoute,
 } from "../../../Service/UrlService";
+import Suspense from "../../Suspense/Suspense";
 import { OrderStatus } from "../../utilities/dictionaries";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import OrderList from "../OrderList/OrderList";
@@ -28,7 +29,6 @@ const OrderHistoryBody = () => {
       url: GET_ALL_ORDER,
       before: () => {},
       successed: (res) => {
-        console.log(res);
         setOrdersArray(res.Data);
         setConfirmOrders(
           res?.Data.filter((item) => item?.Status === OrderStatus.Confirmed)
@@ -42,9 +42,14 @@ const OrderHistoryBody = () => {
         setCancellingdOrders(
           res?.Data.filter((item) => item?.Status === OrderStatus.Cancelled)
         );
+        setIsLoading(false);
       },
-      failed: () => {},
-      always: () => {},
+      failed: () => {
+        setIsLoading(true);
+      },
+      always: () => {
+        setIsLoading(false);
+      },
     });
   };
 
@@ -52,35 +57,43 @@ const OrderHistoryBody = () => {
     getAllOrdersHttp();
   }, []);
   return (
-    <div>
-      <Route path={urlProfileRoute() + urlOrderRoute()} exact>
-        <Redirect to={urlProfileRoute() + urlAllOrderRoutes()} />
-      </Route>
+    <Fragment>
+      {!isLoading && (
+        <div>
+          <Route path={urlProfileRoute() + urlOrderRoute()} exact>
+            <Redirect to={urlProfileRoute() + urlAllOrderRoutes()} />
+          </Route>
 
-      <Route path={urlProfileRoute() + urlAllOrderRoutes()} exact>
-        <OrderList ordersArray={ordersArray} />
-      </Route>
+          <Route path={urlProfileRoute() + urlAllOrderRoutes()} exact>
+            <OrderList ordersArray={ordersArray} />
+          </Route>
 
-      <Route path={urlProfileRoute() + urlConfirmedRoutes()} exact>
-        <OrderList ordersArray={confirmedOrders} />
-      </Route>
+          <Route path={urlProfileRoute() + urlConfirmedRoutes()} exact>
+            <OrderList ordersArray={confirmedOrders} />
+          </Route>
 
-      <Route path={urlProfileRoute() + urlOrderProcessing()} exact>
-        <OrderList ordersArray={processingOrders} />
-      </Route>
+          <Route path={urlProfileRoute() + urlOrderProcessing()} exact>
+            <OrderList ordersArray={processingOrders} />
+          </Route>
 
-      <Route path={urlProfileRoute() + urlOrderDelivaringRoute()} exact>
-        <OrderList ordersArray={delivaringOrders} />
-      </Route>
+          <Route path={urlProfileRoute() + urlOrderDelivaringRoute()} exact>
+            <OrderList ordersArray={delivaringOrders} />
+          </Route>
 
-      <Route path={urlProfileRoute() + urlOrderCancelingRoute()} exact>
-        <OrderList ordersArray={cancellingOrders} />
-      </Route>
+          <Route path={urlProfileRoute() + urlOrderCancelingRoute()} exact>
+            <OrderList ordersArray={cancellingOrders} />
+          </Route>
 
-      <Route path={urlProfileRoute() + urlOrderDetailsRoute() + ":id"} exact>
-        <OrderDetails />
-      </Route>
-    </div>
+          <Route
+            path={urlProfileRoute() + urlOrderDetailsRoute() + ":id"}
+            exact
+          >
+            <OrderDetails />
+          </Route>
+        </div>
+      )}
+      {isLoading && <Suspense />}
+    </Fragment>
   );
 };
 

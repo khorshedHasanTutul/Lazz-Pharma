@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { POST_COMPLAIN } from "../../../lib/endpoints";
 import { http } from "../../../Service/httpService";
 import Suspense from "../../Suspense/Suspense";
-import PopAlert from "../../utilities/alert/PopAlert";
 import Select from "../../utilities/select/Select";
+import ComplainAlert from "./ComplainAlert";
 
 const Complain = () => {
   const [clicked, setClicked] = useState(false);
@@ -72,6 +72,7 @@ const Complain = () => {
     e.preventDefault();
     setClicked(true);
     if (remark.length > 0 && selectedComplain.name) {
+      // submitted info api call
       http.post({
         url: POST_COMPLAIN,
         payload: {
@@ -182,13 +183,13 @@ const Complain = () => {
         </form>
       </div>
       {isAlertHidden && (
-        <PopAlert
+        <ComplainAlert
           content={"Submit Complain Successfully."}
           closeModal={closeAlertHandler}
         />
       )}
       {isFailedRes && (
-        <PopAlert
+        <ComplainAlert
           content={"Something went wrong."}
           closeModal={closeResAlerthandler}
         />

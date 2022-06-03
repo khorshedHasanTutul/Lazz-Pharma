@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import {
   urlHomeRoute,
   urlProfileRoute,
   urlRequestHistoryRoute,
 } from "../../../Service/UrlService";
+import authContext from "../../../store/auth-context";
 
 const RequestProductAlert = ({ removeButtonHandler }) => {
+  const authCtx = useContext(authContext);
   let history = useHistory();
   const removeHandler = () => {
     history.push(urlHomeRoute());
@@ -34,7 +36,7 @@ const RequestProductAlert = ({ removeButtonHandler }) => {
                 Your order has been placed
               </h1>
               <h2 class="t-18 t-bold t-center mb-16 t-secondary">
-                We'll call your number 01778772327 to reconfirm
+                We'll call your number {authCtx.user.phone} to reconfirm
               </h2>
               <div class="flex justify-center">
                 <button

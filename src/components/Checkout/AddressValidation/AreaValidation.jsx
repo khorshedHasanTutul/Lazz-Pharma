@@ -8,6 +8,7 @@ const AreaValidation = ({
   districtId,
   getSelectAreaHandler,
   fixArea,
+  setFixArea,
   setAreaId,
 }) => {
   const [areaList, setAreaList] = useState([]);
@@ -18,6 +19,7 @@ const AreaValidation = ({
   const areaSelectHandler = (areaList) => {
     setSelectedArea(areaList);
     getSelectAreaHandler(areaList.id);
+    setFixArea({ id: areaList.id, name: areaList.name });
   };
   const upzilaBlurHandler = () => {
     setUpazilaIsTouched(true);
@@ -54,12 +56,17 @@ const AreaValidation = ({
   useEffect(() => {
     getAreaHttp(districtId);
   }, [districtId]);
-  
+
   useEffect(() => {
-    if (fixArea.id!==undefined) {
+    if (fixArea.id !== undefined) {
       setSelectedValue(fixArea);
       setSelectedArea(fixArea);
       setAreaId(fixArea.id);
+    }
+    if (fixArea.id === undefined) {
+      setSelectedValue("");
+      setSelectedArea({});
+      setAreaId();
     }
   }, [fixArea, setAreaId]);
 

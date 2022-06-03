@@ -8,6 +8,7 @@ import { urlCheckoutRoute, urlHomeRoute } from "../../Service/UrlService";
 import addressContext from "../../store/address-context";
 import authContext from "../../store/auth-context";
 import cartContext from "../../store/cart-context";
+import Suspense from "../Suspense/Suspense";
 import AddressList from "./AddressList";
 import AddressValidation from "./AddressValidation/AddressValidation";
 import AreaValidation from "./AddressValidation/AreaValidation";
@@ -31,7 +32,7 @@ const Address = ({ ProceedToOrderHandler }) => {
   //get addresses from api set state
   const [addresses, setAddresses] = useState([]);
   //set active type of Address
-  const [activeTypeAddress, setActiveTypeAddress] = useState({});
+  const [activeTypeAddress, setActiveTypeAddress] = useState();
   //set address after updating from database state
   const [name, setNameP] = useState("");
   const [phone, setPhoneP] = useState("");
@@ -41,8 +42,20 @@ const Address = ({ ProceedToOrderHandler }) => {
   const [districtId, setDistrictId] = useState();
   const [areaId, setAreaId] = useState();
   //end
+  const [isLoading, setIsLoading] = useState(true);
 
-  console.log({ addresses });
+  const [fixDivision, setFixDivision] = useState({
+    id: activeTypeAddress?.ProvinceId,
+    name: activeTypeAddress?.Province,
+  });
+  const [fixDistrict, setFixDistrict] = useState({
+    id: activeTypeAddress?.DistrictId,
+    name: activeTypeAddress?.District,
+  });
+  const [fixArea, setFixArea] = useState({
+    id: activeTypeAddress?.UpazilaId,
+    name: activeTypeAddress?.Upazila,
+  });
 
   const saveAddresshandler = () => {
     addressObj = Object.assign({}, storeAddressObj);
@@ -105,18 +118,26 @@ const Address = ({ ProceedToOrderHandler }) => {
         ],
       },
       before: () => {
-        // setIsLoading(true);
+        setIsLoading(true);
       },
       successed: (res) => {
-        console.log(res);
+        const findItem = res.Data.Data.find(
+          (item) => item.Type === activeType.type
+        );
+        setFixDivision({ id: findItem?.ProvinceId, name: findItem?.Province });
+        setFixDistrict({ id: findItem?.DistrictId, name: findItem?.District });
+        setFixArea({ id: findItem?.UpazilaId, name: findItem?.Upazila });
         setAddresses(res.Data.Data);
         setActiveTypeAddress(
           res.Data.Data.find((item) => item.Type === activeType.type)
         );
+        setIsLoading(false);
       },
-      failed: () => {},
+      failed: () => {
+        setIsLoading(false);
+      },
       always: () => {
-        // setIsLoading(false);
+        setIsLoading(false);
       },
     });
   };
@@ -128,10 +149,15 @@ const Address = ({ ProceedToOrderHandler }) => {
   useEffect(() => {
     if (activeType.type !== ctxAddress.getActiveType.type) {
       setactiveType(ctxAddress.getActiveType);
-      // getAddressHttp();
+      const findItem = addresses.find(
+        (item) => item.Type === ctxAddress.getActiveType.type
+      );
       setActiveTypeAddress(
         addresses.find((item) => item.Type === ctxAddress.getActiveType.type)
       );
+      setFixDivision({ id: findItem?.ProvinceId, name: findItem?.Province });
+      setFixDistrict({ id: findItem?.DistrictId, name: findItem?.District });
+      setFixArea({ id: findItem?.UpazilaId, name: findItem?.Upazila });
     }
   }, [activeType, ctxAddress.getActiveType, addresses]);
 
@@ -144,96 +170,93 @@ const Address = ({ ProceedToOrderHandler }) => {
         </div>
       )}
 
-      <div
-        id="Tab4"
-        class="tabcontent tab-content checkout-main-tab-content"
-        style={{ display: "block" }}
-      >
-        {/* <!-- product desc review information --> */}
-        <div class="cart-add-tab-content">
-          <div class="checkout-address-information-main">
-            <div class="inner-shop-add-flex d-flexx">
-              <span>Your contact information</span>
-            </div>
-            <div class="address-info-inner-flex">
-              <div class="address-info-from">
-                <form>
-                  <div class="address-info-inner-content">
-                    <NameValidation
-                      clicked={clicked}
-                      setNameP={setNameP}
-                      fixName={activeTypeAddress?.Name}
-                    />
-                    <MobileValidation
-                      clicked={clicked}
-                      setPhoneP={setPhoneP}
-                      fixPhone={activeTypeAddress?.Mobile}
-                    />
-                    <EmailValidation
-                      clicked={clicked}
-                      setEmailP={setEmailP}
-                      fixEmail={activeTypeAddress?.Email}
-                    />
-                    <div className="grid-3 mb-16 g-8">
-                      <Divisionvalidation
+      {!isLoading && (
+        <div
+          id="Tab4"
+          class="tabcontent tab-content checkout-main-tab-content"
+          style={{ display: "block" }}
+        >
+          {/* <!-- product desc review information --> */}
+          <div class="cart-add-tab-content">
+            <div class="checkout-address-information-main">
+              <div class="inner-shop-add-flex d-flexx">
+                <span>Your contact information</span>
+              </div>
+              <div class="address-info-inner-flex">
+                <div class="address-info-from">
+                  <form>
+                    <div class="address-info-inner-content">
+                      <NameValidation
                         clicked={clicked}
-                        getDistrictHandler={getDistrictHandler}
-                        fixDivision={{
-                          id: activeTypeAddress?.ProvinceId,
-                          name: activeTypeAddress?.Province,
-                        }}
-                        setDivisionId={setDivisionId}
+                        setNameP={setNameP}
+                        fixName={activeTypeAddress?.Name}
                       />
-                      <DistrictValidation
+                      <MobileValidation
                         clicked={clicked}
-                        divisionID={divisionID}
-                        getAreaHandler={getAreaHandler}
-                        fixDistrict={{
-                          id: activeTypeAddress?.DistrictId,
-                          name: activeTypeAddress?.District,
-                        }}
-                        setDistrictId={setDistrictId}
+                        setPhoneP={setPhoneP}
+                        fixPhone={activeTypeAddress?.Mobile}
                       />
-                      <AreaValidation
+                      <EmailValidation
                         clicked={clicked}
-                        districtId={districtId}
-                        getSelectAreaHandler={getSelectAreaHandler}
-                        fixArea={{
-                          id: activeTypeAddress?.UpazilaId,
-                          name: activeTypeAddress?.Upazila,
-                        }}
-                        setAreaId={setAreaId}
+                        setEmailP={setEmailP}
+                        fixEmail={activeTypeAddress?.Email}
+                      />
+                      <div className="grid-3 mb-16 g-8">
+                        <Divisionvalidation
+                          clicked={clicked}
+                          getDistrictHandler={getDistrictHandler}
+                          fixDivisioned={fixDivision}
+                          setFixDivisioned={setFixDivision}
+                          setDivisionId={setDivisionId}
+                        />
+                        <DistrictValidation
+                          clicked={clicked}
+                          divisionID={divisionID}
+                          getAreaHandler={getAreaHandler}
+                          fixDistrict={fixDistrict}
+                          setFixDistrict={setFixDistrict}
+                          setDistrictId={setDistrictId}
+                        />
+                        <AreaValidation
+                          clicked={clicked}
+                          districtId={districtId}
+                          getSelectAreaHandler={getSelectAreaHandler}
+                          fixArea={fixArea}
+                          setFixArea={setFixArea}
+                          setAreaId={setAreaId}
+                        />
+                      </div>
+                      <AddressValidation
+                        clicked={clicked}
+                        setAddressP={setAddressP}
+                        activeTypeAddress={activeTypeAddress}
+                        fixArea={activeTypeAddress?.Remarks}
+                      />
+                      <BottomActiveAddress
+                        saveAddresshandler={saveAddresshandler}
                       />
                     </div>
-                    <AddressValidation
-                      clicked={clicked}
-                      setAddressP={setAddressP}
-                      activeTypeAddress={activeTypeAddress}
-                      fixArea={activeTypeAddress?.Remarks}
-                    />
-                    <BottomActiveAddress
-                      saveAddresshandler={saveAddresshandler}
-                    />
-                  </div>
-                </form>
-              </div>
+                  </form>
+                </div>
 
-              <AddressList addresses={addresses} />
+                <AddressList addresses={addresses} />
+              </div>
             </div>
+            {pathname === urlCheckoutRoute() && (
+              <div class="cart_navigation">
+                <Link class="prev-btn" to={urlHomeRoute()}>
+                  Continue shopping
+                </Link>
+                <a class="next-btn" href onClick={ProceedToOrderHandler}>
+                  Proceed to Order
+                </a>
+              </div>
+            )}
           </div>
-          {pathname === urlCheckoutRoute() && (
-            <div class="cart_navigation">
-              <Link class="prev-btn" to={urlHomeRoute()}>
-                Continue shopping
-              </Link>
-              <a class="next-btn" href onClick={ProceedToOrderHandler}>
-                Proceed to Order
-              </a>
-            </div>
-          )}
+          {/* <!-- product desc review information  --> */}
         </div>
-        {/* <!-- product desc review information  --> */}
-      </div>
+      )}
+      {isLoading && <Suspense />}
     </div>
   );
 };

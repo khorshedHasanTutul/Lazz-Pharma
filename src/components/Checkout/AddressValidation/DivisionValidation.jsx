@@ -6,18 +6,21 @@ import Select from "../../utilities/select/Select";
 const Divisionvalidation = ({
   clicked,
   getDistrictHandler,
-  fixDivision,
   setDivisionId,
+  fixDivisioned,
+  setFixDivisioned,
 }) => {
   const [divisionList, setDivisionList] = useState([]);
   const [selectedDivision, setSelectedDivision] = useState({});
   const [selectedValue, setSelectedValue] = useState("");
   const [divisionIsTouched, setDivisionIsTouched] = useState(false);
   const [divisionIsValid, setDivisionIsValid] = useState(false);
+  console.log({ fixDivisioned });
 
   const divisionSelectHandler = (divisionList) => {
     setSelectedDivision(divisionList);
     getDistrictHandler(divisionList.id);
+    setFixDivisioned({ id: divisionList.id, name: divisionList.name });
   };
   const divisionBlurHandler = () => {
     setDivisionIsTouched(true);
@@ -63,12 +66,17 @@ const Divisionvalidation = ({
 
   //effect for  set database division value
   useEffect(() => {
-    if (fixDivision.id!==undefined) {
-      setSelectedValue(fixDivision);
-      setSelectedDivision(fixDivision);
-      setDivisionId(fixDivision.id);
+    if (fixDivisioned.id !== undefined) {
+      setSelectedValue(fixDivisioned);
+      setSelectedDivision(fixDivisioned);
+      setDivisionId(fixDivisioned.id);
     }
-  }, [fixDivision, setDivisionId]);
+    if (fixDivisioned.id === undefined) {
+      setSelectedValue();
+      setSelectedDivision({});
+      setDivisionId();
+    }
+  }, [setDivisionId, fixDivisioned]);
 
   return (
     <Select

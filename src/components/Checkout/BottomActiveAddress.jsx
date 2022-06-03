@@ -3,19 +3,18 @@ import { storeAddressObj } from "../../Service/AddressService";
 import addressContext from "../../store/address-context";
 import appData from "../DataSource/appData";
 
-
 const BottomActiveAddress = ({ saveAddresshandler }) => {
   const ctxAddress = useContext(addressContext);
   const getAddressList = appData.BottomActiveAddress;
   const [activeType, setactiveType] = useState(ctxAddress.getActiveType);
-  //address type added in obj 
-  storeAddressObj.type=activeType
+  //address type added in obj
+  storeAddressObj.type = activeType;
 
   const activeTypeHandler = (item) => {
     ctxAddress.setActiveType(item);
-    storeAddressObj.type=item.type
+    storeAddressObj.type = item.type;
   };
-  
+
   useEffect(() => {
     if (activeType !== ctxAddress.getActiveType) {
       setactiveType(ctxAddress.getActiveType);

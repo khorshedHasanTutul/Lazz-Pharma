@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GET_CURRENT_INFO, GET_ORDER_DETAILS } from "../../../lib/endpoints";
 import { http } from "../../../Service/httpService";
 import authContext from "../../../store/auth-context";
+import Suspense from "../../Suspense/Suspense";
 
 const OrderDetails = () => {
   let { id } = useParams();
@@ -23,13 +24,13 @@ const OrderDetails = () => {
           return products.push(element.ProductId);
         });
         getCurrentInfo();
-        // setIsLoading(false);
+        setIsLoading(false);
       },
       failed: () => {
-        // setIsLoading(false);
+        setIsLoading(true);
       },
       always: () => {
-        // setIsLoading(false);
+        setIsLoading(false);
       },
     });
   };
@@ -53,241 +54,231 @@ const OrderDetails = () => {
     getOrderDetailsHttp();
   }, []);
 
-  console.log({ orderDetails });
-
   return (
-    <div>
-      {/* <!-- Tab links -->
-             <!-- <nav class="niiceeTabBtn">
-                 <button id="defaultOpen" class="tablinks active" onclick="tabOpener(event, 'Tab6')">All Order</button>
-                 <button class="tablinks" onclick="tabOpener(event, 'Tab7')">Confirmed Orders</button>
-                 <button class="tablinks" onclick="tabOpener(event, 'Tab8')">Processing</button>
-                 <button class="tablinks" onclick="tabOpener(event, 'Tab9')">Delivered</button>
-                 <button class="tablinks" onclick="tabOpener(event, 'Tab10')">Canceled</button>
-             </nav> --> */}
-
-      <div class="tabbed niiceeTabContent profile-tab invoice-tab">
-        <div class="brick label happiness" style={{ color: "#016449" }}>
-          <div class="Steps_steps__3SNbF Steps_wide__2JixU">
-            <div class="line">
-              <div class="filler"></div>
-            </div>
-            <div class="Steps_step__2Wic5">
-              <p class="Steps_step__counter__2y6zu false active">1</p>
-              <div class="Steps_details__1CSho">
-                <h5>pending</h5>
-              </div>
-            </div>
-            <div class="Steps_step__2Wic5">
-              <p class="Steps_step__counter__2y6zu false false">2</p>
-              <div class="Steps_details__1CSho">
-                <h5>confirmed</h5>
-              </div>
-            </div>
-            <div class="Steps_step__2Wic5">
-              <p class="Steps_step__counter__2y6zu false false">3</p>
-              <div class="Steps_details__1CSho">
-                <h5>processing</h5>
-              </div>
-            </div>
-            <div class="Steps_step__2Wic5">
-              <p class="Steps_step__counter__2y6zu false false">4</p>
-              <div class="Steps_details__1CSho">
-                <h5>delivering</h5>
-              </div>
-            </div>
-            <div class="Steps_step__2Wic5">
-              <p class="Steps_step__counter__2y6zu false false">5</p>
-              <div class="Steps_details__1CSho">
-                <h5>completed</h5>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="shaping-address-saveing-row">
-          <div class="shapping-address-inner-content">
-            <div class="saving-address-content">
-              <small>{orderDetails?.Order.ComtactName}</small>
-              <small>{orderDetails?.Order.ComtactPhone}</small>
-              <span>
-                <aside>{orderDetails?.Order.AddressType}</aside>
-              </span>
-              <span>{orderDetails?.Order.ComtactEmail} &nbsp;</span>
-              <span>
-                {" "}
-                {orderDetails?.Order.Remarks}&nbsp;{orderDetails?.Order.Upazila}
-                &nbsp; {orderDetails?.Order.District}&nbsp;
-                {orderDetails?.Order.Province}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="inv-flex-content d-flex js-center al-center">
-          <h4>Order Invoice</h4>
-          <button type="button" onclick="printDiv('page')" value="print a div!">
-            <span class="monami-button__text">Print Invoice</span>
-          </button>
-        </div>
-
-        <div id="page" class="order-invoice">
-          <div class="order-invoice-ea">
-            <div class="page">
-              <div class="custom-row-top">
-                <div class="span4">
-                  <img
-                    src="/Contents/assets/image/logo.png"
-                    alt="img"
-                    class="no-print"
-                  />
-                  <img
-                    src="/Contents/assets/image/logo.png"
-                    alt="img"
-                    class="print"
-                  />
-                  <address>
-                    <h2>Lazz Pharma Limited</h2>
-                    Rasel Square , Dhaka
-                    <br />
-                  </address>
+    <Fragment>
+      {!isLoading && (
+        <div>
+          <div class="tabbed niiceeTabContent profile-tab invoice-tab">
+            <div class="brick label happiness" style={{ color: "#016449" }}>
+              <div class="Steps_steps__3SNbF Steps_wide__2JixU">
+                <div class="line">
+                  <div class="filler"></div>
                 </div>
-                <div class="span4 well">
-                  <table class="invoice-head">
-                    <tbody>
-                      <tr>
-                        <td class="pull-right">
-                          <strong>Name</strong>
-                        </td>
-                        <td>{orderDetails?.Order.ComtactName}</td>
-                      </tr>
-                      <tr>
-                        <td class="pull-right">
-                          <strong>Order ID</strong>
-                        </td>
-                        <td>#{orderDetails?.Order.OrderNo}</td>
-                      </tr>
-                      <tr>
-                        <td class="pull-right">
-                          <strong>Mobile</strong>
-                        </td>
-                        <td>{orderDetails?.Order.ComtactPhone}</td>
-                      </tr>
-                      <tr>
-                        <td class="pull-right">
-                          <strong>Order Date</strong>
-                        </td>
-                        <td>10-08-2013</td>
-                      </tr>
-                      <tr>
-                        <td class="pull-right">
-                          <strong>Invoice Date</strong>
-                        </td>
-                        <td>20-08-2013</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div class="Steps_step__2Wic5">
+                  <p class="Steps_step__counter__2y6zu false active">1</p>
+                  <div class="Steps_details__1CSho">
+                    <h5>pending</h5>
+                  </div>
+                </div>
+                <div class="Steps_step__2Wic5">
+                  <p class="Steps_step__counter__2y6zu false false">2</p>
+                  <div class="Steps_details__1CSho">
+                    <h5>confirmed</h5>
+                  </div>
+                </div>
+                <div class="Steps_step__2Wic5">
+                  <p class="Steps_step__counter__2y6zu false false">3</p>
+                  <div class="Steps_details__1CSho">
+                    <h5>processing</h5>
+                  </div>
+                </div>
+                <div class="Steps_step__2Wic5">
+                  <p class="Steps_step__counter__2y6zu false false">4</p>
+                  <div class="Steps_details__1CSho">
+                    <h5>delivering</h5>
+                  </div>
+                </div>
+                <div class="Steps_step__2Wic5">
+                  <p class="Steps_step__counter__2y6zu false false">5</p>
+                  <div class="Steps_details__1CSho">
+                    <h5>completed</h5>
+                  </div>
                 </div>
               </div>
-              <div class="invoice">
-                <h2>Invoice</h2>
-              </div>
-              <div class="custom-table-row">
-                <div class="span12 well invoice-body">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>sl</th>
-                        <th>Product</th>
-                        <th>Prescription</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Discount</th>
-                        <th>Amount</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {orderDetails?.Products.map((item, index) => (
-                        <tr>
-                          <td>0{index + 1}</td>
-                          <td>{item?.Name}</td>
-                          <td>
-                            {currentInfo[index]?.IsPrescriptionRequired ===
-                            false
-                              ? "Not Required"
-                              : "Required"}
-                          </td>
-                          <td>{item.UnitPrice}</td>
-                          <td>{item.Quantity}</td>
-                          <td>{item.Discount}</td>
-                          <td>{item.TotalAmount}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                <div class="sum-table-for-invoice">
-                  <table class="table table-bordered small-table-sum">
-                    <tbody>
-                      <tr>
-                        <td>SubTotal</td>
-                        <td class="SubTotal-tab">
-                          <span>{orderDetails?.Order.TotalAmount}</span>
-                        </td>
-                      </tr>
-                      {/* <tr>
-                        <td>Rounding Off</td>
-                        <td class="SubTotal-tab">
-                          <span>0.51</span>
-                        </td>
-                      </tr> */}
-                      <tr>
-                        <td>Coupon Discount</td>
-                        <td class="SubTotal-tab">
-                          <span>{orderDetails?.Order.CouponDiscount}</span>
-                        </td>
-                      </tr>
-                      {/* <tr>
-                        <td>Total order value</td>
-                        <td class="SubTotal-tab">
-                          <span>1.00</span>
-                        </td>
-                      </tr> */}
-                      <tr>
-                        <td>Delivery charge</td>
-                        <td class="SubTotal-tab">
-                          <span>{orderDetails?.Order.ShippingCharge}</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <strong>Amount Payable</strong>
-                        </td>
-                        <td class="SubTotal-tab">
-                          <strong>{orderDetails?.Order.PayableAmount}</strong>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="footer-row">
-                <div class="cask-rewarded">
+            </div>
+
+            <div class="shaping-address-saveing-row">
+              <div class="shapping-address-inner-content">
+                <div class="saving-address-content">
+                  <small>{orderDetails?.Order.ComtactName}</small>
+                  <small>{orderDetails?.Order.ComtactPhone}</small>
                   <span>
-                    {orderDetails?.Order.CashBack} Taka Cashback Rewarded For
-                    This Order
+                    <aside>{orderDetails?.Order.AddressType}</aside>
                   </span>
-                  <p>
-                    *** N.B: This cashback will be applicable at your next Order
-                  </p>
-                  <h5>Thank You!</h5>
+                  <span>{orderDetails?.Order.ComtactEmail} &nbsp;</span>
+                  <span>
+                    {" "}
+                    {orderDetails?.Order.Remarks}&nbsp;
+                    {orderDetails?.Order.Upazila}
+                    &nbsp; {orderDetails?.Order.District}&nbsp;
+                    {orderDetails?.Order.Province}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="inv-flex-content d-flex js-center al-center">
+              <h4>Order Invoice</h4>
+              <button
+                type="button"
+                onclick="printDiv('page')"
+                value="print a div!"
+              >
+                <span class="monami-button__text">Print Invoice</span>
+              </button>
+            </div>
+
+            <div id="page" class="order-invoice">
+              <div class="order-invoice-ea">
+                <div class="page">
+                  <div class="custom-row-top">
+                    <div class="span4">
+                      <img
+                        src="/Contents/assets/image/logo.png"
+                        alt="img"
+                        class="no-print"
+                      />
+                      <img
+                        src="/Contents/assets/image/logo.png"
+                        alt="img"
+                        class="print"
+                      />
+                      <address>
+                        <h2>Lazz Pharma Limited</h2>
+                        Rasel Square , Dhaka
+                        <br />
+                      </address>
+                    </div>
+                    <div class="span4 well">
+                      <table class="invoice-head">
+                        <tbody>
+                          <tr>
+                            <td class="pull-right">
+                              <strong>Name</strong>
+                            </td>
+                            <td>{orderDetails?.Order.ComtactName}</td>
+                          </tr>
+                          <tr>
+                            <td class="pull-right">
+                              <strong>Order ID</strong>
+                            </td>
+                            <td>#{orderDetails?.Order.OrderNo}</td>
+                          </tr>
+                          <tr>
+                            <td class="pull-right">
+                              <strong>Mobile</strong>
+                            </td>
+                            <td>{orderDetails?.Order.ComtactPhone}</td>
+                          </tr>
+                          <tr>
+                            <td class="pull-right">
+                              <strong>Order Date</strong>
+                            </td>
+                            <td>10-08-2013</td>
+                          </tr>
+                          <tr>
+                            <td class="pull-right">
+                              <strong>Invoice Date</strong>
+                            </td>
+                            <td>20-08-2013</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="invoice">
+                    <h2>Invoice</h2>
+                  </div>
+                  <div class="custom-table-row">
+                    <div class="span12 well invoice-body">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>sl</th>
+                            <th>Product</th>
+                            <th>Prescription</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Discount</th>
+                            <th>Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {orderDetails?.Products.map((item, index) => (
+                            <tr>
+                              <td>0{index + 1}</td>
+                              <td>{item?.Name}</td>
+                              <td>
+                                {currentInfo[index]?.IsPrescriptionRequired ===
+                                false
+                                  ? "Not Required"
+                                  : "Required"}
+                              </td>
+                              <td>{item.UnitPrice}</td>
+                              <td>{item.Quantity}</td>
+                              <td>{item.Discount}</td>
+                              <td>{item.TotalAmount}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="sum-table-for-invoice">
+                      <table class="table table-bordered small-table-sum">
+                        <tbody>
+                          <tr>
+                            <td>SubTotal</td>
+                            <td class="SubTotal-tab">
+                              <span>{orderDetails?.Order.TotalAmount}</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Coupon Discount</td>
+                            <td class="SubTotal-tab">
+                              <span>{orderDetails?.Order.CouponDiscount}</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Delivery charge</td>
+                            <td class="SubTotal-tab">
+                              <span>{orderDetails?.Order.ShippingCharge}</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <strong>Amount Payable</strong>
+                            </td>
+                            <td class="SubTotal-tab">
+                              <strong>
+                                {orderDetails?.Order.PayableAmount}
+                              </strong>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="footer-row">
+                    <div class="cask-rewarded">
+                      <span>
+                        {orderDetails?.Order.CashBack} Taka Cashback Rewarded
+                        For This Order
+                      </span>
+                      <p>
+                        *** N.B: This cashback will be applicable at your next
+                        Order
+                      </p>
+                      <h5>Thank You!</h5>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+      {isLoading && <Suspense />}
+    </Fragment>
   );
 };
 
