@@ -9,6 +9,7 @@ const DistrictValidation = ({
   getAreaHandler,
   fixDistrict,
   setDistrictId,
+  setFixDistrict,
 }) => {
   const [selectedDistrict, setSelectedDistrict] = useState({});
   const [districtList, setDistrictList] = useState([]);
@@ -18,6 +19,7 @@ const DistrictValidation = ({
   const districtSelectHandler = (districtList) => {
     setSelectedDistrict(districtList);
     getAreaHandler(districtList.id);
+    setFixDistrict({ id: districtList.id, name: districtList.name });
   };
 
   //api request for get districts
@@ -57,10 +59,15 @@ const DistrictValidation = ({
   }, [divisionID]);
   //effect for set database information
   useEffect(() => {
-    if (fixDistrict.id!==undefined) {
+    if (fixDistrict.id !== undefined) {
       setSelectedValue(fixDistrict);
       setSelectedDistrict(fixDistrict);
       setDistrictId(fixDistrict.id);
+    }
+    if (fixDistrict.id === undefined) {
+      setSelectedValue("");
+      setSelectedDistrict({});
+      setDistrictId();
     }
   }, [fixDistrict, setDistrictId]);
 

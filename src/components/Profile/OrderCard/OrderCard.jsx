@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
   urlOrderDetailsRoute,
@@ -7,15 +8,35 @@ import {
 
 const OrderCard = ({ order }) => {
   let created_at = new Date(order.CreatedAt);
-  console.log({ order });
+  let history = useHistory();
+
+  const clickedToViewOrder = () => {
+    history.push(urlProfileRoute() + urlOrderDetailsRoute() + order.Id);
+  };
   return (
     <div id="Tab6" class="tabcontent tab-content detalis-page-tab-content">
       {/* <!-- product desc review information --> */}
       <div class="profile-order-tab">
-        <Link to={urlProfileRoute() + urlOrderDetailsRoute() + order.Id}>
+        <a href>
           <div class="order-id display-flex jc-s-b">
             <span> Order ID #{order.OrderNo}</span>
-            <aside>Cancel Order</aside>
+            <ul className="group-of-buttons">
+              <li>
+                <div className="button-order">
+                  <div>Upload Prescription </div>
+                </div>
+              </li>
+              <li>
+                <div className="button-order">
+                  <div>Attach Prescription </div>
+                </div>
+              </li>
+              <li>
+                <div className="button-order" onClick={clickedToViewOrder}>
+                  <div>View Details</div>
+                </div>
+              </li>
+            </ul>
           </div>
           <div class="order-dsc display-flex jc-s-b">
             <span> Date</span>
@@ -37,7 +58,7 @@ const OrderCard = ({ order }) => {
             culpa, provident est nihil voluptas exercitationem possimus, a
             suscipit?
           </p> */}
-        </Link>
+        </a>
       </div>
       {/* <!-- product desc review information --> */}
     </div>

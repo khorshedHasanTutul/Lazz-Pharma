@@ -24,8 +24,14 @@ export const CREATE_ORDER = "/ProductOrderArea/ProductOrder/Add";
 export const GET_ALL_ORDER = "/ProductOrderArea/ProductOrder/Get";
 export const GET_ORDER_DETAILS = "/ProductOrderArea/ProductOrder/Details/";
 
-//Prescription Related
+//Profile Related
 export const POST_PRESCRIPTION = "/ProductOrderArea/Prescription/Add";
 export const POST_COMPLAIN = "/CommonArea/Complain/Add";
 export const GET_USER_INFO = "/CustomerArea/Customer/GetInfo";
 export const UPDATE_USER_INFO = "/CustomerArea/Customer/UpdateInfo";
+export const PROFILE_IMAGE_UPDATE = "/CustomerArea/Customer/AddPicture";
+export const GET_SPECIALS_OFFER = "/OfferArea/DiscountOffer/List";
+export const GET_PRESCRIPTIONS =
+  "ProductOrderArea/Prescription/MyPrescriptions/";
+export const POST_REQUEST_ORDER = "RequestOrderArea/RequestOrder/Create";
+export const REMOVE_PRESCRIPTION = "ProductOrderArea/Prescription/Remove/";

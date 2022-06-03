@@ -1,60 +1,100 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { GET_USER_INFO, UPDATE_USER_INFO } from "../../../lib/endpoints";
-import { http } from "../../../Service/httpService";
+import {
+  GET_USER_INFO,
+  PROFILE_IMAGE_UPDATE,
+  UPDATE_USER_INFO,
+} from "../../../lib/endpoints";
+import { BASE_URL, http } from "../../../Service/httpService";
 import authContext from "../../../store/auth-context";
 import Suspense from "../../Suspense/Suspense";
 
-const UpdateProfile = () => {
+const UpdateProfile = ({ ProfileInfoHttp }) => {
   const [clicked, setClicked] = useState(false);
   const authCtx = useContext(authContext);
+  const [profileInfo, setProfileInfo] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   //name validation
   const [name, setName] = useState("");
   const [nameIsTouched, setNameIsTouched] = useState(false);
   const [nameIsValid, setNameIsValid] = useState(false);
-  //end
-  //email state
+  //  states
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  //file state
   const [files, setFiles] = useState();
+
   //image preview
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
-  const [profileInfo, setProfileInfo] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  console.log({ name }, profileInfo.Name);
-  //name Handlers
+  const [isInvalidImg, setIsInvalidImg] = useState(false);
+
   const nameChangeHandler = ({ target }) => {
     setName(target.value);
   };
   const nameTouchedHandler = () => {
     setNameIsTouched(true);
   };
-  //   end
+
   const emailChangeHandler = ({ target }) => {
     setEmail(target.value);
   };
   const fileUploadHandler = ({ target }) => {
-    setFiles(target.files[0]);
+    const file = target.files[0];
+    const allowedExtensions = ["jpg", "jpeg", "png"];
+    const subs = file.name.toLowerCase().split(".");
+
+    if (!allowedExtensions.includes(subs[subs.length - 1])) {
+      setIsInvalidImg(true);
+      return;
+    }
+    setFiles(file);
     if (!target.files || target.files.length === 0) {
       setSelectedFile(undefined);
       return;
     }
-    setSelectedFile(target.files[0]);
+    setSelectedFile(file);
+    setIsInvalidImg(false);
   };
+  console.log({ name }, { email });
 
   //save button handler
   const saveButtonHandler = (e) => {
     e.preventDefault();
     setClicked(true);
-    if (name !== profileInfo.Name || email !== profileInfo.Email) {
-      UpdateProfile();
+    const file = files;
+
+    if (
+      (name !== profileInfo.Name || email !== profileInfo.Email) &&
+      name.length > 0
+    ) {
+      updateProfileHttp(name, email);
+    }
+    if (file.name !== profileInfo.Image) {
+      updateProfileImage(file);
     }
   };
-  //end
 
-  const updateProfile = useCallback(() => {
+  //update only profile image api call
+  const updateProfileImage = useCallback((file) => {
+    http.file({
+      url: PROFILE_IMAGE_UPDATE,
+      payload: {
+        Img: file,
+        UserId: authCtx.user.id,
+        ActivityId: "00000000-0000-0000-0000-000000000000",
+      },
+      before: () => {},
+      successed: (res) => {
+        setPreview(`${BASE_URL}/${res.Data}`);
+        ProfileInfoHttp();
+      },
+      failed: () => {},
+      always: () => {},
+    });
+  }, []);
+  console.log({ profileInfo });
+
+  // update profile http api call
+  const updateProfileHttp = useCallback((name, email) => {
     http.post({
       url: UPDATE_USER_INFO,
       payload: {
@@ -64,14 +104,15 @@ const UpdateProfile = () => {
       },
       before: () => {},
       successed: (res) => {
-        console.log(res);
         getProfileInfo();
+        ProfileInfoHttp();
       },
       failed: () => {},
       always: () => {},
     });
   }, []);
 
+  // get profile info api call
   const getProfileInfo = () => {
     http.get({
       url: GET_USER_INFO,
@@ -79,8 +120,15 @@ const UpdateProfile = () => {
         setIsLoading(true);
       },
       successed: (res) => {
-        console.log(res);
         setProfileInfo(res.Data.Customer);
+        if (res.Data.Customer.Name !== null) {
+          setName(res.Data.Customer.Name);
+        }
+        if (res.Data.Customer.Email !== null) {
+          setEmail(res.Data.Customer.Email);
+        }
+
+        setPreview(`${BASE_URL}/${res.Data.Customer.Image}`);
       },
       failed: () => {
         setIsLoading(false);
@@ -90,11 +138,6 @@ const UpdateProfile = () => {
       },
     });
   };
-
-  useEffect(() => {
-    getProfileInfo();
-  }, []);
-
   useEffect(() => {
     if (clicked) {
       if (
@@ -116,7 +159,9 @@ const UpdateProfile = () => {
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
 
-  console.log({ profileInfo });
+  useEffect(() => {
+    getProfileInfo();
+  }, []);
 
   return (
     <>
@@ -130,17 +175,17 @@ const UpdateProfile = () => {
                   type="text"
                   name=""
                   id="name"
-                  required=""
-                  value={profileInfo?.Name}
+                  required
+                  value={name}
                   onChange={nameChangeHandler}
                   onBlur={nameTouchedHandler}
                 />
 
                 {nameIsValid && (
-                  <div class="alert alert-error">Name is required.</div>
+                  <div class="alert alert-error" style={{position:"absolute"}}>Name is required.</div>
                 )}
                 {nameIsTouched && name.length === 0 && !nameIsValid && (
-                  <div class="alert alert-error">Name is required.</div>
+                  <div class="alert alert-error"  style={{position:"absolute"}}>Name is required.</div>
                 )}
               </div>
               <div class="custom-input">
@@ -149,8 +194,8 @@ const UpdateProfile = () => {
                   type="email"
                   name=""
                   id="name"
-                  required=""
-                  value={profileInfo?.Email}
+                  required
+                  value={email}
                   onChange={emailChangeHandler}
                 />
               </div>
@@ -180,6 +225,11 @@ const UpdateProfile = () => {
                     required=""
                     onChange={fileUploadHandler}
                   />
+                  {isInvalidImg && (
+                    <div class="alert alert-error"  style={{position:"absolute"}}>
+                      Only JPG JPEG PNG format acceptable.
+                    </div>
+                  )}
                   {/* <div class="alert alert-error">Photo is required.</div> */}
                 </div>
                 <button

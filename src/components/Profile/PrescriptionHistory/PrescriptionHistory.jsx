@@ -1,9 +1,45 @@
-import React, { useEffect, useRef, useState } from "react";
-import RequestProductAlert from "../../RequestOrder/RequestProductAlert/RequestProductAlert";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { GET_PRESCRIPTIONS, REMOVE_PRESCRIPTION } from "../../../lib/endpoints";
+import { BASE_URL, http } from "../../../Service/httpService";
 import PrescriptionCard from "../PrescriptionCard/PrescriptionCard";
 
 const PrescriptionHistory = () => {
-  const selectExistPresHandler = (evt) => {};
+  const [prescriptions, setPrescriptions] = useState([]);
+  const [selectedPrescription, setSelectedPrescription] = useState([]);
+
+  const downloadHandler = (item) => {
+    window.open(BASE_URL + item.FilePath);
+  };
+  const selectExistHandler = (item) => {
+    setSelectedPrescription((prevState) => [...prevState, item]);
+  };
+
+  const getPrescriptions = useCallback(() => {
+    http.get({
+      url: GET_PRESCRIPTIONS,
+      before: () => {},
+      successed: (res) => {
+        setPrescriptions(res.Data);
+      },
+      failed: () => {},
+      always: () => {},
+    });
+  }, []);
+  const removePrescriptionHandler = (id) => {
+    http.post({
+      url: REMOVE_PRESCRIPTION + id,
+      before: () => {
+        setPrescriptions(prevState => prevState.filter(pres=> pres.Id!==id));
+      },
+      successed: () => {},
+      failed: () => {},
+      always: () => {},
+    });
+  };
+  useEffect(() => {
+    getPrescriptions();
+  }, []);
+
   return (
     <div className="container_prescription">
       <div className="prescription_upload_text">
@@ -23,76 +59,50 @@ const PrescriptionHistory = () => {
           </li>
         </ul>
       </div>
-      <PrescriptionCard />
+      <PrescriptionCard
+        prescriptions={prescriptions}
+        selectedPrescription={selectedPrescription}
+        setPrescriptions={setPrescriptions}
+      />
+      {prescriptions.length > 0 ? (
+        <div className="prescription_founded_box">
+          <p>{prescriptions.length} prescription found</p>
+        </div>
+      ) : (
+        <div className="prescription_founded_box">
+          <p>No prescription found</p>
+        </div>
+      )}
 
-      <div className="prescription_founded_box">
-        <p>1 prescription found</p>
-      </div>
       <div className="image_previewer_container">
-        <div className="item-container">
-          <div className="item-container__image-preview">
-            <img src="/Contents/assets/image/carrer.jpg" alt="" srcset="" />
-          </div>
-          <div className="item-container__buttons-flex">
-            <div className="button-download hover_background">Download</div>
-            <div
-              className="button-select hover_background"
-              onClick={selectExistPresHandler}
-            >
-              Select
+        {/* single item  */}
+        {prescriptions.map((item) => (
+          <div className="item-container">
+            <div className="item-container__image-preview">
+              <img src={BASE_URL + item.FilePath} alt="" srcset="" />
             </div>
-            <div className="button-remove hover_background_remove">Remove</div>
-          </div>
-        </div>
-
-        <div className="item-container">
-          <div className="item-container__image-preview">
-            <img src="/Contents/assets/image/b1.jpg" alt="" srcset="" />
-          </div>
-          <div className="item-container__buttons-flex">
-            <div className="button-download hover_background">Download</div>
-            <div
-              className="button-select hover_background"
-              onClick={selectExistPresHandler}
-            >
-              Select
+            <div className="item-container__buttons-flex">
+              <div
+                className="button-download hover_background"
+                onClick={downloadHandler.bind(null, item)}
+              >
+                Download
+              </div>
+              <div
+                className="button-select hover_background"
+                onClick={selectExistHandler.bind(null, item)}
+              >
+                Select
+              </div>
+              <div
+                className="button-remove hover_background_remove"
+                onClick={removePrescriptionHandler.bind(null, item.Id)}
+              >
+                Remove
+              </div>
             </div>
-            <div className="button-remove hover_background_remove">Remove</div>
           </div>
-        </div>
-
-        <div className="item-container">
-          <div className="item-container__image-preview">
-            <img src="/Contents/assets/image/carrer.jpg" alt="" srcset="" />
-          </div>
-          <div className="item-container__buttons-flex">
-            <div className="button-download hover_background">Download</div>
-            <div className="button-select hover_background">Select</div>
-            <div className="button-remove hover_background_remove">Remove</div>
-          </div>
-        </div>
-
-        <div className="item-container">
-          <div className="item-container__image-preview">
-            <img src="/Contents/assets/image/carrer.jpg" alt="" srcset="" />
-          </div>
-          <div className="item-container__buttons-flex">
-            <div className="button-download hover_background">Download</div>
-            <div className="button-select hover_background">Select</div>
-            <div className="button-remove hover_background_remove">Remove</div>
-          </div>
-        </div>
-
-        <div className="item-container">
-          <div className="item-container__image-preview">
-            <img src="/Contents/assets/image/carrer.jpg" alt="" srcset="" />
-          </div>
-          <div className="item-container__buttons-flex">
-            <div className="button-download hover_background">Download</div>
-            <div className="button-select hover_background">Select</div>
-            <div className="button-remove hover_background_remove">Remove</div>
-          </div>
-        </div>
+        ))}
       </div>
       {/* {isOpenAlert && <RequestProductAlert />} */}
     </div>

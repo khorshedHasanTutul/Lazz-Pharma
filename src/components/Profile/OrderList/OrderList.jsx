@@ -2,8 +2,11 @@ import React from "react";
 import OrderCard from "../OrderCard/OrderCard";
 
 const OrderList = ({ ordersArray }) => {
-  console.log({ ordersArray });
-  if (ordersArray === undefined || ordersArray.length === 0) {
+  if (
+    ordersArray === undefined ||
+    ordersArray.length === 0 ||
+    ordersArray.Total === 0
+  ) {
     return (
       <div
         className="brick label info"
