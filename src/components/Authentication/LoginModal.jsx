@@ -2,13 +2,24 @@ import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { CREATE_LOGIN } from "../../lib/endpoints";
 import { http } from "../../Service/httpService";
-import { urlCheckoutRoute, urlHomeRoute } from "../../Service/UrlService";
+import {
+  urlCheckoutRoute,
+  urlHomeRoute,
+  urlPrescriptionHistory,
+  urlProfileRoute,
+  urlReviewRoute,
+} from "../../Service/UrlService";
 import authContext from "../../store/auth-context";
 import AuthenticationModalBody from "./AuthenticationModalBody";
 import ForgotModal from "./ForgotModal";
 import RegistrationModal from "./RegistrationModal";
 
-const LoginModal = ({ closeModal, isOrderNowPressed }) => {
+const LoginModal = ({
+  closeModal,
+  isOrderNowPressed,
+  reviewPressed,
+  pressUploadPrescription,
+}) => {
   const authCtx = useContext(authContext);
   let history = useHistory();
 
@@ -60,7 +71,7 @@ const LoginModal = ({ closeModal, isOrderNowPressed }) => {
         },
         before: () => {},
         successed: (res) => {
-          console.log(res)
+          console.log(res);
           authCtx.login({
             id: res.Data.Id,
             name: res.Data.Name,
@@ -71,6 +82,10 @@ const LoginModal = ({ closeModal, isOrderNowPressed }) => {
           });
           isOrderNowPressed
             ? history.push(urlCheckoutRoute())
+            : reviewPressed
+            ? history.push(urlReviewRoute())
+            : pressUploadPrescription
+            ? history.push(urlProfileRoute() + urlPrescriptionHistory())
             : history.push(urlHomeRoute());
           closeModal();
         },

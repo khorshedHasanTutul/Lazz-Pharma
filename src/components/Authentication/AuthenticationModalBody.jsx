@@ -6,6 +6,8 @@ const AuthenticationModalBody = ({
   closeLoginModalhandler,
   isOrderNowPressed,
   forgotPassPressed,
+  reviewPressed,
+  pressUploadPrescription
 }) => {
   return (
     <div id="demo-modal" class="modal">
@@ -15,6 +17,8 @@ const AuthenticationModalBody = ({
           closeLoginModalhandler={closeLoginModalhandler}
           isOrderNowPressed={isOrderNowPressed}
           forgotPassPressed={forgotPassPressed}
+          reviewPressed={reviewPressed}
+          pressUploadPrescription={pressUploadPrescription}
         />
         <a href class="modal__close" onClick={closeModal}>
           &times;

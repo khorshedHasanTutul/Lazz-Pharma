@@ -1,7 +1,17 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useParams } from "react-router-dom";
-import { GET_CURRENT_INFO, GET_ORDER_DETAILS } from "../../../lib/endpoints";
-import { http } from "../../../Service/httpService";
+import {
+  GET_CURRENT_INFO,
+  GET_ORDER_BY_PRESCRIPTIONS,
+  GET_ORDER_DETAILS,
+} from "../../../lib/endpoints";
+import { BASE_URL, http } from "../../../Service/httpService";
 import authContext from "../../../store/auth-context";
 import Suspense from "../../Suspense/Suspense";
 
@@ -12,6 +22,7 @@ const OrderDetails = () => {
   const [currentInfo, setCurrentInfo] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   let getDate = new Date(orderDetails?.createdAt);
+  const [prescriptions, setPrescriptions] = useState([]);
   const products = [];
 
   const getOrderDetailsHttp = () => {
@@ -23,6 +34,7 @@ const OrderDetails = () => {
         res.Data.Products.map(function (element) {
           return products.push(element.ProductId);
         });
+        getPrescriptionsByOrder();
         getCurrentInfo();
         setIsLoading(false);
       },
@@ -34,6 +46,18 @@ const OrderDetails = () => {
       },
     });
   };
+
+  const getPrescriptionsByOrder = useCallback(() => {
+    http.get({
+      url: GET_ORDER_BY_PRESCRIPTIONS + id,
+      before: () => {},
+      successed: (res) => {
+        setPrescriptions(res.Data);
+      },
+      failed: () => {},
+      always: () => {},
+    });
+  }, []);
 
   const getCurrentInfo = () => {
     http.post({
@@ -53,6 +77,7 @@ const OrderDetails = () => {
   useEffect(() => {
     getOrderDetailsHttp();
   }, []);
+  console.log({ prescriptions });
 
   return (
     <Fragment>
@@ -96,6 +121,26 @@ const OrderDetails = () => {
                 </div>
               </div>
             </div>
+            {prescriptions.length > 0 && (
+              <div className="prescription_card_orderDetails">
+                <div className="image_preview_container">
+                  <>
+                    <div className="image_previewer">
+                      {/* single item */}
+                      {prescriptions.map((file) => (
+                        <div className="image_prev">
+                          <img
+                            src={BASE_URL + file.FilePath}
+                            alt="img"
+                            srcset=""
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                </div>
+              </div>
+            )}
 
             <div class="shaping-address-saveing-row">
               <div class="shapping-address-inner-content">
@@ -119,13 +164,25 @@ const OrderDetails = () => {
 
             <div class="inv-flex-content d-flex js-center al-center">
               <h4>Order Invoice</h4>
-              <button
-                type="button"
-                onclick="printDiv('page')"
-                value="print a div!"
-              >
-                <span class="monami-button__text">Print Invoice</span>
-              </button>
+              <ul className="order-details-buttons d-flex js-center al-center">
+                <li>
+                  <div>
+                    <span class="monami-button__text">
+                      Upload Prescriptions
+                    </span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <span class="monami-button__text">Attach Prescription</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <span class="monami-button__text">Print Invoice</span>
+                  </div>
+                </li>
+              </ul>
             </div>
 
             <div id="page" class="order-invoice">

@@ -3108,9 +3108,23 @@ button {
   position: fixed;
   top: 0;
   transition: all 500ms ease-in-out;
-  z-index: 999999;
+  z-index: 999;
   width: 100%;
   background: white;
+}
+.prescription_card_orderDetails {
+  border: 1px solid whitesmoke;
+  background: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0.3);
+  padding: 9px;
+  margin-bottom: 12px;
+}
+.order-details-buttons > li div {
+  background: #016449;
+  color: white;
+  padding: 8px;
+  border-radius: 6px;
+  font-weight: bold;
 }
 
 main {

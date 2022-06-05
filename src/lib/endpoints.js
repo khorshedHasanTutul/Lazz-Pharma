@@ -35,3 +35,9 @@ export const GET_PRESCRIPTIONS =
   "ProductOrderArea/Prescription/MyPrescriptions/";
 export const POST_REQUEST_ORDER = "RequestOrderArea/RequestOrder/Create";
 export const REMOVE_PRESCRIPTION = "ProductOrderArea/Prescription/Remove/";
+export const POST_CONTACT = "ContactArea/Contact/Add";
+export const POST_REVIEW = "/ReviewArea/AppReview/Create";
+export const GET_REVIEW = "/ReviewArea/AppReview/Get";
+
+export const GET_ORDER_BY_PRESCRIPTIONS =
+  "/ProductOrderArea/ProductOrder/Prescriptions/";
