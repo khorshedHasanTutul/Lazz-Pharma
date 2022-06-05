@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { POST_CONTACT } from "../../lib/endpoints";
+import { http } from "../../Service/httpService";
+import Suspense from "../Suspense/Suspense";
 
 const ContactBodyTemplate = () => {
   //send button state
@@ -23,6 +26,8 @@ const ContactBodyTemplate = () => {
   const [email, setEmail] = useState("");
   const [emailIsTouched, setEmailIsTouched] = useState(false);
   const [emailIsValid, setEmailIsvalid] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   //Message Funcction
   const messageOnChangeHandler = ({ target }) => {
@@ -68,21 +73,43 @@ const ContactBodyTemplate = () => {
       message.length !== 0
     ) {
       //api post goes here
-      setName("");
-      setNameIsValid(false);
-      setNameIsTouched(false);
-      setEmail("");
-      setEmailIsvalid(false);
-      setEmailIsTouched(false);
-      setphone("");
-      setPhoneIsValid(false);
-      setPhoneIsTouched(false);
-      setMessage("");
-      setMessageIsTouched(false);
-      setMessageIsValid(false);
-      setClicked(false);
-
-      alert("Sent message successfully.");
+      http.post({
+        url: POST_CONTACT,
+        payload: {
+          Name: name,
+          Mobile: phone,
+          Email: email,
+          Massege: message,
+          ActivityId: window.ActivityId,
+        },
+        before: () => {
+          setClicked(false);
+          setIsLoading(true);
+          setName("");
+          setNameIsValid(false);
+          setNameIsTouched(false);
+          setEmail("");
+          setEmailIsvalid(false);
+          setEmailIsTouched(false);
+          setphone("");
+          setPhoneIsValid(false);
+          setPhoneIsTouched(false);
+          setMessage("");
+          setMessageIsTouched(false);
+          setMessageIsValid(false);
+          
+          setIsLoading(false);
+        },
+        successed: (res) => {
+          alert("Sent message successfully.");
+        },
+        failed: () => {
+          setIsLoading(true);
+        },
+        always: () => {
+          setIsLoading(false);
+        },
+      });
     }
   };
 
@@ -255,6 +282,7 @@ const ContactBodyTemplate = () => {
           </h3>
         </div>
       </div>
+      {isLoading && <Suspense />}
     </div>
   );
 };

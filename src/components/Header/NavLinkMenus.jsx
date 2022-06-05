@@ -27,10 +27,10 @@ const NavLinkMenus = () => {
       text:"Special Offer",
       to:urlSpecialOfferRoute(),
     },
-    {
-      text: "Branch & Location",
-      to: urlBranchLocationRoute(),
-    },
+    // {
+    //   text: "Branch & Location",
+    //   to: urlBranchLocationRoute(),
+    // },
     {
       text: "Review",
       to: urlReviewRoute(),

@@ -8,7 +8,7 @@ import addressContext from "../../store/address-context";
 import cartContext from "../../store/cart-context";
 import AlertPopUp from "./OrderAlert/AlertPopUp";
 
-const Payment = ({ AddressActiveHandler, addresses }) => {
+const Payment = ({ AddressActiveHandler, addresses, prescriptionsHis }) => {
   const [PopUpAlert, setPopUpAlert] = useState(false);
   const ctxAddress = useContext(addressContext);
   const ctxCart = useContext(cartContext);
@@ -100,10 +100,10 @@ const Payment = ({ AddressActiveHandler, addresses }) => {
           Items: products,
           ActivityId: "00000000-0000-0000-0000-000000000000",
           Remarks: getSelectedAddress.Remarks,
-          autoOrderIsActive: false,
+          autoOrderIsActive: prescriptionsHis.check,
           // CoupenAmount: discounted.Data,
           // CouponId: discounted.Id,
-          ImgId: [],
+          ImgId: prescriptionsHis.id,
           Cashback: 0,
           fineCash: 0,
         },

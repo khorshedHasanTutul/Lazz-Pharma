@@ -1,7 +1,13 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { GET_CURRENT_INFO } from "../../lib/endpoints";
+import { GET_CURRENT_INFO, POST_PRESCRIPTION } from "../../lib/endpoints";
 import { http } from "../../Service/httpService";
 import { urlHomeRoute } from "../../Service/UrlService";
 import addressContext from "../../store/address-context";
@@ -11,6 +17,7 @@ const ProductSummary = ({
   proceedToAddressHandler,
   AddressActiveHandler,
   addresses,
+  setPrescriptionsHis,
 }) => {
   const fileRef = useRef();
   let history = useHistory();
@@ -18,14 +25,17 @@ const ProductSummary = ({
   const ctxAddress = useContext(addressContext);
   const cartCtxModal = cartCtx.getCartModel;
   const [selectedFile, setSelectedFile] = useState();
-  const [preview, setPreview] = useState();
+  const [preview, setPreview] = useState([]);
   const [currentInfo, setCurrentInfo] = useState([]);
   const getCtxAddressActiveType = ctxAddress.getActiveType;
   const products = [];
   cartCtxModal.Items.map((item) => products.push(item.id));
+  const [files, setFiles] = useState([]);
+  const [imageIsInvalid, setImageIsInvalid] = useState(false);
   const findActiveAddress = addresses.find(
     (item) => item.Type === getCtxAddressActiveType.type
   );
+  const [checked, setIsChecked] = useState(false);
   const [qty, setQty] = useState("");
   // cartCtx.updateProductsPrice(currentInfo);
 
@@ -33,6 +43,9 @@ const ProductSummary = ({
     e.preventDefault();
     let quantity = findItem.quantity - 1;
     cartCtx.updateQuantity(findItem, quantity);
+  };
+  const clickedAutoOrderHandler = () => {
+    setIsChecked((prevState) => !prevState);
   };
 
   const qtyIncHandler = (findItem, e) => {
@@ -62,12 +75,32 @@ const ProductSummary = ({
     }
   };
 
-  const setSelectedFileHandler = (e) => {
-    if (!e.target.files || e.target.files.length === 0) {
-      setSelectedFile(undefined);
+  const proceedAddressHandler = () => {
+    proceedToAddressHandler();
+  };
+
+  const setSelectedFileHandler = ({ target }) => {
+    const file = target.files[0];
+    if (!file) return;
+    const allowedExtensions = ["jpg", "jpeg", "png", "pdf", "doc", "docx"];
+
+    const subs = file.name.toLowerCase().split(".");
+
+    if (!allowedExtensions.includes(subs[subs.length - 1])) {
+      setImageIsInvalid(true);
+      target.value = "";
+      return false;
+    } else setImageIsInvalid(false);
+
+    if (!target.files || target.files.length === 0) {
+      setSelectedFile();
       return;
     }
-    setSelectedFile(e.target.files[0]);
+    setSelectedFile(target.files[0]);
+    const objectUrl = URL.createObjectURL(target.files[0]);
+    setPreview((prevState) => [...prevState, { objectUrl: objectUrl }]);
+    postPrescription(file);
+    target.value = "";
   };
 
   const fileUploaderHandler = () => {
@@ -77,15 +110,26 @@ const ProductSummary = ({
     setPreview("");
   };
 
-  useEffect(() => {
-    if (!selectedFile) {
-      setPreview(undefined);
-      return;
-    }
-    const objectUrl = URL.createObjectURL(selectedFile);
-    setPreview(objectUrl);
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [selectedFile]);
+  const postPrescription = useCallback((file) => {
+    http.file({
+      url: POST_PRESCRIPTION,
+      payload: {
+        Img: file,
+        From: "Upload Prescription",
+        Description: "",
+        activityId: "00000000-0000-0000-0000-000000000000",
+      },
+      before: () => {},
+      successed: (res) => {
+        setFiles((prevState) => [...prevState, { image: file, id: res.Id }]);
+      },
+      failed: () => {},
+      always: () => {},
+      map: (res) => {
+        return res;
+      },
+    });
+  }, []);
 
   useEffect(() => {
     if (cartCtxModal.Items.length === 0) {
@@ -112,8 +156,12 @@ const ProductSummary = ({
   useEffect(() => {
     getCurrentInfo();
   }, []);
-
-  console.log({ currentInfo });
+  useEffect(() => {
+    setPrescriptionsHis({
+      id: files.map((item) => item.id),
+      check: checked,
+    });
+  }, [checked, files, setPrescriptionsHis]);
 
   return (
     <div class="tab_content">
@@ -272,33 +320,34 @@ const ProductSummary = ({
             </div>
           </div>
         )}
-        {/* <div>
-          <p class="OrderNotice" style={{ marginTop: "50px" }}>
-            *** সকাল ১০ টা থেকে ৭ টার মধ্যে অর্ডার করলে ২৪ থেকে ৪৮ ঘন্টার মধ্যে
-            ডেলিভারি। <br />
-            ***শুক্রবারে সকল ডেলিভারি কার্যক্রম বন্ধ থাকে।
-          </p>
-        </div> */}
+
         <div className="upload-Handler">
-          {preview && (
+          {files.length > 0 && (
             <div className="image_preview_container">
-              <div className="image_previewer">
-                <div className="image_prev">
-                  <img src={preview} alt="img" srcset="" />
-                  <p
-                    style={{
-                      color: "red",
-                      textAlign: "center",
-                      textDecoration: "underline",
-                      cursor: "pointer",
-                      marginTop: "10px",
-                    }}
-                    onClick={imageRemoverhandler}
-                  >
-                    Remove
-                  </p>
-                </div>
-              </div>
+              {files?.length > 0 && (
+                <>
+                  <div className="image_previewer">
+                    {/* single item */}
+                    {preview.map((file) => (
+                      <div className="image_prev">
+                        <img src={file.objectUrl} alt="img" srcset="" />
+                        <p
+                          style={{
+                            color: "red",
+                            textAlign: "center",
+                            textDecoration: "underline",
+                            cursor: "pointer",
+                            marginTop: "10px",
+                          }}
+                          onClick={imageRemoverhandler}
+                        >
+                          Remove
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
 
               <div
                 className="plus_icon_container"
@@ -319,16 +368,6 @@ const ProductSummary = ({
                 onChange={setSelectedFileHandler}
               />
             </div>
-            {/* <div className="prescription_order_section__note">
-            <label htmlFor="">Note</label>
-            <input type="text" onChange={noteOnChangeHandler} />
-          </div> */}
-            {/* <div
-            className="prescription_order_section__order-button"
-            onClick={submittedButtonHandler}
-          >
-            Save & Order
-          </div> */}
           </div>
         </div>
         <div className="auto-order-container">
@@ -344,6 +383,7 @@ const ProductSummary = ({
                 position: "relative",
                 outline: "currentcolor none 0px",
               }}
+              onClick={clickedAutoOrderHandler}
             />
             <p>Auto Order after 28 days</p>
           </div>
@@ -354,7 +394,7 @@ const ProductSummary = ({
             <Link class="prev-btn" to={urlHomeRoute()}>
               Continue shopping
             </Link>
-            <a onClick={proceedToAddressHandler} class="next-btn" href>
+            <a onClick={proceedAddressHandler} class="next-btn" href>
               Proceed to checkout
             </a>
           </div>

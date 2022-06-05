@@ -18,6 +18,10 @@ const Checkout = () => {
   const findActiveAddress = addresses.find(
     (item) => item.Type === getActiveTypeAddress.type
   );
+  const [prescriptionsHis, setPrescriptionsHis] = useState({
+    id: [],
+    check: false,
+  });
   const ProSummaryRef = useRef(null);
   const [isActiveProductSummary, setActiveProductSummary] = useState(true);
   const [isActiveAddress, setActiveAddress] = useState(false);
@@ -99,7 +103,7 @@ const Checkout = () => {
       );
     }
   }, [isActiveProductSummary, isActiveAddress, isActivePayment]);
-  console.log({addresses})
+  console.log({ addresses });
 
   const getAddressHttp = () => {
     http.post({
@@ -119,7 +123,7 @@ const Checkout = () => {
         // setIsLoading(true);
       },
       successed: (res) => {
-        console.log({res})
+        console.log({ res });
         setAddresses(res.Data.Data);
       },
       failed: () => {},
@@ -165,6 +169,7 @@ const Checkout = () => {
                   AddressActiveHandler={AddressActiveHandler}
                   proceedToAddressHandler={proceedToAddressHandler}
                   addresses={addresses}
+                  setPrescriptionsHis={setPrescriptionsHis}
                 />
               )}
               {isActiveAddress && (
@@ -174,6 +179,7 @@ const Checkout = () => {
                 <Payment
                   AddressActiveHandler={AddressActiveHandler}
                   addresses={addresses}
+                  prescriptionsHis={prescriptionsHis}
                 />
               )}
             </div>

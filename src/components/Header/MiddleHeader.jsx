@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
   urlHomeRoute,
+  urlPrescriptionHistory,
   urlProfileRoute,
   urlRequestOrderRoute,
 } from "../../Service/UrlService";
@@ -16,6 +17,7 @@ const MiddleHeader = forwardRef((props, ref) => {
   let history = useHistory();
   const [loginPopUp, setLoginPopUp] = useState(false);
   const [searchValue, setSearchValuye] = useState("");
+  const [pressUploadPrescription, setPresUploadPrescription] = useState(false);
 
   const userHandler = () => {
     if (authCtx.isLoggedIn) {
@@ -33,6 +35,14 @@ const MiddleHeader = forwardRef((props, ref) => {
   };
   const closeSearchHandler = () => {
     setSearchValuye("");
+  };
+  const uploadPrescription = () => {
+    setPresUploadPrescription(true);
+    if (authCtx.isLoggedIn !== true) {
+      setLoginPopUp(true);
+      return;
+    }
+    history.push(urlProfileRoute() + urlPrescriptionHistory());
   };
 
   return (
@@ -103,8 +113,8 @@ const MiddleHeader = forwardRef((props, ref) => {
         <div class="col-sm-3 col-lg-2">
           <div class="info-content">
             <ul>
-              <li>
-                <Link to={urlRequestOrderRoute()}>
+              <li onClick={uploadPrescription}>
+                <a href>
                   {/* <i class="fa fa-file-text-o" aria-hidden="true"></i> */}
                   {/* <img
                     src="./Contents/assets/image/prescription.png"
@@ -118,7 +128,7 @@ const MiddleHeader = forwardRef((props, ref) => {
                   <span title="Just upload prescription to place an order">
                     Upload Prescription
                   </span>
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
@@ -165,6 +175,7 @@ const MiddleHeader = forwardRef((props, ref) => {
         <AuthenticationModalBody
           Template={LoginModal}
           closeModal={closeAuthModalHandler}
+          pressUploadPrescription={pressUploadPrescription}
         />
       )}
     </div>

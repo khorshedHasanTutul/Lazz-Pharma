@@ -1,5 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { POST_PRESCRIPTION, POST_REQUEST_ORDER } from "../../lib/endpoints";
+import { sumAProperty } from "../../lib/utilities";
+import { http } from "../../Service/httpService";
 import { urlTermsConditionRoute } from "../../Service/UrlService";
 import PopAlert from "../utilities/alert/PopAlert";
 import RequestOrderTable from "./requestOrdertable/RequestOrderTable";
@@ -8,13 +11,16 @@ import RequestProductForm from "./RequestProductForm/RequestProductForm";
 
 const RequestProduct = () => {
   const fileRef = useRef();
+  const [files, setFiles] = useState([]);
   const inputFieldsRef = useRef();
   const inputRefFocus = useRef();
   const [isChecked, setIsChecked] = useState(false);
   const [product, setProduct] = useState([]);
   const [selectedFile, setSelectedFile] = useState();
-  const [preview, setPreview] = useState();
-  const [openAlert , setOpenAlert] = useState(false);
+  const [preview, setPreview] = useState([]);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [imageIsInvalid, setImageIsInvalid] = useState(false);
+  const [description, setDescription] = useState("");
 
   const checkedHandler = () => {
     setIsChecked((prevState) => !prevState);
@@ -30,19 +36,86 @@ const RequestProduct = () => {
   const fileUploaderHandler = () => {
     fileRef.current.click();
   };
-  const removeButtonHandler=()=>{
-    setOpenAlert(prevState => !prevState);
-  }
-  const setSelectedFileHandler = (e) => {
-    if (!e.target.files || e.target.files.length === 0) {
-      setSelectedFile(undefined);
+  const descriptionChangeHandler = ({ target }) => {
+    setDescription(target.value);
+  };
+  const removeButtonHandler = () => {
+    setOpenAlert((prevState) => !prevState);
+  };
+  const setSelectedFileHandler = ({ target }) => {
+    const file = target.files[0];
+    if (!file) return;
+    const allowedExtensions = ["jpg", "jpeg", "png", "pdf", "doc", "docx"];
+
+    const subs = file.name.toLowerCase().split(".");
+
+    if (!allowedExtensions.includes(subs[subs.length - 1])) {
+      setImageIsInvalid(true);
+      target.value = "";
+      return false;
+    } else setImageIsInvalid(false);
+
+    if (!target.files || target.files.length === 0) {
+      setSelectedFile();
       return;
     }
-    setSelectedFile(e.target.files[0]);
+    setSelectedFile(target.files[0]);
+    const objectUrl = URL.createObjectURL(target.files[0]);
+    setPreview((prevState) => [...prevState, { objectUrl: objectUrl }]);
+    postPrescription(file);
+
+    target.value = "";
   };
   const imageRemoverhandler = () => {
-    setPreview("");
+    setPreview();
   };
+  const postPrescription = useCallback((file) => {
+    http.file({
+      url: POST_PRESCRIPTION,
+      payload: {
+        Img: file,
+        From: "Upload Prescription",
+        Description: "",
+        activityId: "00000000-0000-0000-0000-000000000000",
+      },
+      before: () => {},
+      successed: (res) => {
+        setFiles((prevState) => [...prevState, { image: file, id: res.Id }]);
+      },
+      failed: () => {},
+      always: () => {},
+      map: (res) => {
+        return res;
+      },
+    });
+  }, []);
+  const postOrder = useCallback((files, products, description) => {
+    http.post({
+      url: POST_REQUEST_ORDER,
+      payload: {
+        TotalItem: products.length,
+        TotalQuantity: sumAProperty(products, "quantity"),
+        Items: products.map((product, i) => ({
+          Name: product.name,
+          Strength: product.strength,
+          Quantity: product.quantity,
+          Position: i + 1,
+        })),
+        ImgId: files.map((file) => file.id),
+        ActivityId: "00000000-0000-0000-0000-000000000000",
+        Remarks: description,
+      },
+      before: () => {},
+      successed: (res) => {
+        setOpenAlert(true);
+        setDescription("");
+        setProduct([]);
+        setFiles([]);
+      },
+      failed: () => {},
+      always: () => {},
+    });
+  }, []);
 
   const submitButtonHandler = () => {
     !isChecked &&
@@ -60,19 +133,9 @@ const RequestProduct = () => {
 
     if (isChecked && product.length > 0) {
       //api request goes here
-      setOpenAlert(true)
+      postOrder(files, product, description);
     }
   };
-
-  useEffect(() => {
-    if (!selectedFile) {
-      setPreview(undefined);
-      return;
-    }
-    const objectUrl = URL.createObjectURL(selectedFile);
-    setPreview(objectUrl);
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [selectedFile]);
 
   return (
     <div class="request_product">
@@ -96,58 +159,29 @@ const RequestProduct = () => {
 
       <div className="prscription_card" style={{ boxShadow: "none" }}>
         <div className="image_preview_container">
-          {preview && (
-            <div className="image_previewer">
-              <div className="image_prev">
-                <img src={preview} alt="img" srcset="" />
-                <p
-                  style={{
-                    color: "red",
-                    textAlign: "center",
-                    textDecoration: "underline",
-                    cursor: "pointer",
-                    marginTop: "10px",
-                  }}
-                  onClick={imageRemoverhandler}
-                >
-                  Remove
-                </p>
+          {files?.length > 0 && (
+            <>
+              <div className="image_previewer">
+                {/* single item */}
+                {preview.map((file) => (
+                  <div className="image_prev">
+                    <img src={file.objectUrl} alt="img" srcset="" />
+                    <p
+                      style={{
+                        color: "red",
+                        textAlign: "center",
+                        textDecoration: "underline",
+                        cursor: "pointer",
+                        marginTop: "10px",
+                      }}
+                      onClick={imageRemoverhandler}
+                    >
+                      Remove
+                    </p>
+                  </div>
+                ))}
               </div>
-              {/* <div className="image_prev">
-              <img
-                src="/Contents/assets/image/banner2.jpg"
-                alt="img"
-                srcset=""
-              />
-              <p
-                style={{
-                  color: "red",
-                  textAlign: "center",
-                  textDecoration: "underline",
-                  cursor: "pointer",
-                }}
-              >
-                Remove
-              </p>
-            </div>
-            <div className="image_prev">
-              <img
-                src="/Contents/assets/image/banner2.jpg"
-                alt="img"
-                srcset=""
-              />
-              <p
-                style={{
-                  color: "red",
-                  textAlign: "center",
-                  textDecoration: "underline",
-                  cursor: "pointer",
-                }}
-              >
-                Remove
-              </p>
-            </div> */}
-            </div>
+            </>
           )}
 
           <div className="plus_icon_container" onClick={fileUploaderHandler}>
@@ -173,7 +207,15 @@ const RequestProduct = () => {
       </div>
       <div className="prescription_description">
         <label htmlFor="description">Description</label>
-        <textarea name="pres_description" id="" cols="5" rows="5"></textarea>
+        <textarea
+          name="pres_description"
+          id=""
+          cols="5"
+          rows="5"
+          style={{ height: "auto" }}
+          value={description}
+          onChange={descriptionChangeHandler}
+        ></textarea>
       </div>
 
       <div
@@ -201,11 +243,9 @@ const RequestProduct = () => {
           <span class=""></span> Send Product Request
         </button>
       </div>
-      {
-        openAlert && (
-          <RequestProductAlert removeButtonHandler={removeButtonHandler}/>
-        )
-      }
+      {openAlert && (
+        <RequestProductAlert removeButtonHandler={removeButtonHandler} />
+      )}
     </div>
   );
 };
