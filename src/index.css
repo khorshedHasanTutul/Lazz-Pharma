@@ -2766,12 +2766,11 @@ button {
   margin-top: 5px;
 }
 .table_header_items {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   border-bottom: 2px solid #016449;
   margin-bottom: 2px;
-  flex-wrap: wrap;
+  place-items: center;
 }
 .table_content_items {
   display: flex;
@@ -2780,10 +2779,9 @@ button {
   flex-wrap: wrap;
 }
 .table_content__single-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  place-items: center;
 }
 .items-found-container {
   width: 100%;
@@ -2995,6 +2993,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 }
 
 .prescription_order_section {
@@ -3093,6 +3092,38 @@ button {
   top: 0;
   background: white;
   transition: all 500ms ease-in-out;
+}
+.upload-button-text-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-weight: bold;
+}
+.upload-button-text-container div {
+  background: #016449;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 6px;
+  margin-top: 3px;
+  cursor: pointer;
+}
+.checkbox-attached input {
+  position: absolute;
+  height: 15px;
+  top: 0;
+  left: 36px;
+}
+.save-prescription {
+  background: #016449;
+  /* display: ; */
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 5px;
+  color: white;
+  display: inline-block;
+  text-align: center;
+  width: 20%;
+  cursor: pointer;
 }
 
 .position-fixed-to-top-navBar {

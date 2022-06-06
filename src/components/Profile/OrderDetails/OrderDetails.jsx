@@ -11,9 +11,12 @@ import {
   GET_ORDER_BY_PRESCRIPTIONS,
   GET_ORDER_DETAILS,
 } from "../../../lib/endpoints";
+import { humanizeShortDateTime } from "../../../lib/utilities";
 import { BASE_URL, http } from "../../../Service/httpService";
 import authContext from "../../../store/auth-context";
 import Suspense from "../../Suspense/Suspense";
+import AttachPrescriptionAlert from "../PrescriptionAlert/AttachPrescriptionAlert";
+import UploadPrescriptionAlert from "../PrescriptionAlert/UploadPrescriptionAlert";
 
 const OrderDetails = () => {
   let { id } = useParams();
@@ -24,6 +27,42 @@ const OrderDetails = () => {
   let getDate = new Date(orderDetails?.createdAt);
   const [prescriptions, setPrescriptions] = useState([]);
   const products = [];
+  const [UploadPresAlert, setUploadPresAlert] = useState(false);
+  const [attachPres, setAttachPres] = useState(false);
+  console.log({ orderDetails });
+  const printInvoiceHandler = () => {
+    localStorage.setItem(
+      "Invoice",
+      JSON.stringify({
+        orderNo: orderDetails?.Order.OrderNo,
+        userName: authCtx.user.name,
+        phone: authCtx.user.phone,
+        orderDate: `${getDate.toLocaleDateString()} ${getDate.toLocaleTimeString()}`,
+        today: humanizeShortDateTime(`/Date(${new Date().getTime()})/`),
+        products: orderDetails?.Products,
+        subTotal: orderDetails?.Order.TotalAmount,
+        payable: orderDetails?.Order.PayableAmount,
+        couponDiscount: orderDetails?.Order.CouponDiscount,
+        deliveryChange: orderDetails?.Order.ShippingCharge,
+        address: {
+          contactName: orderDetails?.Order.ComtactName,
+          phone: orderDetails?.Order.ComtactPhone,
+          email: orderDetails?.Order.ComtactEmail,
+          text: orderDetails?.Order.Remarks,
+          upazila: orderDetails?.Order.Upazila,
+          district: orderDetails?.Order.District,
+          division: orderDetails?.Order.Province,
+        },
+      })
+    );
+    window.open("/invoice.html", "_blank");
+  };
+  const closePrescriptionModal = () => {
+    setUploadPresAlert((prevState) => !prevState);
+  };
+  const closeAttachPreshandler = () => {
+    setAttachPres((prevState) => !prevState);
+  };
 
   const getOrderDetailsHttp = () => {
     http.get({
@@ -74,10 +113,18 @@ const OrderDetails = () => {
     });
   };
 
+  const uploadPrescriptionHandler = () => {
+    setUploadPresAlert((prevState) => !prevState);
+  };
+  const attachedPrescriptionHandler = () => {
+    setAttachPres((prevState) => !prevState);
+  };
+
   useEffect(() => {
     getOrderDetailsHttp();
   }, []);
-  console.log({ prescriptions });
+
+  console.log({ orderDetails });
 
   return (
     <Fragment>
@@ -133,6 +180,7 @@ const OrderDetails = () => {
                             src={BASE_URL + file.FilePath}
                             alt="img"
                             srcset=""
+                            style={{ height: "100%" }}
                           />
                         </div>
                       ))}
@@ -166,19 +214,19 @@ const OrderDetails = () => {
               <h4>Order Invoice</h4>
               <ul className="order-details-buttons d-flex js-center al-center">
                 <li>
-                  <div>
+                  <div onClick={uploadPrescriptionHandler}>
                     <span class="monami-button__text">
                       Upload Prescriptions
                     </span>
                   </div>
                 </li>
                 <li>
-                  <div>
+                  <div onClick={attachedPrescriptionHandler}>
                     <span class="monami-button__text">Attach Prescription</span>
                   </div>
                 </li>
                 <li>
-                  <div>
+                  <div onClick={printInvoiceHandler}>
                     <span class="monami-button__text">Print Invoice</span>
                   </div>
                 </li>
@@ -335,6 +383,20 @@ const OrderDetails = () => {
         </div>
       )}
       {isLoading && <Suspense />}
+      {UploadPresAlert && (
+        <UploadPrescriptionAlert
+          orderNo={orderDetails.Order.Id}
+          closeModal={closePrescriptionModal}
+          getPrescriptionsByOrder={getPrescriptionsByOrder}
+        />
+      )}
+      {attachPres && (
+        <AttachPrescriptionAlert
+          closeModal={closeAttachPreshandler}
+          orderId={orderDetails.Order.Id}
+          getPrescriptionsByOrder={getPrescriptionsByOrder}
+        />
+      )}
     </Fragment>
   );
 };

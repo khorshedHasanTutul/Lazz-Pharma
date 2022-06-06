@@ -38,6 +38,11 @@ export const REMOVE_PRESCRIPTION = "ProductOrderArea/Prescription/Remove/";
 export const POST_CONTACT = "ContactArea/Contact/Add";
 export const POST_REVIEW = "/ReviewArea/AppReview/Create";
 export const GET_REVIEW = "/ReviewArea/AppReview/Get";
-
 export const GET_ORDER_BY_PRESCRIPTIONS =
   "/ProductOrderArea/ProductOrder/Prescriptions/";
+export const ATTACH_PRESCRIPTION =
+  "ProductOrderArea/ProductOrder/AddPrescription";
+export const REQUEST_ORDER_GET = "/RequestOrderArea/RequestOrder/Get";
+export const REQUEST_ORDER_ITEMS_GET = "/RequestOrderArea/RequestOrder/Items/";
+export const REQUEST_ORDER_PRES_GET =
+  "/RequestOrderArea/RequestOrder/Prescriptions/";

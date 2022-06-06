@@ -10,5 +10,24 @@ export const paramsUrlGenerator = (params) => {
 };
 
 export const sumAProperty = (items = [], path) => {
-    return items.reduce((total, product) => (+product[path] + total), 0);
+  return items.reduce((total, product) => +product[path] + total, 0);
+};
+
+export const humanizeShortDateTime = (enData) => {
+  const regex = /\d+/g;
+  const timestamp = (enData.match(regex) || []).join("");
+
+  if (typeof +timestamp === "number") {
+    const date = new Date(+timestamp);
+
+    return `${date.toLocaleString("en-GB", {
+      dateStyle: "short",
+    })} ${date.toLocaleString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    })}`;
   }
+
+  return "Error parsing date";
+};

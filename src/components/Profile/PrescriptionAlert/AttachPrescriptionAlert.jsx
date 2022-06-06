@@ -1,0 +1,120 @@
+import React, { useCallback, useEffect, useState } from "react";
+import { ATTACH_PRESCRIPTION, GET_PRESCRIPTIONS } from "../../../lib/endpoints";
+import { BASE_URL, http } from "../../../Service/httpService";
+
+const AttachPrescriptionAlert = ({
+  closeModal,
+  orderId,
+  getPrescriptionsByOrder,
+}) => {
+  const [existPrescriptions, setExistPrescriptions] = useState([]);
+  const [attachedPrescription, setAttachedPrescription] = useState([]);
+  const [checkedStatus, setCheckedStatus] = useState([{ status: false }]);
+  const getPrescriptions = useCallback(() => {
+    http.get({
+      url: GET_PRESCRIPTIONS,
+      before: () => {},
+      successed: (res) => {
+        setExistPrescriptions(res.Data);
+      },
+      failed: () => {},
+      always: () => {},
+      map: (res) => {
+        return res;
+      },
+    });
+  }, []);
+  const selectedItemHandler = (item, { target }) => {
+    const findItem = attachedPrescription.filter(
+      (item2) => item2.Id === item.Id
+    );
+    if (target.checked && findItem.length === 0) {
+      setAttachedPrescription((prevState) => [...prevState, item]);
+    } else {
+      const findItem = attachedPrescription.filter(
+        (item2) => item2.Id !== item.Id
+      );
+      setAttachedPrescription(findItem);
+    }
+  };
+  const saveHandler = () => {
+    attachedPrescription.length > 0 &&
+      http.post({
+        url: ATTACH_PRESCRIPTION,
+        payload: {
+          Prescriptions: attachedPrescription.map((f) => f.Id),
+          OrderId: orderId,
+          ActivityId: "00000000-0000-0000-0000-000000000000",
+        },
+        before: () => {},
+        successed: () => {
+          getPrescriptionsByOrder();
+          closeModal();
+        },
+        failed: () => {},
+        always: () => {},
+      });
+  };
+  useEffect(() => {
+    getPrescriptions();
+  }, [getPrescriptions]);
+
+  return (
+    <div id="pop-up">
+      <div class="overlay__popup show">
+        <div class="popup undefined">
+          <div class="popup__title">
+            <h2>Attached Prescription</h2>
+            <div
+              style={{ color: "white", fontSize: "1.5rem", cursor: "pointer" }}
+              onClick={closeModal}
+            >
+              ✖
+            </div>
+          </div>
+          <div class="popup__body">
+            <div>
+              <div className="count_prescription">
+                <p style={{ fontWeight: "bold" }}>
+                  {attachedPrescription.length} Prescriptions total Selected
+                </p>
+              </div>
+              <div className="upload-Handler">
+                <div className="image_preview_container">
+                  {existPrescriptions.length > 0 && (
+                    <div className="image_previewer">
+                      {/* single item  */}
+                      {existPrescriptions.map((item) => (
+                        <div className="image_prev">
+                          <img
+                            src={BASE_URL + item.FilePath}
+                            alt="img"
+                            srcset=""
+                            style={{ height: "auto" }}
+                          />
+                          <div className="checkbox-attached">
+                            <input
+                              type="checkbox"
+                              name="attached_pres"
+                              id="attached_pres"
+                              onClick={selectedItemHandler.bind(this, item)}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="save-prescription d-flex" onClick={saveHandler}>
+                Save
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AttachPrescriptionAlert;
