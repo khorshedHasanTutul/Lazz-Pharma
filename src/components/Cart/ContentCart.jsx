@@ -43,6 +43,7 @@ const ContentCart = ({
       setQty(target.value);
     }
     cartCtx.updateEditableQuantity(item, target.value);
+    console.log({ item });
   };
 
   const blurHandler = (item) => {
@@ -57,7 +58,7 @@ const ContentCart = ({
   const orderNowButtonPressedHandler = (evt) => {
     if (cartCtxModal.Items.length === 0) {
       evt.preventDefault();
-      alert("Please select at least one product")
+      alert("Please select at least one product");
       openCart();
       return false;
     }

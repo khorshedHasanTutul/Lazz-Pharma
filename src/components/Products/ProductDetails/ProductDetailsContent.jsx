@@ -1,19 +1,21 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import appData from "../../../Service/DataSource/appData";
+import { PRODUCT_DETAILS_GET } from "../../../lib/endpoints";
+import { searchItemsConvertObject } from "../../../lib/utilities";
+import { http } from "../../../Service/httpService";
 import cartContext from "../../../store/cart-context";
-import { BASE_URL, PRODUCT_DETAILS } from "../../lib/endpoints";
+import { BASE_URL } from "../../lib/endpoints";
 import ProductInfoTabs from "./ProductInfoTabs";
 
 const ProductDetailsContent = () => {
   const { id } = useParams();
-  const getDataById = appData.categoryProducts.find((item) => item.id === id);
   const [qty, setQty] = useState("");
   const getCartContext = useContext(cartContext);
   const getCartCtxItems = getCartContext.getCartModel.Items;
-  const findItem = getCartCtxItems.find((item2) => item2.id === getDataById.id);
+  const findItem = getCartCtxItems.find((item2) => item2.id === id);
   const [clickedReviewHandler, setClickedReviewHandler] = useState(false);
   const [visibleCartBox, setVisibleCartBox] = useState(false);
+  const [productDetails, setProductDetails] = useState();
   // const [count, setCount] = useState(1);
   const storeCartHandler = (item, e) => {
     e.preventDefault();
@@ -52,44 +54,21 @@ const ProductDetailsContent = () => {
     }
   };
 
-  // const qtyIncHandler = () => {
-  //   setCount(parseInt(count) + 1);
-  // };
-  // const qtyDechandler = () => {
-  //   if (count > 1) {
-  //     setCount(parseInt(count) - 1);
-  //   }
-  // };
-  // const qtyOnChangeHandler = ({ target }) => {
-  //   setCount(target.value);
-  // };
-
-  // const addToCartHandler = () => {
-  //   // cartCtx.singleProductAdd(item,count);
-  //   alert("Under Construction");
-  // };
-
   const reviewClickedHandler = () => {
     setClickedReviewHandler((prevState) => !prevState);
   };
-
-  // const { id } = useParams();
-  // const axios = require("axios").default;
-
-  // const sendGetRequest = async () => {
-  //   try {
-  //     const response = await axios.get(BASE_URL + PRODUCT_DETAILS, {
-  //       params: { id: id },
-  //     });
-  //     console.log(response.data);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   sendGetRequest();
-  // }, []);
+  const getProductDetails = useCallback(() => {
+    http.get({
+      url: PRODUCT_DETAILS_GET + id,
+      before: () => {},
+      successed: (res) => {
+        res.Id = id;
+        setProductDetails(searchItemsConvertObject(res));
+      },
+      failed: () => {},
+      always: () => {},
+    });
+  }, []);
   useEffect(() => {
     if (findItem) {
       setVisibleCartBox(true);
@@ -97,6 +76,10 @@ const ProductDetailsContent = () => {
       setVisibleCartBox(false);
     }
   }, [findItem]);
+  useEffect(() => {
+    getProductDetails();
+  }, []);
+  console.log({ productDetails });
 
   return (
     <div id="center_column" class="center_column col-xs-12 col-sm-9">
@@ -106,75 +89,55 @@ const ProductDetailsContent = () => {
             <div class="product-image">
               <div class="product-full">
                 <div class="product-image">
-                  <img src="/Contents/assets/image/koko.jpeg" alt="img" />
+                  <img
+                    src={
+                      BASE_URL +
+                      "/Content/ImageData/Products/Small/" +
+                      productDetails?.image
+                    }
+                    alt="img"
+                  />
                 </div>
               </div>
             </div>
           </div>
           <div class="pb-right-column col-xs-12 col-sm-6">
-            <h1 class="product-name">{getDataById.Nm}</h1>
+            <h1 class="product-name">{productDetails?.Nm}</h1>
             <div class="product-comments">
-              <div class="product-star">
+              {/* <div class="product-star">
                 <i class="fa fa-star-o"></i>
                 <i class="fa fa-star-o"></i>
                 <i class="fa fa-star-o"></i>
                 <i class="fa fa-star-o"></i>
                 <i class="fa fa-star-o"></i>
-              </div>
+              </div> */}
               <div class="comments-advices">
-                <a href>No Review</a>
+                {/* <a href>No Review</a> */}
                 <a href onClick={reviewClickedHandler}>
                   <i class="fa fa-pencil"></i> write a review
                 </a>
               </div>
             </div>
             <div class="product-price-group">
-              <span class="price">৳ {getDataById.MRP}</span>
+              <span class="price">৳ {productDetails?.MRP}</span>
             </div>
             <div className="generic-name" style={{ lineHeight: "20px" }}>
               <p>
-                <span>Generic Name</span> : Mask
+                <span>Generic Name</span> : {productDetails?.GN}
               </p>
             </div>
             <div class="info-orther" style={{ lineHeight: "20px" }}>
               <p>
-                <span>Item Code</span> : N/A
+                <span>Supplier Name</span> : {productDetails?.supplier}
               </p>
             </div>
-            <div class="product-desc">
+            {/* <div class="product-desc">
               <p>S3 Meltblown 99% Surgical Mask SGS CE DGDA Certified</p>
-            </div>
-            {/* <div class="form-option">
-              <p class="form-option-title">Quantity:</p>
-              <div class="new-attributes attributes input-group bootstrap-touchspin">
-                <button
-                  class="vertical-up btn btn-default bootstrap-touchspin-up"
-                  type="button"
-                  onClick={qtyDechandler}
-                >
-                  <i class="fa fa-minus" aria-hidden="true"></i>
-                </button>
-                <input
-                  name="qty"
-                  value={count}
-                  class="vertical-qty form-control"
-                  style={{ display: "block" }}
-                  type="text"
-                  onChange={qtyOnChangeHandler}
-                />
-                <button
-                  class="vertical-down btn btn-default bootstrap-touchspin-down"
-                  type="button"
-                  onClick={qtyIncHandler}
-                >
-                  <i class="fa fa-plus" aria-hidden="true"></i>
-                </button>
-              </div>
             </div> */}
             {!visibleCartBox && (
               <div
                 class="add-to-cart d-flex al-center j-center"
-                onClick={storeCartHandler.bind(this, getDataById)}
+                onClick={storeCartHandler.bind(this, productDetails)}
                 style={{ width: "50%" }}
               >
                 <svg
@@ -206,8 +169,8 @@ const ProductDetailsContent = () => {
                           name="qty"
                           id="qty"
                           value={findItem?.quantity}
-                          onChange={qtyChangeHandler.bind(null, getDataById)}
-                          onBlur={blurHandler.bind(null, getDataById)}
+                          onChange={qtyChangeHandler.bind(null, productDetails)}
+                          onBlur={blurHandler.bind(null, productDetails)}
                         />
                       </aside>
                       <span
@@ -227,6 +190,7 @@ const ProductDetailsContent = () => {
         <ProductInfoTabs
           clickedReviewHandler={clickedReviewHandler}
           reviewClickedHandler={reviewClickedHandler}
+          productDetails={productDetails}
         />
       </div>
     </div>

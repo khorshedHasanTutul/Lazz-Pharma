@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { useEffect } from "react/cjs/react.development";
 import {
   CREATE_LOGIN,
   CREATE_REGISTRATION,

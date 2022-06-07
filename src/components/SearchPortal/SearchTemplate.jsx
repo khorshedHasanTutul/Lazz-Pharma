@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import appData from "../../Service/DataSource/appData";
+import { searchItemsConvertObject } from "../../lib/utilities";
+import { BASE_URL } from "../../Service/httpService";
 import { urlProductDetails } from "../../Service/UrlService";
 import cartContext from "../../store/cart-context";
 
 const SearchTemplate = ({ item, closeSearch, lowerSearchvalue, setalert }) => {
+  item = searchItemsConvertObject(item);
   const [qty, setQty] = useState("");
-  const categoryData = appData.BottomHeader[0].dropDownCategoryItem.find(
-    (item2) => item2.categoryId === item.category_id
-  );
   const getCartContext = useContext(cartContext);
   const [visibleCartBox, setVisibleCartBox] = useState(false);
   const getCartCtxItems = getCartContext.getCartModel.Items;
@@ -72,7 +71,10 @@ const SearchTemplate = ({ item, closeSearch, lowerSearchvalue, setalert }) => {
     <div class="search-result__items">
       <div class="result-card">
         <div class="result-card__img">
-          <img src="/Contents/assets/image/koko.jpeg" alt="product_image" />
+          <img
+            src={BASE_URL + "/Content/ImageData/Products/Small/" + item.image}
+            alt="img"
+          />
         </div>
         <div class="result-card__details">
           <Link
@@ -81,6 +83,15 @@ const SearchTemplate = ({ item, closeSearch, lowerSearchvalue, setalert }) => {
             onClick={closeSearch}
           >
             <span dangerouslySetInnerHTML={getHTML()}></span>
+            <span>
+              &nbsp;{item.St}&nbsp;{item.category}
+            </span>
+            <div style={{ fontWeight: "400" }}>
+              <span>{item.GN}</span>
+            </div>
+            <div style={{ fontWeight: "400" }}>
+              <span>{item.supplier}</span>
+            </div>
           </Link>
           <p class="result-card__details--price">
             <span>Price: </span>
@@ -106,8 +117,8 @@ const SearchTemplate = ({ item, closeSearch, lowerSearchvalue, setalert }) => {
             href
             onClick={closeSearch}
           >
-            <span>Category: </span>
-            <span class="current">{categoryData.categoryName}</span>
+            {/* <span>Category: </span>
+            <span class="current">{item.category}</span> */}
           </Link>
         </div>
         {!visibleCartBox && (

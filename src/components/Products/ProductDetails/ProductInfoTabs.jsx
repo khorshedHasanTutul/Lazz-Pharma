@@ -1,28 +1,57 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
+import { POST_REVIEW_PRODUCT } from "../../../lib/endpoints";
+import { http } from "../../../Service/httpService";
 
-const ProductInfoTabs = ({ clickedReviewHandler, reviewClickedHandler }) => {
+const ProductInfoTabs = ({
+  clickedReviewHandler,
+  reviewClickedHandler,
+  productDetails,
+}) => {
+  const { id } = useParams();
   const ref = useRef(null);
   const refAutoFocus = useRef();
   const [isActiveDetails, setIsActiveDetails] = useState(true);
-  const [isActiveInformation, setIsActiveInformation] = useState(false);
+  // const [isActiveInformation, setIsActiveInformation] = useState(false);
   const [isActiveReview, setIsActiveReview] = useState(false);
+  const [review, setReview] = useState("");
+  const [getReviews, setGetReviews] = useState([]);
 
   const detailsActiveHandler = () => {
     setIsActiveDetails(true);
-    setIsActiveInformation(false);
+    // setIsActiveInformation(false);
     setIsActiveReview(false);
   };
 
-  const informationActiveHandler = () => {
-    setIsActiveDetails(false);
-    setIsActiveInformation(true);
-    setIsActiveReview(false);
-  };
+  // const informationActiveHandler = () => {
+  //   setIsActiveDetails(false);
+  //   setIsActiveInformation(true);
+  //   setIsActiveReview(false);
+  // };
 
   const reviewActiveHandler = () => {
     setIsActiveDetails(false);
-    setIsActiveInformation(false);
+    // setIsActiveInformation(false);
     setIsActiveReview(true);
+  };
+  const reviewChangeHandler = ({ target }) => {
+    setReview(target.value);
+  };
+  const submitReviewHandler = () => {
+    if (review.length > 0) {
+      http.post({
+        url: POST_REVIEW_PRODUCT,
+        payload: {
+          ProductId: id,
+          Content: review,
+        },
+        before: () => {},
+        successed: (res) => {
+          setReview("");
+        },
+        failed: () => {},
+      });
+    }
   };
 
   useEffect(() => {
@@ -44,17 +73,17 @@ const ProductInfoTabs = ({ clickedReviewHandler, reviewClickedHandler }) => {
     } else {
       ref.current.classList.remove("active");
     }
-    if (isActiveInformation) {
-      ref.current.nextElementSibling.classList.add("active");
-    } else {
-      ref.current.nextElementSibling.classList.remove("active");
-    }
+    // if (isActiveInformation) {
+    //   ref.current.nextElementSibling.classList.add("active");
+    // } else {
+    //   ref.current.nextElementSibling.classList.remove("active");
+    // }
     if (isActiveReview) {
-      ref.current.parentNode.childNodes[2].classList.add("active");
+      ref.current.parentNode.childNodes[1].classList.add("active");
     } else {
-      ref.current.parentNode.childNodes[2].classList.remove("active");
+      ref.current.parentNode.childNodes[1].classList.remove("active");
     }
-  }, [isActiveDetails, isActiveInformation, isActiveReview]);
+  }, [isActiveDetails, isActiveReview]);
 
   return (
     <div class="product-tab">
@@ -64,11 +93,11 @@ const ProductInfoTabs = ({ clickedReviewHandler, reviewClickedHandler }) => {
             Product Details
           </a>
         </li>
-        <li onClick={informationActiveHandler}>
+        {/* <li onClick={informationActiveHandler}>
           <a href data-toggle="tab">
             Information
           </a>
-        </li>
+        </li> */}
         <li onClick={reviewActiveHandler}>
           <a href data-toggle="tab">
             Reviews
@@ -78,11 +107,18 @@ const ProductInfoTabs = ({ clickedReviewHandler, reviewClickedHandler }) => {
       <div class="tab-container" style={{ position: "relative" }}>
         {isActiveDetails && (
           <div class="tab-panel" style={{ position: "inherit" }}>
-            <p>N/A</p>
+            <p>
+              {productDetails?.details && productDetails.details}
+              The Information Provided Here Is For Informational Purposes Only.
+              This May Not Cover All Possible Side Effects, Drug Interactions Or
+              Warnings Or Alerts. Please Consult Your Doctor And Discuss All
+              Your Queries Related To Any Disease Or Medicine. We Intend To
+              Support, Not Replace, The Doctor-Patient Relationship.
+            </p>
           </div>
         )}
 
-        {isActiveInformation && (
+        {/* {isActiveInformation && (
           <div class="tab-panel " style={{ position: "inherit" }}>
             <table class="table table-bordered">
               <tbody>
@@ -109,7 +145,7 @@ const ProductInfoTabs = ({ clickedReviewHandler, reviewClickedHandler }) => {
               </tbody>
             </table>
           </div>
-        )}
+        )} */}
 
         {isActiveReview && (
           <div class="product-comments-block-tab">
@@ -123,11 +159,11 @@ const ProductInfoTabs = ({ clickedReviewHandler, reviewClickedHandler }) => {
                     placeholder="Post Your Review Here"
                     type="text"
                     data-type="string"
-                    max=""
-                    min=""
+                    value={review}
+                    onChange={reviewChangeHandler}
                   />
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" onClick={submitReviewHandler}>
                   <button
                     class="button form-control"
                     type="submit"

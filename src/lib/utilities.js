@@ -31,3 +31,35 @@ export const humanizeShortDateTime = (enData) => {
 
   return "Error parsing date";
 };
+
+export const searchItemsConvertObject = (item) => {
+  return {
+    Nm: item.Name,
+    id: item.Id,
+    MRP: item.UnitSalePrice,
+    Ds: item.Discount,
+    St: item.Strength,
+    GN: item.GenericName,
+    image: item.ImagePath,
+    category: item.Category,
+    supplier: item.Suplier,
+    details: item.Details,
+  };
+};
+
+export const tranformQuery = (text, func) => {
+  const duplicateText = text;
+  var query = text.split(" ");
+  // text.split(' ').each(function () {
+  //   text = (this + '').trim();
+  //   if (text && text.length > 0) {
+  //     query.push(text);
+  //   }
+  // });
+
+  // if (duplicateText[duplicateText.length - 1] === ' ') {
+  //   query[query.length - 1] += ' ';
+  // }
+
+  return query;
+};

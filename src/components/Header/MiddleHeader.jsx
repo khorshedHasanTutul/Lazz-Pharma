@@ -159,7 +159,7 @@ const MiddleHeader = forwardRef((props, ref) => {
               <i class="fa fa-user-o" aria-hidden="true"></i>
             </a>
           </li>
-          <li>
+          <li className="notification">
             <a href title="Notification">
               <i class="fa fa-bell-o" aria-hidden="true"></i>
             </a>

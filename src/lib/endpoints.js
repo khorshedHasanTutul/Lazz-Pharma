@@ -46,3 +46,9 @@ export const REQUEST_ORDER_GET = "/RequestOrderArea/RequestOrder/Get";
 export const REQUEST_ORDER_ITEMS_GET = "/RequestOrderArea/RequestOrder/Items/";
 export const REQUEST_ORDER_PRES_GET =
   "/RequestOrderArea/RequestOrder/Prescriptions/";
+
+export const SEARCH_PRODUCT = "/ProductArea/Product/Search";
+
+export const PRODUCT_DETAILS_GET = "/ProductArea/ProductContent/ByProduct/";
+export const GET_RELATED_PRODUCTS = "/ProductArea/Product/GetRelated/";
+export const POST_REVIEW_PRODUCT = "/ReviewArea/Comment/Create";
