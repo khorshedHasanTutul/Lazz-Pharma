@@ -163,6 +163,8 @@ const ProductSummary = ({
     });
   }, [checked, files, setPrescriptionsHis]);
 
+  console.log({currentInfo})
+
   return (
     <div class="tab_content">
       <div class="heading-counter warning">
