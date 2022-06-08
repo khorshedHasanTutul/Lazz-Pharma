@@ -26,6 +26,7 @@ const OrderCard = ({ order }) => {
   const attachedPrescriptionHandler = () => {
     setAttachPres((prevState) => !prevState);
   };
+  const refilOrderHandler = () => {};
   const clickedToViewOrder = () => {
     history.push(urlProfileRoute() + urlOrderDetailsRoute() + order.Id);
   };
@@ -55,6 +56,11 @@ const OrderCard = ({ order }) => {
                   </div>
                 </li>
                 <li>
+                  <div className="button-order" onClick={refilOrderHandler}>
+                    <div>Refil Order</div>
+                  </div>
+                </li>
+                <li>
                   <div className="button-order" onClick={clickedToViewOrder}>
                     <div>View Details</div>
                   </div>
@@ -76,19 +82,14 @@ const OrderCard = ({ order }) => {
                 {order.Province}
               </aside>
             </div>
-            {/* <p>
-            Lorem ipsum dolor sit amet consectetur , adipisicing elit.
-            Necessitatibus fugit, soluta dicta obcaecati eos voluptatibus iste
-            culpa, provident est nihil voluptas exercitationem possimus, a
-            suscipit?
-          </p> */}
           </a>
         </div>
         {/* <!-- product desc review information --> */}
       </div>
       {UploadPresAlert && (
         <UploadPrescriptionAlert
-          orderNo={order.Id}
+          orderId={order.Id}
+          orderNumber={order.OrderNo}
           closeModal={closePrescriptionModal}
         />
       )}

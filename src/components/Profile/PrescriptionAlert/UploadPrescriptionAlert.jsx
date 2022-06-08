@@ -1,9 +1,15 @@
 import React, { useCallback, useRef, useState } from "react";
-import { ATTACH_PRESCRIPTION, POST_PRESCRIPTION } from "../../../lib/endpoints";
+import {
+  ATTACH_PRESCRIPTION,
+  POST_PRESCRIPTION,
+  REMOVE_PRESCRIPTION,
+} from "../../../lib/endpoints";
 import { http } from "../../../Service/httpService";
+import Suspense from "../../Suspense/Suspense";
 
 const UploadPrescriptionAlert = ({
-  orderNo,
+  orderId,
+  orderNumber,
   closeModal,
   getPrescriptionsByOrder,
 }) => {
@@ -12,12 +18,24 @@ const UploadPrescriptionAlert = ({
   const [imageIsInvalid, setImageIsInvalid] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState([]);
+  const [isGetting, setIsGetting] = useState(false);
 
   const fileUploaderHandler = () => {
     fileRef.current.click();
   };
-  const imageRemoverhandler = () => {
-    setPreview("");
+
+  const imageRemoverhandler = (file) => {
+    http.post({
+      url: REMOVE_PRESCRIPTION + file.id,
+      before: () => {},
+      successed: () => {
+        setPreview((prevState) =>
+          prevState.filter((item) => item.id !== file.id)
+        );
+      },
+      failed: () => {},
+      always: () => {},
+    });
   };
 
   const setSelectedFileHandler = ({ target }) => {
@@ -37,13 +55,15 @@ const UploadPrescriptionAlert = ({
       setSelectedFile();
       return;
     }
-    setSelectedFile(target.files[0]);
-    const objectUrl = URL.createObjectURL(target.files[0]);
-    setPreview((prevState) => [...prevState, { objectUrl: objectUrl }]);
+    setSelectedFile(file);
+
     postPrescription(file);
     target.value = "";
   };
+
   const postPrescription = useCallback((file) => {
+    const objectUrl = URL.createObjectURL(file);
+
     http.file({
       url: POST_PRESCRIPTION,
       payload: {
@@ -52,28 +72,39 @@ const UploadPrescriptionAlert = ({
         Description: "",
         activityId: "00000000-0000-0000-0000-000000000000",
       },
-      before: () => {},
+      before: () => {
+        setIsGetting(true);
+      },
       successed: (res) => {
         setFiles((prevState) => [...prevState, { image: file, id: res.Id }]);
+        setPreview((prevState) => [
+          ...prevState,
+          { objectUrl: objectUrl, id: res.Id },
+        ]);
+        setIsGetting(false);
       },
       failed: () => {},
-      always: () => {},
+      always: () => {
+        setIsGetting(false);
+      },
       map: (res) => {
         return res;
       },
     });
   }, []);
+
   const submitHandler = () => {
+    if (isGetting) return;
     const fileId = files.map((f) => f.id);
-    attachedPrescription(orderNo, fileId);
+    attachedPrescription(orderId, fileId);
   };
 
-  const attachedPrescription = useCallback((orderNo, files) => {
+  const attachedPrescription = useCallback((orderId, files) => {
     http.post({
       url: ATTACH_PRESCRIPTION,
       payload: {
         Prescriptions: files,
-        OrderId: orderNo,
+        OrderId: orderId,
         ActivityId: "00000000-0000-0000-0000-000000000000",
       },
       before: () => {},
@@ -120,7 +151,7 @@ const UploadPrescriptionAlert = ({
                                 cursor: "pointer",
                                 marginTop: "10px",
                               }}
-                              onClick={imageRemoverhandler}
+                              onClick={imageRemoverhandler.bind(null, file)}
                             >
                               Remove
                             </p>
@@ -158,9 +189,10 @@ const UploadPrescriptionAlert = ({
               </div>
             </div>
             <div className="upload-button-text-container">
-              <p>Upload Prescription for Order #1321321</p>
+              <p>Upload Prescription for Order #{orderNumber}</p>
               <div onClick={submitHandler}>Upload Prescription</div>
             </div>
+            {isGetting && <Suspense />}
           </div>
         </div>
       </div>

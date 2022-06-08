@@ -7,11 +7,16 @@ import React, {
 } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { GET_CURRENT_INFO, POST_PRESCRIPTION } from "../../lib/endpoints";
+import {
+  GET_CURRENT_INFO,
+  POST_PRESCRIPTION,
+  REMOVE_PRESCRIPTION,
+} from "../../lib/endpoints";
 import { http } from "../../Service/httpService";
 import { urlHomeRoute } from "../../Service/UrlService";
 import addressContext from "../../store/address-context";
 import cartContext from "../../store/cart-context";
+import Suspense from "../Suspense/Suspense";
 
 const ProductSummary = ({
   proceedToAddressHandler,
@@ -37,6 +42,7 @@ const ProductSummary = ({
   );
   const [checked, setIsChecked] = useState(false);
   const [qty, setQty] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   // cartCtx.updateProductsPrice(currentInfo);
 
   const qtyDecHandler = (findItem, e) => {
@@ -96,9 +102,8 @@ const ProductSummary = ({
       setSelectedFile();
       return;
     }
-    setSelectedFile(target.files[0]);
-    const objectUrl = URL.createObjectURL(target.files[0]);
-    setPreview((prevState) => [...prevState, { objectUrl: objectUrl }]);
+    setSelectedFile(file);
+
     postPrescription(file);
     target.value = "";
   };
@@ -106,11 +111,23 @@ const ProductSummary = ({
   const fileUploaderHandler = () => {
     fileRef.current.click();
   };
-  const imageRemoverhandler = () => {
-    setPreview("");
+  const imageRemoverhandler = (file) => {
+    http.post({
+      url: REMOVE_PRESCRIPTION + file.id,
+      before: () => {},
+      successed: () => {
+        setPreview((prevState) =>
+          prevState.filter((item) => item.id !== file.id)
+        );
+      },
+      failed: () => {},
+      always: () => {},
+    });
   };
 
   const postPrescription = useCallback((file) => {
+    const objectUrl = URL.createObjectURL(file);
+
     http.file({
       url: POST_PRESCRIPTION,
       payload: {
@@ -122,6 +139,10 @@ const ProductSummary = ({
       before: () => {},
       successed: (res) => {
         setFiles((prevState) => [...prevState, { image: file, id: res.Id }]);
+        setPreview((prevState) => [
+          ...prevState,
+          { objectUrl: objectUrl, id: res.Id },
+        ]);
       },
       failed: () => {},
       always: () => {},
@@ -143,19 +164,25 @@ const ProductSummary = ({
       payload: {
         productIds: products,
       },
-      before: () => {},
+      before: () => {
+        setIsLoading(true);
+      },
       successed: (res) => {
         setCurrentInfo(res.Data);
         cartCtx.updateProductsPrice(res.Data);
+        setIsLoading(false);
       },
       failed: () => {},
-      always: () => {},
+      always: () => {
+        setIsLoading(false);
+      },
     });
   };
 
   useEffect(() => {
     getCurrentInfo();
   }, []);
+
   useEffect(() => {
     setPrescriptionsHis({
       id: files.map((item) => item.id),
@@ -163,246 +190,271 @@ const ProductSummary = ({
     });
   }, [checked, files, setPrescriptionsHis]);
 
-  console.log({currentInfo})
+  console.log({ currentInfo });
 
   return (
-    <div class="tab_content">
-      <div class="heading-counter warning">
-        Your shopping cart contains:
-        <span> {cartCtxModal.TotalItems} Product</span>
-      </div>
-
-      <div class="order-detail-content">
-        <table class="table table-bordered table-responsive cart_summary">
-          <thead>
-            <tr>
-              <th class="cart_product">Product</th>
-              <th>Description</th>
-              <th>Unit price</th>
-              <th>Qty</th>
-              <th>Amount</th>
-              <th class="action">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cartCtxModal.Items.map((item, index) => (
-              <tr>
-                <td class="cart_product">
-                  <a href>
-                    <img
-                      src="/Contents/assets/image/pditals.jpg"
-                      alt="Product"
-                    />
-                  </a>
-                </td>
-                <td class="cart_description">
-                  <p class="product-name">
-                    <a href>{item.Nm}</a>
-                  </p>
-                  <small class="cart_ref">Type : {item.category}</small>
-                  <br />
-                  <small class="cart_ref">Strength: {item.strength} </small>
-                  <br />
-                  <small>Company: {item.suplier} </small>
-                </td>
-                <td class="price" style={{ textAlign: "center", width: "15%" }}>
-                  {currentInfo[index]?.Discount > 0 &&
-                  currentInfo[index]?.Discount !== null ? (
-                    <span>
-                      ৳{" "}
-                      {(
-                        currentInfo[index]?.UnitSalePrice -
-                        (currentInfo[index]?.UnitSalePrice *
-                          currentInfo[index]?.Discount) /
-                          100
-                      ).toFixed(2)}
-                    </span>
-                  ) : (
-                    <span>৳ {currentInfo[index]?.UnitSalePrice}</span>
-                  )}
-                </td>
-                <td class="qty">
-                  <div class="pro_qty">
-                    <a href onClick={qtyIncHandler.bind(this, item)}>
-                      <i class="fa fa-caret-up"></i>
-                    </a>
-                    <input
-                      class="form-control input-sm"
-                      type="text"
-                      value={item.quantity}
-                      onChange={qtyChangeHandler.bind(null, item)}
-                      onBlur={blurHandler.bind(null, item)}
-                    />
-
-                    <a href onClick={qtyDecHandler.bind(this, item)}>
-                      <i class="fa fa-caret-down"></i>
-                    </a>
-                  </div>
-                </td>
-                <td class="price" style={{ textAlign: "center", width: "18%" }}>
-                  {currentInfo[index]?.Discount === 0 &&
-                    currentInfo[index]?.Discount !== null && (
-                      <span>
-                        ৳{" "}
-                        {(
-                          currentInfo[index]?.UnitSalePrice * item.quantity
-                        ).toFixed(2)}
-                      </span>
-                    )}
-                  {currentInfo[index]?.Discount > 0 && (
-                    <span>
-                      ৳
-                      {(
-                        (currentInfo[index]?.UnitSalePrice -
-                          (currentInfo[index]?.UnitSalePrice *
-                            currentInfo[index]?.Discount) /
-                            100) *
-                        item.quantity
-                      ).toFixed(2)}
-                    </span>
-                  )}
-                </td>
-                <td
-                  class="action"
-                  onClick={cartItemRemoverHandler.bind(null, item)}
-                >
-                  <a
-                    className="icon-remove"
-                    href
-                    style={{ fontSize: "1.5rem", color: "red" }}
-                  >
-                    <i class="fa fa-remove" aria-hidden="true"></i>
-                  </a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="4">
-                <strong>Total</strong>
-              </td>
-              <td colspan="2" style={{ textAlign: "center" }}>
-                <strong>
-                  ৳ <span>{cartCtxModal.TotalAmmount.toFixed(2)}</span>
-                </strong>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-
-        {findActiveAddress !== undefined && findActiveAddress?.Name !== null && (
-          <div class="shaping-address-saveing-row">
-            <div class="shapping-address-inner-content">
-              <div class="location-ad-icon">
-                <i class="fa fa-map-marker" aria-hidden="true"></i>
-              </div>
-              <div class="saving-address-content">
-                <small>{findActiveAddress && findActiveAddress?.Name}</small>
-                <small>{findActiveAddress && findActiveAddress?.Mobile}</small>
-                <span>
-                  <aside>{findActiveAddress && findActiveAddress?.Type}</aside>
-                </span>
-                <span>{findActiveAddress && findActiveAddress?.Email}</span>
-                &nbsp;
-                <span>
-                  {findActiveAddress &&
-                    findActiveAddress?.Province +
-                      "-" +
-                      findActiveAddress?.District +
-                      "-" +
-                      findActiveAddress?.Upazila +
-                      "-" +
-                      findActiveAddress?.Remarks}
-                </span>
-              </div>
-            </div>
-            <div class="saving-ad-btn" onClick={AddressActiveHandler}>
-              <button>Change</button>
-            </div>
+    <>
+      {!isLoading && (
+        <div class="tab_content">
+          <div class="heading-counter warning">
+            Your shopping cart contains:
+            <span> {cartCtxModal.TotalItems} Product</span>
           </div>
-        )}
 
-        <div className="upload-Handler">
-          {files.length > 0 && (
-            <div className="image_preview_container">
-              {files?.length > 0 && (
-                <>
-                  <div className="image_previewer">
-                    {/* single item */}
-                    {preview.map((file) => (
-                      <div className="image_prev">
-                        <img src={file.objectUrl} alt="img" srcset="" />
-                        <p
-                          style={{
-                            color: "red",
-                            textAlign: "center",
-                            textDecoration: "underline",
-                            cursor: "pointer",
-                            marginTop: "10px",
-                          }}
-                          onClick={imageRemoverhandler}
-                        >
-                          Remove
-                        </p>
+          <div class="order-detail-content">
+            <table class="table table-bordered table-responsive cart_summary">
+              <thead>
+                <tr>
+                  <th class="cart_product">Product</th>
+                  <th>Description</th>
+                  <th>Unit price</th>
+                  <th>Qty</th>
+                  <th>Amount</th>
+                  <th class="action">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cartCtxModal.Items.map((item, index) => (
+                  <tr>
+                    <td class="cart_product">
+                      <a href>
+                        <img
+                          src="/Contents/assets/image/pditals.jpg"
+                          alt="Product"
+                        />
+                      </a>
+                    </td>
+                    <td class="cart_description">
+                      <p class="product-name">
+                        <a href>{item.Nm}</a>
+                      </p>
+                      <small class="cart_ref">Type : {item.category}</small>
+                      <br />
+                      <small class="cart_ref">Strength: {item.strength} </small>
+                      <br />
+                      <small>Company: {item.suplier} </small>
+                    </td>
+                    <td
+                      class="price"
+                      style={{ textAlign: "center", width: "15%" }}
+                    >
+                      {currentInfo[index]?.Discount > 0 &&
+                      currentInfo[index]?.Discount !== null ? (
+                        <span>
+                          ৳{" "}
+                          {(
+                            currentInfo[index]?.UnitSalePrice -
+                            (currentInfo[index]?.UnitSalePrice *
+                              currentInfo[index]?.Discount) /
+                              100
+                          ).toFixed(2)}
+                        </span>
+                      ) : (
+                        <span>৳ {currentInfo[index]?.UnitSalePrice}</span>
+                      )}
+                    </td>
+                    <td class="qty">
+                      <div class="pro_qty">
+                        <a href onClick={qtyIncHandler.bind(this, item)}>
+                          <i class="fa fa-caret-up"></i>
+                        </a>
+                        <input
+                          class="form-control input-sm"
+                          type="text"
+                          value={item.quantity}
+                          onChange={qtyChangeHandler.bind(null, item)}
+                          onBlur={blurHandler.bind(null, item)}
+                        />
+
+                        <a href onClick={qtyDecHandler.bind(this, item)}>
+                          <i class="fa fa-caret-down"></i>
+                        </a>
                       </div>
-                    ))}
+                    </td>
+                    <td
+                      class="price"
+                      style={{ textAlign: "center", width: "18%" }}
+                    >
+                      {currentInfo[index]?.Discount === 0 &&
+                        currentInfo[index]?.Discount !== null && (
+                          <span>
+                            ৳{" "}
+                            {(
+                              currentInfo[index]?.UnitSalePrice * item.quantity
+                            ).toFixed(2)}
+                          </span>
+                        )}
+                      {currentInfo[index]?.Discount > 0 && (
+                        <span>
+                          ৳
+                          {(
+                            (currentInfo[index]?.UnitSalePrice -
+                              (currentInfo[index]?.UnitSalePrice *
+                                currentInfo[index]?.Discount) /
+                                100) *
+                            item.quantity
+                          ).toFixed(2)}
+                        </span>
+                      )}
+                    </td>
+                    <td
+                      class="action"
+                      onClick={cartItemRemoverHandler.bind(null, item)}
+                    >
+                      <a
+                        className="icon-remove"
+                        href
+                        style={{ fontSize: "1.5rem", color: "red" }}
+                      >
+                        <i class="fa fa-remove" aria-hidden="true"></i>
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="4">
+                    <strong>Total</strong>
+                  </td>
+                  <td colspan="2" style={{ textAlign: "center" }}>
+                    <strong>
+                      ৳ <span>{cartCtxModal.TotalAmmount.toFixed(2)}</span>
+                    </strong>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+
+            {findActiveAddress !== undefined &&
+              findActiveAddress?.Name !== null && (
+                <div class="shaping-address-saveing-row">
+                  <div class="shapping-address-inner-content">
+                    <div class="location-ad-icon">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </div>
+                    <div class="saving-address-content">
+                      <small>
+                        {findActiveAddress && findActiveAddress?.Name}
+                      </small>
+                      <small>
+                        {findActiveAddress && findActiveAddress?.Mobile}
+                      </small>
+                      <span>
+                        <aside>
+                          {findActiveAddress && findActiveAddress?.Type}
+                        </aside>
+                      </span>
+                      <span>
+                        {findActiveAddress && findActiveAddress?.Email}
+                      </span>
+                      &nbsp;
+                      <span>
+                        {findActiveAddress &&
+                          findActiveAddress?.Province +
+                            "-" +
+                            findActiveAddress?.District +
+                            "-" +
+                            findActiveAddress?.Upazila +
+                            "-" +
+                            findActiveAddress?.Remarks}
+                      </span>
+                    </div>
                   </div>
-                </>
+                  <div class="saving-ad-btn" onClick={AddressActiveHandler}>
+                    <button>Change</button>
+                  </div>
+                </div>
               )}
 
-              <div
-                className="plus_icon_container"
-                onClick={fileUploaderHandler}
-              >
-                <p className="plus_icon">+</p>
+            <div className="upload-Handler">
+              {files.length > 0 && (
+                <div className="image_preview_container">
+                  {files?.length > 0 && (
+                    <>
+                      <div className="image_previewer">
+                        {/* single item */}
+                        {preview.map((file) => (
+                          <div className="image_prev">
+                            <img src={file.objectUrl} alt="img" srcset="" />
+                            <p
+                              style={{
+                                color: "red",
+                                textAlign: "center",
+                                textDecoration: "underline",
+                                cursor: "pointer",
+                                marginTop: "10px",
+                              }}
+                              onClick={imageRemoverhandler.bind(null, file)}
+                            >
+                              Remove
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+
+                  <div
+                    className="plus_icon_container"
+                    onClick={fileUploaderHandler}
+                  >
+                    <p className="plus_icon">+</p>
+                  </div>
+                </div>
+              )}
+              <div className="prescription_order_section">
+                <div className="file_uploader" style={{ maxWidth: "33.33%" }}>
+                  <label htmlFor="">Upload Prescription</label>
+                  <input
+                    type="file"
+                    name=""
+                    id=""
+                    ref={fileRef}
+                    onChange={setSelectedFileHandler}
+                  />
+                  {imageIsInvalid && (
+                    <div class="alert alert-error">
+                      Only JPG JPEG PNG format acceptable.
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-          )}
-          <div className="prescription_order_section">
-            <div className="file_uploader" style={{ maxWidth: "33.33%" }}>
-              <label htmlFor="">Upload Prescription</label>
-              <input
-                type="file"
-                name=""
-                id=""
-                ref={fileRef}
-                onChange={setSelectedFileHandler}
-              />
+            <div className="auto-order-container">
+              <p>Auto Order</p>
+              <div className="order-group">
+                <input
+                  type="checkbox"
+                  name="select_order"
+                  id=""
+                  style={{
+                    width: "auto",
+                    display: "inline",
+                    position: "relative",
+                    outline: "currentcolor none 0px",
+                  }}
+                  onClick={clickedAutoOrderHandler}
+                />
+                <p>Auto Order after 28 days</p>
+              </div>
+            </div>
+
+            <div class="row" style={{ margin: "auto" }}>
+              <div class="cart_navigation">
+                <Link class="prev-btn" to={urlHomeRoute()}>
+                  Continue shopping
+                </Link>
+                <a onClick={proceedAddressHandler} class="next-btn" href>
+                  Proceed to checkout
+                </a>
+              </div>
             </div>
           </div>
         </div>
-        <div className="auto-order-container">
-          <p>Auto Order</p>
-          <div className="order-group">
-            <input
-              type="checkbox"
-              name="select_order"
-              id=""
-              style={{
-                width: "auto",
-                display: "inline",
-                position: "relative",
-                outline: "currentcolor none 0px",
-              }}
-              onClick={clickedAutoOrderHandler}
-            />
-            <p>Auto Order after 28 days</p>
-          </div>
-        </div>
-
-        <div class="row" style={{ margin: "auto" }}>
-          <div class="cart_navigation">
-            <Link class="prev-btn" to={urlHomeRoute()}>
-              Continue shopping
-            </Link>
-            <a onClick={proceedAddressHandler} class="next-btn" href>
-              Proceed to checkout
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+      )}
+      {isLoading && <Suspense />}
+    </>
   );
 };
 

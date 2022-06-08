@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { ATTACH_PRESCRIPTION, GET_PRESCRIPTIONS } from "../../../lib/endpoints";
 import { BASE_URL, http } from "../../../Service/httpService";
+import Suspense from "../../Suspense/Suspense";
 
 const AttachPrescriptionAlert = ({
   closeModal,
@@ -9,16 +10,22 @@ const AttachPrescriptionAlert = ({
 }) => {
   const [existPrescriptions, setExistPrescriptions] = useState([]);
   const [attachedPrescription, setAttachedPrescription] = useState([]);
-  const [checkedStatus, setCheckedStatus] = useState([{ status: false }]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const getPrescriptions = useCallback(() => {
     http.get({
       url: GET_PRESCRIPTIONS,
-      before: () => {},
+      before: () => {
+        setIsLoading(true);
+      },
       successed: (res) => {
         setExistPrescriptions(res.Data);
+        setIsLoading(false);
       },
       failed: () => {},
-      always: () => {},
+      always: () => {
+        setIsLoading(false);
+      },
       map: (res) => {
         return res;
       },
@@ -46,13 +53,16 @@ const AttachPrescriptionAlert = ({
           OrderId: orderId,
           ActivityId: "00000000-0000-0000-0000-000000000000",
         },
-        before: () => {},
+        before: () => {
+          
+        },
         successed: () => {
-          getPrescriptionsByOrder();
           closeModal();
+          getPrescriptionsByOrder();
         },
         failed: () => {},
-        always: () => {},
+        always: () => {
+        },
       });
   };
   useEffect(() => {
@@ -72,44 +82,47 @@ const AttachPrescriptionAlert = ({
               ✖
             </div>
           </div>
-          <div class="popup__body">
-            <div>
-              <div className="count_prescription">
-                <p style={{ fontWeight: "bold" }}>
-                  {attachedPrescription.length} Prescriptions total Selected
-                </p>
-              </div>
-              <div className="upload-Handler">
-                <div className="image_preview_container">
-                  {existPrescriptions.length > 0 && (
-                    <div className="image_previewer">
-                      {/* single item  */}
-                      {existPrescriptions.map((item) => (
-                        <div className="image_prev">
-                          <img
-                            src={BASE_URL + item.FilePath}
-                            alt="img"
-                            srcset=""
-                            style={{ height: "auto" }}
-                          />
-                          <div className="checkbox-attached">
-                            <input
-                              type="checkbox"
-                              name="attached_pres"
-                              id="attached_pres"
-                              onClick={selectedItemHandler.bind(this, item)}
+          <div class="popup__body" style={{ minHeight: "200px" }}>
+            {!isLoading && (
+              <div>
+                <div className="count_prescription">
+                  <p style={{ fontWeight: "bold" }}>
+                    {attachedPrescription.length} Prescriptions total Selected
+                  </p>
+                </div>
+                <div className="upload-Handler">
+                  <div className="image_preview_container">
+                    {existPrescriptions.length > 0 && (
+                      <div className="image_previewer">
+                        {/* single item  */}
+                        {existPrescriptions.map((item) => (
+                          <div className="image_prev">
+                            <img
+                              src={BASE_URL + item.FilePath}
+                              alt="img"
+                              srcset=""
+                              style={{ height: "auto" }}
                             />
+                            <div className="checkbox-attached">
+                              <input
+                                type="checkbox"
+                                name="attached_pres"
+                                id="attached_pres"
+                                onClick={selectedItemHandler.bind(this, item)}
+                              />
+                            </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="save-prescription d-flex" onClick={saveHandler}>
+                  Save
                 </div>
               </div>
-              <div className="save-prescription d-flex" onClick={saveHandler}>
-                Save
-              </div>
-            </div>
+            )}
+            {isLoading && <Suspense />}
           </div>
         </div>
       </div>

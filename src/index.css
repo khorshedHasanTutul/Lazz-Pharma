@@ -1905,6 +1905,7 @@ label {
 
 .profile-body-inner-content .product-desc-review-information-main {
   padding-top: 0px;
+  min-height: 54vw;
 }
 
 .profile-short-desc > img {
@@ -3595,10 +3596,10 @@ ul {
 }
 
 .result-card__details--name {
-	color: inherit;
-	text-decoration: none;
-	font-size: 1.1rem;
-	font-weight: 700;
+  color: inherit;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 .t-pink {
   color: #016449;
@@ -3651,6 +3652,13 @@ ul {
   margin-bottom: 10px;
   display: flex;
   align-items: center;
+}
+.requestHistory_container .request-products {
+  font-weight: 700;
+  font-size: 2rem;
+  text-align: center;
+  font-family: initial;
+  margin: 0 auto;
 }
 .cash-content p {
   color: #016449;
