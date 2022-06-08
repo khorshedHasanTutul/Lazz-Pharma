@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { gotoTop } from "../../../lib/utilities";
+import ScrolToTop from "../../pages/ScrolToTop";
+import Paginator from "../../Paginators/Paginators";
 import OrderCard from "../OrderCard/OrderCard";
 
 const OrderList = ({ ordersArray }) => {
+  const pageSize = 5;
+  const [pagedOrders, setPagedOrders] = useState([]);
+
+  const pageChangeHandler = (page) => {
+    setPagedOrders(ordersArray.slice((page - 1) * pageSize, page * pageSize));
+    gotoTop();
+  };
+  useEffect(() => {
+    setPagedOrders(ordersArray.slice(0, pageSize));
+  }, [ordersArray]);
+
   if (
     ordersArray === undefined ||
     ordersArray.length === 0 ||
@@ -17,11 +31,19 @@ const OrderList = ({ ordersArray }) => {
     );
   } else {
     return (
-      <div className="tabbed niiceeTabContent profile-tab">
-        {ordersArray.Data.map((order) => (
-          <OrderCard order={order} key={order.orderNumber} />
-        ))}
-      </div>
+      <>
+        <div className="tabbed niiceeTabContent profile-tab">
+          {pagedOrders.map((order) => (
+            <OrderCard order={order} key={order.orderNumber} />
+          ))}
+        </div>
+        <div className="gap" style={{ marginTop: "20px" }}></div>
+        <Paginator
+          items={ordersArray.length}
+          pageItems={pageSize}
+          onPageChange={pageChangeHandler}
+        />
+      </>
     );
   }
 };

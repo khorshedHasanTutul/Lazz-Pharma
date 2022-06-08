@@ -19,7 +19,7 @@ import MobileValidation from "./AddressValidation/MobileValidation";
 import NameValidation from "./AddressValidation/NameValidation";
 import BottomActiveAddress from "./BottomActiveAddress";
 
-const Address = ({ ProceedToOrderHandler }) => {
+const Address = ({ ProceedToOrderHandler, getAddressHttpCheckout }) => {
   const authCtx = useContext(authContext);
   const { pathname } = useLocation();
   const ctxCart = useContext(cartContext);
@@ -87,6 +87,7 @@ const Address = ({ ProceedToOrderHandler }) => {
         before: () => {},
         successed: (data) => {
           getAddressHttp();
+          getAddressHttpCheckout();
         },
         failed: () => {},
         always: () => {},

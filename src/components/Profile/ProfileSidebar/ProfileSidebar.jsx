@@ -7,7 +7,12 @@ const ProfileSidebar = ({ profileInfo }) => {
     <div class="profile-sidebar">
       <div class="profile-sidebar-inner">
         <div class="profile-short-desc">
-          <img src={`${BASE_URL}/${profileInfo.Image}`} alt="cmt" />
+          {profileInfo.Image === null ? (
+            <img src="/Contents/assets/image/user.png" alt="img" />
+          ) : (
+            <img src={`${BASE_URL}/${profileInfo.Image}`} alt="img" />
+          )}
+
           <p>{profileInfo.Name}</p>
           <p>{profileInfo.Email}</p>
           <aside>

@@ -1,22 +1,30 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { POST_PRESCRIPTION, POST_REQUEST_ORDER } from "../../../lib/endpoints";
+import {
+  POST_PRESCRIPTION,
+  POST_REQUEST_ORDER,
+  REMOVE_PRESCRIPTION,
+} from "../../../lib/endpoints";
 import { BASE_URL, http } from "../../../Service/httpService";
 import RequestProductAlert from "../../RequestOrder/RequestProductAlert/RequestProductAlert";
+import Suspense from "../../Suspense/Suspense";
 
-const PrescriptionCard = ({ selectedPrescription, setPrescriptions }) => {
+const PrescriptionCard = ({
+  selectedPrescription,
+  setPrescriptions,
+  setSelectedPrescription,
+}) => {
   const fileRef = useRef();
   const [files, setFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState([]);
   const [note, setNote] = useState("");
   const [imageIsInvalid, setImageIsInvalid] = useState(false);
+  const [isGetting, setIsGetting] = useState(false);
 
   const noteOnChangeHandler = ({ target }) => {
     setNote(target.value);
   };
-
   const [isOpenAlert, setIsOpenAlert] = useState(false);
-  console.log({ files, selectedPrescription });
 
   const submittedButtonHandler = () => {
     if ((selectedPrescription.length > 0 || preview.length > 0) && note) {
@@ -65,22 +73,37 @@ const PrescriptionCard = ({ selectedPrescription, setPrescriptions }) => {
       setSelectedFile();
       return;
     }
-    setSelectedFile(target.files[0]);
-    const objectUrl = URL.createObjectURL(target.files[0]);
-    setPreview((prevState) => [...prevState, { objectUrl: objectUrl }]);
+    setSelectedFile(file);
+
     postPrescription(file, note);
 
     target.value = "";
   };
 
-  const imageRemoverhandler = () => {
-    setPreview();
+  const imageRemoverhandler = (file) => {
+    http.post({
+      url: REMOVE_PRESCRIPTION + file.id,
+      before: () => {},
+      successed: () => {
+        setPreview((prevState) =>
+          prevState.filter((item) => item.id !== file.id)
+        );
+      },
+      failed: () => {},
+      always: () => {},
+    });
   };
   const fileUploaderHandler = () => {
     fileRef.current.click();
   };
+  const previewImageRemoveHandler = (item) => {
+    setSelectedPrescription((prevState) =>
+      prevState.filter((item2) => item2.Id !== item.Id)
+    );
+  };
 
   const postPrescription = useCallback((file, note) => {
+    const objectUrl = URL.createObjectURL(file);
     http.file({
       url: POST_PRESCRIPTION,
       payload: {
@@ -89,13 +112,22 @@ const PrescriptionCard = ({ selectedPrescription, setPrescriptions }) => {
         Description: note,
         activityId: "00000000-0000-0000-0000-000000000000",
       },
-      before: () => {},
+      before: () => {
+        setIsGetting(true);
+      },
       successed: (res) => {
         setFiles((prevState) => [...prevState, { image: file, id: res.Id }]);
+        setPreview((prevState) => [
+          ...prevState,
+          { objectUrl: objectUrl, id: res.Id },
+        ]);
         setNote("");
+        setIsGetting(false);
       },
       failed: () => {},
-      always: () => {},
+      always: () => {
+        setIsGetting(false);
+      },
       map: (res) => {
         return res;
       },
@@ -123,7 +155,7 @@ const PrescriptionCard = ({ selectedPrescription, setPrescriptions }) => {
                         cursor: "pointer",
                         marginTop: "10px",
                       }}
-                      onClick={imageRemoverhandler}
+                      onClick={imageRemoverhandler.bind(null, file)}
                     >
                       Remove
                     </p>
@@ -136,6 +168,7 @@ const PrescriptionCard = ({ selectedPrescription, setPrescriptions }) => {
           <div className="plus_icon_container" onClick={fileUploaderHandler}>
             <p className="plus_icon">+</p>
           </div>
+          {isGetting && <Suspense />}
         </div>
 
         {selectedPrescription.length > 0 && (
@@ -157,6 +190,7 @@ const PrescriptionCard = ({ selectedPrescription, setPrescriptions }) => {
                       cursor: "pointer",
                       marginTop: "10px",
                     }}
+                    onClick={previewImageRemoveHandler.bind(null, item)}
                   >
                     Remove
                   </p>

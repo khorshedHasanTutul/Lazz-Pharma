@@ -63,3 +63,9 @@ export const tranformQuery = (text, func) => {
 
   return query;
 };
+
+export const gotoTop = () => {
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, 0);
+};

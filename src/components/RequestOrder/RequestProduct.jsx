@@ -1,9 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { POST_PRESCRIPTION, POST_REQUEST_ORDER } from "../../lib/endpoints";
+import {
+  POST_PRESCRIPTION,
+  POST_REQUEST_ORDER,
+  REMOVE_PRESCRIPTION,
+} from "../../lib/endpoints";
 import { sumAProperty } from "../../lib/utilities";
 import { http } from "../../Service/httpService";
 import { urlTermsConditionRoute } from "../../Service/UrlService";
+import Suspense from "../Suspense/Suspense";
 import PopAlert from "../utilities/alert/PopAlert";
 import RequestOrderTable from "./requestOrdertable/RequestOrderTable";
 import RequestProductAlert from "./RequestProductAlert/RequestProductAlert";
@@ -21,6 +26,7 @@ const RequestProduct = () => {
   const [openAlert, setOpenAlert] = useState(false);
   const [imageIsInvalid, setImageIsInvalid] = useState(false);
   const [description, setDescription] = useState("");
+  const [isGetting, setIsGetting] = useState(false);
 
   const checkedHandler = () => {
     setIsChecked((prevState) => !prevState);
@@ -42,6 +48,7 @@ const RequestProduct = () => {
   const removeButtonHandler = () => {
     setOpenAlert((prevState) => !prevState);
   };
+
   const setSelectedFileHandler = ({ target }) => {
     const file = target.files[0];
     if (!file) return;
@@ -59,17 +66,30 @@ const RequestProduct = () => {
       setSelectedFile();
       return;
     }
-    setSelectedFile(target.files[0]);
-    const objectUrl = URL.createObjectURL(target.files[0]);
-    setPreview((prevState) => [...prevState, { objectUrl: objectUrl }]);
+    setSelectedFile(file);
+
     postPrescription(file);
 
     target.value = "";
   };
-  const imageRemoverhandler = () => {
-    setPreview();
+
+  const imageRemoverhandler = (file) => {
+    http.post({
+      url: REMOVE_PRESCRIPTION + file.id,
+      before: () => {},
+      successed: () => {
+        setPreview((prevState) =>
+          prevState.filter((item) => item.id !== file.id)
+        );
+      },
+      failed: () => {},
+      always: () => {},
+    });
   };
+
   const postPrescription = useCallback((file) => {
+    const objectUrl = URL.createObjectURL(file);
+
     http.file({
       url: POST_PRESCRIPTION,
       payload: {
@@ -78,17 +98,27 @@ const RequestProduct = () => {
         Description: "",
         activityId: "00000000-0000-0000-0000-000000000000",
       },
-      before: () => {},
+      before: () => {
+        setIsGetting(true);
+      },
       successed: (res) => {
         setFiles((prevState) => [...prevState, { image: file, id: res.Id }]);
+        setPreview((prevState) => [
+          ...prevState,
+          { objectUrl: objectUrl, id: res.Id },
+        ]);
+        setIsGetting(false);
       },
       failed: () => {},
-      always: () => {},
+      always: () => {
+        setIsGetting(false);
+      },
       map: (res) => {
         return res;
       },
     });
   }, []);
+
   const postOrder = useCallback((files, products, description) => {
     http.post({
       url: POST_REQUEST_ORDER,
@@ -174,7 +204,7 @@ const RequestProduct = () => {
                         cursor: "pointer",
                         marginTop: "10px",
                       }}
-                      onClick={imageRemoverhandler}
+                      onClick={imageRemoverhandler.bind(null, file)}
                     >
                       Remove
                     </p>
@@ -199,11 +229,17 @@ const RequestProduct = () => {
               ref={fileRef}
               onChange={setSelectedFileHandler}
             />
+            {imageIsInvalid && (
+              <div class="alert alert-error">
+                Only JPG JPEG PNG format acceptable.
+              </div>
+            )}
           </div>
           {/* <div className="prescription_order_section__order-button">
             Save & Order
           </div> */}
         </div>
+        {isGetting && <Suspense />}
       </div>
       <div className="prescription_description">
         <label htmlFor="description">Description</label>

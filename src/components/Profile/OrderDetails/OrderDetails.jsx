@@ -29,7 +29,6 @@ const OrderDetails = () => {
   const products = [];
   const [UploadPresAlert, setUploadPresAlert] = useState(false);
   const [attachPres, setAttachPres] = useState(false);
-  console.log({ orderDetails });
   const printInvoiceHandler = () => {
     localStorage.setItem(
       "Invoice",
@@ -385,7 +384,8 @@ const OrderDetails = () => {
       {isLoading && <Suspense />}
       {UploadPresAlert && (
         <UploadPrescriptionAlert
-          orderNo={orderDetails.Order.Id}
+          orderId={orderDetails.Order.Id}
+          orderNumber={orderDetails.Order.OrderNo}
           closeModal={closePrescriptionModal}
           getPrescriptionsByOrder={getPrescriptionsByOrder}
         />

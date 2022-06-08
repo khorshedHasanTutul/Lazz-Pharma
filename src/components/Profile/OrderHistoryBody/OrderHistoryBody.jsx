@@ -1,6 +1,7 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { GET_ALL_ORDER } from "../../../lib/endpoints";
+import { paramsUrlGenerator } from "../../../lib/utilities";
 import { http } from "../../../Service/httpService";
 import {
   urlAllOrderRoutes,
@@ -24,23 +25,24 @@ const OrderHistoryBody = () => {
   const [delivaringOrders, setDelivaringdOrders] = useState([]);
   const [cancellingOrders, setCancellingdOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const getAllOrdersHttp = () => {
+
+  const getAllOrdersHttp = useCallback(() => {
     http.get({
       url: GET_ALL_ORDER,
       before: () => {},
       successed: (res) => {
-        setOrdersArray(res.Data);
+        setOrdersArray(res.Data.Data);
         setConfirmOrders(
-          res?.Data.filter((item) => item?.Status === OrderStatus.Confirmed)
+          res?.Data.Data.filter((item) => item?.Status === OrderStatus.Confirmed)
         );
         setProcessingOrders(
-          res?.Data.filter((item) => item?.Status === OrderStatus.Processing)
+          res?.Data.Data.filter((item) => item?.Status === OrderStatus.Processing)
         );
         setDelivaringdOrders(
-          res?.Data.filter((item) => item?.Status === OrderStatus.Delivering)
+          res?.Data.Data.filter((item) => item?.Status === OrderStatus.Delivering)
         );
         setCancellingdOrders(
-          res?.Data.filter((item) => item?.Status === OrderStatus.Cancelled)
+          res?.Data.Data.filter((item) => item?.Status === OrderStatus.Cancelled)
         );
         setIsLoading(false);
       },
@@ -51,14 +53,17 @@ const OrderHistoryBody = () => {
         setIsLoading(false);
       },
     });
-  };
+  }, []);
 
   useEffect(() => {
     getAllOrdersHttp();
-  }, []);
+  }, [getAllOrdersHttp]);
+
+  console.log({ordersArray})
+
   return (
     <Fragment>
-      {!isLoading && (
+      {!isLoading  && (
         <div>
           <Route path={urlProfileRoute() + urlOrderRoute()} exact>
             <Redirect to={urlProfileRoute() + urlAllOrderRoutes()} />

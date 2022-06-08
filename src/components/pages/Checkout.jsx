@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { GET_SAVED_ADDRESS } from "../../lib/endpoints";
 import { storeAddressObj } from "../../Service/AddressService";
 import { http } from "../../Service/httpService";
@@ -15,7 +21,7 @@ const Checkout = () => {
   const getActiveTypeAddress = ctxAddress.getActiveType;
   //store addresses from database state
   const [addresses, setAddresses] = useState([]);
-  const findActiveAddress = addresses.find(
+  const findActiveAddress = addresses?.find(
     (item) => item.Type === getActiveTypeAddress.type
   );
   const [prescriptionsHis, setPrescriptionsHis] = useState({
@@ -26,6 +32,8 @@ const Checkout = () => {
   const [isActiveProductSummary, setActiveProductSummary] = useState(true);
   const [isActiveAddress, setActiveAddress] = useState(false);
   const [isActivePayment, setActivePayment] = useState(false);
+
+  console.log({ findActiveAddress });
 
   const SummaryActiveHandler = () => {
     setActiveProductSummary(true);
@@ -53,18 +61,10 @@ const Checkout = () => {
 
   //check whether to go to payment model or not
   const okToProceed = () => {
-    if (
-      findActiveAddress !== undefined ||
-      findActiveAddress?.Name !== null ||
-      (storeAddressObj.name.length > 0 &&
-        storeAddressObj.mobile.length > 0 &&
-        storeAddressObj.division.length > 0 &&
-        storeAddressObj.district.length > 0 &&
-        storeAddressObj.area.length > 0 &&
-        storeAddressObj.address.length > 0)
-    )
-      return true;
-    else return false;
+    if (findActiveAddress === undefined || findActiveAddress?.Name === null) {
+      return false;
+    }
+    return true;
   };
 
   const proceedToAddressHandler = () => {
@@ -105,7 +105,7 @@ const Checkout = () => {
   }, [isActiveProductSummary, isActiveAddress, isActivePayment]);
   console.log({ addresses });
 
-  const getAddressHttp = () => {
+  const getAddressHttp = useCallback(() => {
     http.post({
       url: GET_SAVED_ADDRESS,
       payload: {
@@ -131,11 +131,11 @@ const Checkout = () => {
         // setIsLoading(false);
       },
     });
-  };
+  }, [authCtx.user.id]);
 
   useEffect(() => {
     getAddressHttp();
-  }, []);
+  }, [getAddressHttp]);
 
   return (
     <div id="body_parent">
@@ -173,7 +173,7 @@ const Checkout = () => {
                 />
               )}
               {isActiveAddress && (
-                <Address ProceedToOrderHandler={ProceedToOrderHandler} />
+                <Address ProceedToOrderHandler={ProceedToOrderHandler} getAddressHttpCheckout={getAddressHttp} />
               )}
               {isActivePayment && (
                 <Payment
