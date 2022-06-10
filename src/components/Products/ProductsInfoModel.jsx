@@ -1,19 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { searchItemsConvertObject } from "../../lib/utilities";
+import { BASE_URL } from "../../Service/httpService";
 import { urlProductDetails } from "../../Service/UrlService";
 import cartContext from "../../store/cart-context";
 
 const ProductsInfoModel = ({ item }) => {
+  let itemContain = searchItemsConvertObject(item);
   const [qty, setQty] = useState("");
 
   const getCartContext = useContext(cartContext);
   const [visibleCartBox, setVisibleCartBox] = useState(false);
   const getCartCtxItems = getCartContext.getCartModel.Items;
-  const findItem = getCartCtxItems.find((item2) => item2.id === item.id);
+  const findItem = getCartCtxItems.find((item2) => item2.id === itemContain.id);
 
-  const storeCartHandler = (item, e) => {
+  const storeCartHandler = (itemContain, e) => {
     e.preventDefault();
-    getCartContext.storeCartItems(item);
+    getCartContext.storeCartItems(itemContain);
   };
 
   const qtyIncHandler = (e) => {
@@ -31,20 +34,20 @@ const ProductsInfoModel = ({ item }) => {
     }
   };
 
-  const qtyChangeHandler = (item, { target }) => {
+  const qtyChangeHandler = (itemContain, { target }) => {
     if (target.value === "") {
       setQty(0);
     } else {
       setQty(target.value);
     }
-    getCartContext.updateEditableQuantity(item, target.value);
+    getCartContext.updateEditableQuantity(itemContain, target.value);
   };
 
-  const blurHandler = (item) => {
+  const blurHandler = (itemContain) => {
     if (qty === 0) {
       // setQtyAlert(true);
       alert("Quantity Can't be less than 1");
-      getCartContext.updateEditableQuantity(item, 1);
+      getCartContext.updateEditableQuantity(itemContain, 1);
       setQty(1);
     }
   };
@@ -60,39 +63,60 @@ const ProductsInfoModel = ({ item }) => {
   return (
     <div class="inner-product-main-flex slide-single splide__slide">
       <a href>
-        {item.Ds > 0 && (
+        {itemContain.Ds > 0 && (
           <div class="group-price-drag">
             <span class="product-new-drag">
-              {item.Ds > 0 ? item.Ds : ""}
-              {item.Ds > 0 ? "%" : null}
+              {itemContain.Ds > 0 ? itemContain.Ds : ""}
+              {itemContain.Ds > 0 ? "%" : null}
             </span>
           </div>
         )}
-        <Link to={urlProductDetails() + item.id}>
+        <Link to={urlProductDetails() + itemContain.id}>
           <div class="product-top-area">
             <div class="product-img">
-              <img src="/Contents/assets/image/koko.jpeg" alt="product" />
+              {itemContain.image === null ? (
+                <img
+                  src="/Contents/assets/image/default-medicine.png"
+                  alt="product"
+                />
+              ) : (
+                <img
+                  src={
+                    BASE_URL +
+                    "/Content/ImageData/Products/Small/" +
+                    itemContain.image
+                  }
+                  alt="product"
+                />
+              )}
             </div>
             <div class="product-content">
-              <div className="product_heading_info">
-                <h3>{item.Nm} &nbsp; </h3>
-
-                <span>{item.St} Tab</span>
+              <div className="product-top-heading" style={{height:"70%"}}>
+                <div className="product_heading_info">
+                  <h3>{itemContain.Nm} &nbsp; </h3>
+                  <span>{itemContain.St} Tab</span>
+                </div>
+                <span>{itemContain.category}</span>
               </div>
-              <span>Vitamin C</span>
 
-              <div class="basket-add">
-                {item.Ds === 0 && (
-                  <span class="item__price item__price--now">৳{item.MRP}</span>
+              <div class="basket-add" style={{height:"30%"}}>
+                {itemContain.Ds === 0 && (
+                  <span class="item__price item__price--now">
+                    ৳{itemContain.MRP}
+                  </span>
                 )}
 
-                {item.Ds > 0 && (
+                {itemContain.Ds > 0 && (
                   <>
                     <span class="item__price item__price--now">
-                      ৳{(item.MRP - (item.MRP * item.Ds) / 100).toFixed(2)}
+                      ৳
+                      {(
+                        itemContain.MRP -
+                        (itemContain.MRP * itemContain.Ds) / 100
+                      ).toFixed(2)}
                     </span>
                     <span class="price product-price">
-                      <del class="cross_price"> ৳{item.MRP}</del>
+                      <del class="cross_price"> ৳{itemContain.MRP}</del>
                     </span>
                   </>
                 )}
@@ -104,7 +128,7 @@ const ProductsInfoModel = ({ item }) => {
         {!visibleCartBox && (
           <div
             class="add-to-cart d-flex al-center j-center"
-            onClick={storeCartHandler.bind(this, item)}
+            onClick={storeCartHandler.bind(this, itemContain)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -135,8 +159,8 @@ const ProductsInfoModel = ({ item }) => {
                       name="qty"
                       id="qty"
                       value={findItem?.quantity}
-                      onChange={qtyChangeHandler.bind(null, item)}
-                      onBlur={blurHandler.bind(null, item)}
+                      onChange={qtyChangeHandler.bind(null, itemContain)}
+                      onBlur={blurHandler.bind(null, itemContain)}
                     />
                   </aside>
                   <span

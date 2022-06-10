@@ -1,0 +1,28 @@
+.notification__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.notification__single__item {
+	width: 50%;
+	text-align: center;
+	background: #016449;
+	padding: 10px;
+	border-radius: 10px;
+}
+.empty__notification__list {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.5rem;
+	color: #016449;
+	font-weight: bold;
+}
+.Notification_notification__single__item:hover {
+	background: #31B086;
+	transition: .2s ease-in-out;
+}

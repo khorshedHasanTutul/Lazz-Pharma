@@ -50,23 +50,23 @@ const FooterParent = () => {
                 <ul id="introduce-company" class="introduce-list">
                   <li>
                     <i class="fa fa-angle-double-right"></i>
-                    <a
-                      href="https://www.lazzpharma.com/RequestOrder"
+                    <Link
+                      to={urlRequestOrderRoute()}
                       style={{ color: "white" }}
                     >
                       Request Order
-                    </a>
+                    </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <i class="fa fa-angle-double-right"></i>
                     <Link
-                    to={urlRequestOrderRoute()}
+                      to={urlRequestOrderRoute()}
                       style={{ color: "white" }}
                     >
                       Urgent Order
                     </Link>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <i class="fa fa-angle-double-right"></i>
                     <Link
                       to={urlBranchLocationRoute()}
@@ -74,13 +74,10 @@ const FooterParent = () => {
                     >
                       Find Store
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <i class="fa fa-angle-double-right"></i>
-                    <Link
-                      to={urlHowToOrderRoute()}
-                      style={{ color: "white" }}
-                    >
+                    <Link to={urlHowToOrderRoute()} style={{ color: "white" }}>
                       How to Order
                     </Link>
                   </li>
@@ -89,7 +86,7 @@ const FooterParent = () => {
               <div class="col-sm-6">
                 <div class="introduce-title">Support</div>
                 <ul id="introduce-support" class="introduce-list">
-                <li>
+                  <li>
                     <i class="fa fa-angle-double-right"></i>
                     <Link to={urlCarrerRoute()} style={{ color: "white" }}>
                       Carrer

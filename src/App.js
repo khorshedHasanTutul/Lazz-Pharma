@@ -25,6 +25,7 @@ import {
   urlGalleryRoute,
   urlHomeRoute,
   urlHowToOrderRoute,
+  urlNotificationRoute,
   urlPrivacyPolicy,
   urlProductDetails,
   urlProfileRoute,
@@ -42,6 +43,7 @@ import SubCategoryProduct from "./components/Products/SubCategoryProduct/SubCate
 import Profile from "./components/pages/Profile";
 import { useLocation } from "react-router-dom";
 import SpecialOffer from "./components/Profile/Special Offer/SpecialOffer";
+import Notification from "./components/Notification/Notification";
 
 function App() {
   const location = useLocation();
@@ -113,6 +115,9 @@ function App() {
           </Route>
           <Route path={urlSubCategoryWiseRoute() + ":id"}>
             <SubCategoryProduct />
+          </Route>
+          <Route path={urlNotificationRoute()}>
+            <Notification />
           </Route>
         </Switch>
       </main>

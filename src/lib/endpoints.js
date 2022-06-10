@@ -52,3 +52,7 @@ export const SEARCH_PRODUCT = "/ProductArea/Product/Search";
 export const PRODUCT_DETAILS_GET = "/ProductArea/ProductContent/ByProduct/";
 export const GET_RELATED_PRODUCTS = "/ProductArea/Product/GetRelated/";
 export const POST_REVIEW_PRODUCT = "/ReviewArea/Comment/Create";
+
+export const GET_CATEGORY_WISE_PRODUCT = "/AppDataArea/AppCategoryProduct/Get";
+export const GET_NOTIFICATION = "/NoticeArea/Notification/Get";
+export const NOTIFY_SEEN = "/NoticeArea/Notification/Seen?activityId=";

@@ -277,7 +277,7 @@ const reducer = (state, action) => {
       if (findElement.UnitSalePrice !== element.MRP) {
         element.MRP = findElement.UnitSalePrice;
       }
-      if(findElement.Discount !== element.Ds) {
+      if (findElement.Discount !== element.Ds) {
         element.Ds = findElement.Discount;
       }
       return element;
@@ -293,7 +293,7 @@ const reducer = (state, action) => {
       } else {
         mrpPriceOfSingleProduct = calcAmmount(element);
       }
-      totalAmmount += mrpPriceOfSingleProduct * element.quantity;
+       totalAmmount += mrpPriceOfSingleProduct * element.quantity;
     });
     return {
       ...state,

@@ -20,7 +20,7 @@ var appData = {
       dropDownCategoryName: "Shop Categories",
       dropDownCategoryItem: [
         {
-          categoryId: 1,
+          categoryId: "3a218b83-3ca2-47ca-9c4a-ae6dbe07d4fd",
           visible: true,
           categoryName: "Medicine",
           subCategory: [
