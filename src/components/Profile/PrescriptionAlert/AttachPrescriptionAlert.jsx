@@ -44,6 +44,7 @@ const AttachPrescriptionAlert = ({
       setAttachedPrescription(findItem);
     }
   };
+
   const saveHandler = () => {
     attachedPrescription.length > 0 &&
       http.post({
@@ -53,16 +54,13 @@ const AttachPrescriptionAlert = ({
           OrderId: orderId,
           ActivityId: "00000000-0000-0000-0000-000000000000",
         },
-        before: () => {
-          
-        },
+        before: () => {},
         successed: () => {
           closeModal();
           getPrescriptionsByOrder();
         },
         failed: () => {},
-        always: () => {
-        },
+        always: () => {},
       });
   };
   useEffect(() => {
@@ -83,7 +81,7 @@ const AttachPrescriptionAlert = ({
             </div>
           </div>
           <div class="popup__body" style={{ minHeight: "200px" }}>
-            {!isLoading && (
+            {!isLoading && existPrescriptions.length > 0 && (
               <div>
                 <div className="count_prescription">
                   <p style={{ fontWeight: "bold" }}>
@@ -119,6 +117,14 @@ const AttachPrescriptionAlert = ({
                 </div>
                 <div className="save-prescription d-flex" onClick={saveHandler}>
                   Save
+                </div>
+              </div>
+            )}
+            {!isLoading && existPrescriptions.length === 0 && (
+              <div className="without-prescription">
+                <p>OMG ! You didn't uploaded any prescriptions yet. 😥</p>
+                <div className="without-pres-button save-prescription d-flex" onClick={closeModal}>
+                  Ok
                 </div>
               </div>
             )}

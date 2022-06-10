@@ -1,8 +1,17 @@
-import React, { forwardRef, useContext, useState } from "react";
+import React, {
+  forwardRef,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { GET_USER_INFO } from "../../lib/endpoints";
+import { http } from "../../Service/httpService";
 import {
   urlHomeRoute,
+  urlNotificationRoute,
   urlPrescriptionHistory,
   urlProfileRoute,
   urlRequestOrderRoute,
@@ -15,6 +24,7 @@ import SearchProduct from "../SearchPortal/SearchProduct";
 const MiddleHeader = forwardRef((props, ref) => {
   const authCtx = useContext(authContext);
   let history = useHistory();
+  const [countNotification, setCountNotification] = useState([]);
   const [loginPopUp, setLoginPopUp] = useState(false);
   const [searchValue, setSearchValuye] = useState("");
   const [pressUploadPrescription, setPresUploadPrescription] = useState(false);
@@ -44,6 +54,27 @@ const MiddleHeader = forwardRef((props, ref) => {
     }
     history.push(urlProfileRoute() + urlPrescriptionHistory());
   };
+
+  const notificationHandler = () => {
+    setCountNotification(0);
+    history.push(urlNotificationRoute());
+  };
+
+  const getUserInfo = () => {
+    http.get({
+      url: GET_USER_INFO,
+      before: () => {},
+      successed: (res) => {
+        setCountNotification(res.Data.NotificationCount);
+      },
+      failed: () => {},
+      always: () => {},
+    });
+  };
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   return (
     <div class="container-fluid main-header" ref={ref}>
@@ -159,10 +190,19 @@ const MiddleHeader = forwardRef((props, ref) => {
               <i class="fa fa-user-o" aria-hidden="true"></i>
             </a>
           </li>
-          <li className="notification">
+          <li className="notification" onClick={notificationHandler}>
             <a href title="Notification">
               <i class="fa fa-bell-o" aria-hidden="true"></i>
             </a>
+            {countNotification?.NotificationCount < 99 &&
+              countNotification?.NotificationCount > 0 && (
+                <span>{countNotification?.NotificationCount}</span>
+              )}
+            {countNotification?.NotificationCount >= 99 && (
+              <span>
+                99 <sup>+</sup>
+              </span>
+            )}
           </li>
           <li>
             <a href="tel:01704247162" title="Call to Order">

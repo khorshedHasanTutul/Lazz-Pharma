@@ -1,20 +1,19 @@
-export const urlHomeRoute=()=>'/';
-export const urlRequestOrderRoute=()=>'/order';
-export const urlReviewRoute=()=>'/review';
-export const urlCarrerRoute=()=>'/carrer';
-export const urlGalleryRoute=()=>'/gallery';
-export const urlAboutRoute=()=>'/about';
-export const urlContactRoute=()=>'/contact';
-export const urlReturnPolicy=()=>'/return';
-export const urlTermsConditionRoute=()=>'/termsCondition';
-export const urlPrivacyPolicy=()=>'/privacy';
-export const urlProductDetails=()=>'/product/details/';
-export const urlBranchLocationRoute=()=>'/branchLocation';
-export const urlCategoryWiseRoute=()=>'/category/';
-export const urlSubCategoryWiseRoute=()=>'/subCategory/';
+export const urlHomeRoute = () => "/";
+export const urlRequestOrderRoute = () => "/order";
+export const urlReviewRoute = () => "/review";
+export const urlCarrerRoute = () => "/carrer";
+export const urlGalleryRoute = () => "/gallery";
+export const urlAboutRoute = () => "/about";
+export const urlContactRoute = () => "/contact";
+export const urlReturnPolicy = () => "/return";
+export const urlTermsConditionRoute = () => "/termsCondition";
+export const urlPrivacyPolicy = () => "/privacy";
+export const urlProductDetails = () => "/product/details/";
+export const urlBranchLocationRoute = () => "/branchLocation";
+export const urlCategoryWiseRoute = () => "/category/";
+export const urlSubCategoryWiseRoute = () => "/subCategory/";
 
-
-export const urlProfileRoute=()=>'/profile';
+export const urlProfileRoute = () => "/profile";
 //profile order route
 export const urlOrderRoute = () => "/order";
 //Profile all Order Routes
@@ -30,17 +29,19 @@ export const urlOrderCancelingRoute = () => "/order/cancel";
 //profile order details route
 export const urlOrderDetailsRoute = () => "/order/details/";
 //Prescription History
-export const urlPrescriptionHistory = ()=>"/prescription/history";
+export const urlPrescriptionHistory = () => "/prescription/history";
 //request History
-export const urlRequestHistoryRoute = ()=>"/prescription/request";
+export const urlRequestHistoryRoute = () => "/prescription/request";
 //profile edit address
-export const urlProfileAddressRoute=()=>"/edit/address";
+export const urlProfileAddressRoute = () => "/edit/address";
 //profile special offer
-export const urlSpecialOfferRoute=()=>"/special/offer"
-// profile edit 
-export const urlProfileEditRoute=()=>"/edit"
+export const urlSpecialOfferRoute = () => "/special/offer";
+// profile edit
+export const urlProfileEditRoute = () => "/edit";
 // profile submit complain
-export const urlProfileComplain=()=>"/complain"
+export const urlProfileComplain = () => "/complain";
 
-export const urlCheckoutRoute=()=>'/checkout';
-export const urlHowToOrderRoute=()=>'/howToOrder'
+export const urlCheckoutRoute = () => "/checkout";
+export const urlHowToOrderRoute = () => "/howToOrder";
+
+export const urlNotificationRoute = () => "/notification";

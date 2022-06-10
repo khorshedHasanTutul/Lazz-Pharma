@@ -7,6 +7,7 @@ import {
   urlOrderDetailsRoute,
   urlProfileRoute,
 } from "../../../Service/UrlService";
+import { humanizeShortDateTime } from "../../../lib/utilities";
 
 const OrderCard = ({ order }) => {
   console.log({ order });
@@ -69,16 +70,20 @@ const OrderCard = ({ order }) => {
             </div>
             <div class="order-dsc display-flex jc-s-b">
               <span> Date</span>
-              <aside>12 October'22 02:30 PM</aside>
+              <aside>{humanizeShortDateTime(order.CreatedAt)}</aside>
+            </div>
+            <div class="order-dsc display-flex jc-s-b">
+              <span> Status</span>
+              <aside className="status-order-card">{order.Status}</aside>
             </div>
             <div class="order-dsc display-flex jc-s-b">
               <span> Payable Amount</span>
-              <aside>{order.PayableAmount} tk</aside>
+              <aside>{order?.PayableAmount.toFixed(2)} tk</aside>
             </div>
             <div class="order-dsc display-flex jc-s-b">
               <span>Shipping Address</span>
               <aside>
-                {order.Remarks} {order.Upazila} {order.District}{" "}
+                {order.Remarks}, {order.Upazila}, {order.District},{" "}
                 {order.Province}
               </aside>
             </div>

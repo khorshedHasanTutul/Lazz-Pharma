@@ -50,6 +50,7 @@ const ProductSummary = ({
     let quantity = findItem.quantity - 1;
     cartCtx.updateQuantity(findItem, quantity);
   };
+
   const clickedAutoOrderHandler = () => {
     setIsChecked((prevState) => !prevState);
   };
@@ -230,33 +231,33 @@ const ProductSummary = ({
                       </p>
                       <small class="cart_ref">Type : {item.category}</small>
                       <br />
-                      <small class="cart_ref">Strength: {item.strength} </small>
+                      <small class="cart_ref">Strength: {item.st} </small>
                       <br />
-                      <small>Company: {item.suplier} </small>
+                      <small>Company: {item.supplier} </small>
                     </td>
                     <td
                       class="price"
                       style={{ textAlign: "center", width: "15%" }}
                     >
-                      {currentInfo[index]?.Discount > 0 &&
-                      currentInfo[index]?.Discount !== null ? (
+                      {item?.Ds > 0 &&
+                      item.Ds!== null ? (
                         <span>
                           ৳{" "}
                           {(
-                            currentInfo[index]?.UnitSalePrice -
-                            (currentInfo[index]?.UnitSalePrice *
-                              currentInfo[index]?.Discount) /
+                            item.MRP -
+                            (item.MRP *
+                              item.Ds) /
                               100
                           ).toFixed(2)}
                         </span>
                       ) : (
-                        <span>৳ {currentInfo[index]?.UnitSalePrice}</span>
+                        <span>৳ {item.MRP}</span>
                       )}
                     </td>
                     <td class="qty">
                       <div class="pro_qty">
-                        <a href onClick={qtyIncHandler.bind(this, item)}>
-                          <i class="fa fa-caret-up"></i>
+                        <a href onClick={qtyDecHandler.bind(this, item)}>
+                          <i class="fa fa-minus" aria-hidden="true"></i>
                         </a>
                         <input
                           class="form-control input-sm"
@@ -265,9 +266,8 @@ const ProductSummary = ({
                           onChange={qtyChangeHandler.bind(null, item)}
                           onBlur={blurHandler.bind(null, item)}
                         />
-
-                        <a href onClick={qtyDecHandler.bind(this, item)}>
-                          <i class="fa fa-caret-down"></i>
+                        <a href onClick={qtyIncHandler.bind(this, item)}>
+                          <i class="fa fa-plus"></i>
                         </a>
                       </div>
                     </td>
@@ -275,22 +275,22 @@ const ProductSummary = ({
                       class="price"
                       style={{ textAlign: "center", width: "18%" }}
                     >
-                      {currentInfo[index]?.Discount === 0 &&
-                        currentInfo[index]?.Discount !== null && (
+                      {item.Ds === 0 &&
+                        item.Ds !== null && (
                           <span>
                             ৳{" "}
                             {(
-                              currentInfo[index]?.UnitSalePrice * item.quantity
+                              item.MRP * item.quantity
                             ).toFixed(2)}
                           </span>
                         )}
-                      {currentInfo[index]?.Discount > 0 && (
+                      {item.Ds > 0 && (
                         <span>
                           ৳
                           {(
-                            (currentInfo[index]?.UnitSalePrice -
-                              (currentInfo[index]?.UnitSalePrice *
-                                currentInfo[index]?.Discount) /
+                            (item.MRP -
+                              (item.MRP *
+                                item.Ds) /
                                 100) *
                             item.quantity
                           ).toFixed(2)}

@@ -25,6 +25,7 @@ const OtpCodeModal = ({
   const [otpIsTouched, setOtpIsTouched] = useState(false);
   const [otpIsValid, setOtpIsValid] = useState(false);
   const [failedMessage, setFailedMessage] = useState(false);
+  const [otpResend, setOtpResend] = useState(false);
 
   const otpTouchedHandler = () => {
     setOtpIsTouched(true);
@@ -50,6 +51,7 @@ const OtpCodeModal = ({
     //success code goes here
     evt.preventDefault();
     setClicked(true);
+    setOtpResend(false);
 
     //if fullfil all condition then state update of this states
     if (otp.length !== 0) {
@@ -187,10 +189,15 @@ const OtpCodeModal = ({
         ActivityId: "00000000-0000-0000-0000-000000000000",
         Phone: getAuthCtxRegistrationValue.phone,
       },
-      before: () => {},
+      before: () => {
+        setOtpIsTouched(false);
+        setOtpIsValid(false);
+        setOtpResend(false);
+      },
       successed: (res) => {
         //spinner off here
         authCtx.userOtpId.id = res.Id;
+        setOtpResend(true);
       },
       failed: () => {},
       always: () => {},
@@ -218,8 +225,11 @@ const OtpCodeModal = ({
                 onBlur={otpTouchedHandler}
               />
               {failedMessage && <div class="alert alert-error">Wrong OTP!</div>}
-              {isExistUser && (
+              {!forgotPassPressed && isExistUser && (
                 <div class="alert alert-error">User already Exist!</div>
+              )}
+              {forgotPassPressed && isExistUser && (
+                <div class="alert alert-error">User doesn't exist!</div>
               )}
               {otpIsValid && (
                 <div class="alert alert-error">Otp is required.</div>
@@ -243,6 +253,11 @@ const OtpCodeModal = ({
           Resent
         </a>
       </div>
+      {otpResend && (
+        <div class="dont-have-account">
+          <p style={{ color: "red" }}>OTP Code Send Successfully.</p>
+        </div>
+      )}
     </div>
   );
 };

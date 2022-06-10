@@ -24,8 +24,8 @@ const ContactBodyTemplate = () => {
 
   //email state
   const [email, setEmail] = useState("");
-  const [emailIsTouched, setEmailIsTouched] = useState(false);
-  const [emailIsValid, setEmailIsvalid] = useState(false);
+  // const [emailIsTouched, setEmailIsTouched] = useState(false);
+  // const [emailIsValid, setEmailIsvalid] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -57,9 +57,9 @@ const ContactBodyTemplate = () => {
   const emailOnChangeHandler = ({ target }) => {
     setEmail(target.value);
   };
-  const emailTouchedHandler = () => {
-    setEmailIsTouched(true);
-  };
+  // const emailTouchedHandler = () => {
+  //   setEmailIsTouched(true);
+  // };
 
   //send button Handler
 
@@ -68,7 +68,7 @@ const ContactBodyTemplate = () => {
     evt.preventDefault();
     if (
       name.length !== 0 &&
-      email.length !== 0 &&
+      // email.length !== 0 &&
       phone.length !== 0 &&
       message.length !== 0
     ) {
@@ -89,8 +89,8 @@ const ContactBodyTemplate = () => {
           setNameIsValid(false);
           setNameIsTouched(false);
           setEmail("");
-          setEmailIsvalid(false);
-          setEmailIsTouched(false);
+          // setEmailIsvalid(false);
+          // setEmailIsTouched(false);
           setphone("");
           setPhoneIsValid(false);
           setPhoneIsTouched(false);
@@ -136,12 +136,12 @@ const ContactBodyTemplate = () => {
         setPhoneIsValid(true);
       } else setPhoneIsValid(false);
 
-      if (
-        (emailIsTouched && email.length === 0) ||
-        (!emailIsTouched && email.length === 0)
-      ) {
-        setEmailIsvalid(true);
-      } else setEmailIsvalid(false);
+      // if (
+      //   (emailIsTouched && email.length === 0) ||
+      //   (!emailIsTouched && email.length === 0)
+      // ) {
+      //   setEmailIsvalid(true);
+      // } else setEmailIsvalid(false);
     }
   }, [
     message.length,
@@ -150,8 +150,8 @@ const ContactBodyTemplate = () => {
     name.length,
     phone.length,
     phoneIsTouched,
-    email.length,
-    emailIsTouched,
+    // email.length,
+    // emailIsTouched,
     clicked,
   ]);
 
@@ -237,15 +237,15 @@ const ContactBodyTemplate = () => {
                 type="text"
                 value={email}
                 onChange={emailOnChangeHandler}
-                onBlur={emailTouchedHandler}
+                // onBlur={emailTouchedHandler}
               />
             </div>
-            {emailIsValid && (
+            {/* {emailIsValid && (
               <div class="alert alert-error">Email is required.</div>
             )}
             {emailIsTouched && email.length === 0 && !emailIsValid && (
               <div class="alert alert-error">Email is required.</div>
-            )}
+            )} */}
           </div>
           <div class="col-sm-12 text-right form-group">
             <button
