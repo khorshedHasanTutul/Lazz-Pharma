@@ -163,7 +163,6 @@ const Checkout = () => {
                   <span>03. Payment</span>
                 </li>
               </ul>
-
               {isActiveProductSummary && (
                 <ProductSummary
                   AddressActiveHandler={AddressActiveHandler}

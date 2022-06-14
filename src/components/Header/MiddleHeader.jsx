@@ -16,6 +16,7 @@ import {
   urlProfileRoute,
   urlRequestOrderRoute,
 } from "../../Service/UrlService";
+import appContext from "../../store/app-context";
 import authContext from "../../store/auth-context";
 import AuthenticationModalBody from "../Authentication/AuthenticationModalBody";
 import LoginModal from "../Authentication/LoginModal";
@@ -23,6 +24,7 @@ import SearchProduct from "../SearchPortal/SearchProduct";
 
 const MiddleHeader = forwardRef((props, ref) => {
   const authCtx = useContext(authContext);
+  const { orderCreated } = useContext(appContext);
   let history = useHistory();
   const [countNotification, setCountNotification] = useState([]);
   const [loginPopUp, setLoginPopUp] = useState(false);
@@ -75,6 +77,11 @@ const MiddleHeader = forwardRef((props, ref) => {
   useEffect(() => {
     getUserInfo();
   }, []);
+  useEffect(() => {
+    if (orderCreated.currentOrderStatus === true) {
+      getUserInfo();
+    }
+  }, [orderCreated.currentOrderStatus]);
 
   return (
     <div class="container-fluid main-header" ref={ref}>

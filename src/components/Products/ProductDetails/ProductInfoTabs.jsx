@@ -1,13 +1,24 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { POST_REVIEW_PRODUCT } from "../../../lib/endpoints";
+import {
+  GET_REVIEW,
+  GET_REVIEW_BY_PRODUCT,
+  POST_REVIEW_PRODUCT,
+} from "../../../lib/endpoints";
+import { paramsUrlGenerator } from "../../../lib/utilities";
 import { http } from "../../../Service/httpService";
+import authContext from "../../../store/auth-context";
+import AuthenticationModalBody from "../../Authentication/AuthenticationModalBody";
+import LoginModal from "../../Authentication/LoginModal";
+import Paginator from "../../Paginators/Paginators";
 
 const ProductInfoTabs = ({
   clickedReviewHandler,
   reviewClickedHandler,
   productDetails,
 }) => {
+  const authCtx = useContext(authContext);
   const { id } = useParams();
   const ref = useRef(null);
   const refAutoFocus = useRef();
@@ -15,12 +26,34 @@ const ProductInfoTabs = ({
   // const [isActiveInformation, setIsActiveInformation] = useState(false);
   const [isActiveReview, setIsActiveReview] = useState(false);
   const [review, setReview] = useState("");
-  const [getReviews, setGetReviews] = useState([]);
+  const [reviewTouched, setReviewTouched] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const [reviewValid, setReviewValid] = useState(false);
+  const [loginModal, setLoginModal] = useState(false);
+  const [allReviews, setAllReviews] = useState({
+    items: [],
+    totalCount: 0,
+    count: 0,
+  });
+  const [params, setParams] = useState({
+    isDescending: false,
+    pageNumber: 1,
+    pageSize: 5,
+  });
 
   const detailsActiveHandler = () => {
     setIsActiveDetails(true);
     // setIsActiveInformation(false);
     setIsActiveReview(false);
+  };
+  const closeAuthModalHandler = () => {
+    setLoginModal((prevState) => !prevState);
+  };
+  const reviewTouchedHandler = () => {
+    setReviewTouched(true);
+  };
+  const pageChangeHandler = (page) => {
+    setParams((prevState) => ({ ...prevState, pageNumber: page }));
   };
 
   // const informationActiveHandler = () => {
@@ -37,7 +70,13 @@ const ProductInfoTabs = ({
   const reviewChangeHandler = ({ target }) => {
     setReview(target.value);
   };
+  
   const submitReviewHandler = () => {
+    if (!authCtx.isLoggedIn) {
+      setLoginModal(true);
+      return;
+    }
+    setClicked(true);
     if (review.length > 0) {
       http.post({
         url: POST_REVIEW_PRODUCT,
@@ -47,12 +86,50 @@ const ProductInfoTabs = ({
         },
         before: () => {},
         successed: (res) => {
+          setAllReviews((prevState) => ({
+            ...prevState,
+            items: [res.Data, ...prevState.items],
+            totalCount: prevState.totalCount + 1,
+          }));
           setReview("");
+          setClicked(false);
+          setReviewTouched(false);
+          setReviewValid(false);
         },
         failed: () => {},
       });
     }
   };
+
+  const getReview = useCallback((paramsUrl) => {
+    http.post({
+      url: GET_REVIEW_BY_PRODUCT + paramsUrl,
+      payload: {
+        filter: [
+          {
+            field: "ProductId",
+            value: id,
+            operation: 0,
+          },
+        ],
+      },
+      before: () => {},
+      successed: (res) => {
+        setAllReviews({
+          items: res.Data.Data,
+          totalCount: res.Data.Total,
+          count: res.Data.Data?.length ?? 0,
+        });
+      },
+      failed: () => {},
+      always: () => {},
+    });
+  }, []);
+
+  useEffect(() => {
+    const paramsUrl = paramsUrlGenerator(params);
+    getReview(paramsUrl);
+  }, [getReview, params]);
 
   useEffect(() => {
     if (clickedReviewHandler) {
@@ -84,6 +161,17 @@ const ProductInfoTabs = ({
       ref.current.parentNode.childNodes[1].classList.remove("active");
     }
   }, [isActiveDetails, isActiveReview]);
+
+  useEffect(() => {
+    if (clicked) {
+      if (
+        (reviewTouched && review.length === 0) ||
+        (!reviewTouched && review.length === 0)
+      ) {
+        setReviewValid(true);
+      } else setReviewValid(false);
+    }
+  }, [clicked, review.length, reviewTouched]);
 
   return (
     <div class="product-tab">
@@ -161,7 +249,13 @@ const ProductInfoTabs = ({
                     data-type="string"
                     value={review}
                     onChange={reviewChangeHandler}
+                    onBlur={reviewTouchedHandler}
                   />
+                  {reviewValid && (
+                    <div class="alert alert-error">
+                      Cant't Post Empty Review.
+                    </div>
+                  )}
                 </div>
                 <div class="col-md-4" onClick={submitReviewHandler}>
                   <button
@@ -176,10 +270,43 @@ const ProductInfoTabs = ({
               </div>
             </div>
             <p> </p>
-            <div class="comment_container"></div>
+            <div class="comment_container">
+              {allReviews.items.map((item) => (
+                <div className="comment-single-item">
+                  <div className="item-img">
+                    <img
+                      src="/Contents/assets/image/user.png"
+                      alt="img"
+                      srcset=""
+                    />
+                  </div>
+                  <div className="item-reply-box">
+                    <div className="commenter-name">
+                      {item.Customer !== null ? item.Customer : "Customer"}
+                    </div>
+                    <div className="commenter-comment">
+                      <p>{item.Content}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              <Paginator
+                items={allReviews.totalCount}
+                pageItems={params.pageSize}
+                startPage={params.pageNumber}
+                onPageChange={pageChangeHandler}
+              />
+            </div>
           </div>
         )}
       </div>
+      {loginModal && (
+        <AuthenticationModalBody
+          Template={LoginModal}
+          closeModal={closeAuthModalHandler}
+        />
+      )}
     </div>
   );
 };

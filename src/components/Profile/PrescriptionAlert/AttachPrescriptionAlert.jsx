@@ -80,7 +80,7 @@ const AttachPrescriptionAlert = ({
               ✖
             </div>
           </div>
-          <div class="popup__body" style={{ minHeight: "200px" }}>
+          <div class="popup__body" style={{ minHeight: "120px" }}>
             {!isLoading && existPrescriptions.length > 0 && (
               <div>
                 <div className="count_prescription">
@@ -123,7 +123,10 @@ const AttachPrescriptionAlert = ({
             {!isLoading && existPrescriptions.length === 0 && (
               <div className="without-prescription">
                 <p>OMG ! You didn't uploaded any prescriptions yet. 😥</p>
-                <div className="without-pres-button save-prescription d-flex" onClick={closeModal}>
+                <div
+                  className="without-pres-button save-prescription d-flex"
+                  onClick={closeModal}
+                >
                   Ok
                 </div>
               </div>

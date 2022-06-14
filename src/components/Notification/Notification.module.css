@@ -5,6 +5,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
+  position: relative;
 }
 
 .notification__single__item {
@@ -13,6 +14,7 @@
 	background: #016449;
 	padding: 10px;
 	border-radius: 10px;
+	position: relative;
 }
 .empty__notification__list {
 	display: flex;
@@ -21,8 +23,20 @@
 	font-size: 1.5rem;
 	color: #016449;
 	font-weight: bold;
+	
 }
 .Notification_notification__single__item:hover {
 	background: #31B086;
 	transition: .2s ease-in-out;
+}
+.status__notification {
+	text-align: left;
+	color: white;
+	background: #E63345;
+	display: inline-block;
+	position: absolute;
+	left: 10px;
+	padding: 2px;
+	border-radius: 6px;
+	top: 2px;
 }

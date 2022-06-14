@@ -36,7 +36,7 @@ const AlertPopUp = ({ alertStateChangedHandler,order,mobile }) => {
                 Your order has been placed
               </h1>
               <h1 class="t-20 t-bold t-center mb-16 t-primary">
-                Your order number is "#{order.OrderNo}"
+                Your order number is "#{order?.OrderNo}"
               </h1>
               <h2 class="t-18 t-bold t-center mb-16 t-secondary">
                 We'll call your number {mobile} to reconfirm

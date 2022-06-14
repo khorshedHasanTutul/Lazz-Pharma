@@ -8,18 +8,21 @@ import ScrolToTop from "./components/pages/ScrolToTop";
 import CartContextProvider from "./store/CartContextProvider";
 import AddressContextProvider from "./store/AddressContextProvider";
 import AuthContextProvider from "./store/AuthContextProvider";
+import AppContextProvider from "./store/AppContextProvider";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <ScrolToTop />
-      <AuthContextProvider>
-      <AddressContextProvider>
-        <CartContextProvider>
-          <App />
-        </CartContextProvider>
-      </AddressContextProvider>
-      </AuthContextProvider>
+      <AppContextProvider>
+        <AuthContextProvider>
+          <AddressContextProvider>
+            <CartContextProvider>
+              <App />
+            </CartContextProvider>
+          </AddressContextProvider>
+        </AuthContextProvider>
+      </AppContextProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

@@ -91,29 +91,29 @@ const ProductsInfoModel = ({ item }) => {
               )}
             </div>
             <div class="product-content">
-              <div className="product-top-heading" style={{height:"70%"}}>
+              <div className="product-top-heading" style={{ height: "70%" }}>
                 <div className="product_heading_info">
                   <h3>{itemContain.Nm} &nbsp; </h3>
-                  <span>{itemContain.St} Tab</span>
+                  <span>{itemContain.St!=='.' && itemContain.St}</span>
                 </div>
                 <span>{itemContain.category}</span>
               </div>
 
-              <div class="basket-add" style={{height:"30%"}}>
+              <div class="basket-add" style={{ height: "30%" }}>
                 {itemContain.Ds === 0 && (
                   <span class="item__price item__price--now">
                     ৳{itemContain.MRP}
                   </span>
                 )}
+                {/* {(
+                        itemContain.MRP -
+                        (itemContain.MRP * itemContain.Ds) / 100
+                      ).toFixed(2)} */}
 
                 {itemContain.Ds > 0 && (
                   <>
                     <span class="item__price item__price--now">
-                      ৳
-                      {(
-                        itemContain.MRP -
-                        (itemContain.MRP * itemContain.Ds) / 100
-                      ).toFixed(2)}
+                      ৳{(itemContain.MRP - itemContain.Ds).toFixed(2)}
                     </span>
                     <span class="price product-price">
                       <del class="cross_price"> ৳{itemContain.MRP}</del>
