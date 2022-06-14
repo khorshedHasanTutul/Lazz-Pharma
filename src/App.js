@@ -32,6 +32,7 @@ import {
   urlRequestOrderRoute,
   urlReturnPolicy,
   urlReviewRoute,
+  urlSearchProducts,
   urlSpecialOfferRoute,
   urlSubCategoryWiseRoute,
   urlTermsConditionRoute,
@@ -44,6 +45,7 @@ import Profile from "./components/pages/Profile";
 import { useLocation } from "react-router-dom";
 import SpecialOffer from "./components/Profile/Special Offer/SpecialOffer";
 import Notification from "./components/Notification/Notification";
+import SearchAllProduct from "./components/Products/SearchAllProduct/SearchAllProduct";
 
 function App() {
   const location = useLocation();
@@ -118,6 +120,9 @@ function App() {
           </Route>
           <Route path={urlNotificationRoute()}>
             <Notification />
+          </Route>
+          <Route path={urlSearchProducts()}>
+            <SearchAllProduct />
           </Route>
         </Switch>
       </main>

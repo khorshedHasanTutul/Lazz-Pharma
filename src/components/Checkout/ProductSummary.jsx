@@ -239,16 +239,9 @@ const ProductSummary = ({
                       class="price"
                       style={{ textAlign: "center", width: "15%" }}
                     >
-                      {item?.Ds > 0 &&
-                      item.Ds!== null ? (
+                      {item?.Ds > 0 && item.Ds !== null ? (
                         <span>
-                          ৳{" "}
-                          {(
-                            item.MRP -
-                            (item.MRP *
-                              item.Ds) /
-                              100
-                          ).toFixed(2)}
+                          ৳ {(item.MRP -  item.Ds).toFixed(2)}
                         </span>
                       ) : (
                         <span>৳ {item.MRP}</span>
@@ -275,25 +268,12 @@ const ProductSummary = ({
                       class="price"
                       style={{ textAlign: "center", width: "18%" }}
                     >
-                      {item.Ds === 0 &&
-                        item.Ds !== null && (
-                          <span>
-                            ৳{" "}
-                            {(
-                              item.MRP * item.quantity
-                            ).toFixed(2)}
-                          </span>
-                        )}
+                      {item.Ds === 0 && item.Ds !== null && (
+                        <span>৳ {(item.MRP * item.quantity).toFixed(2)}</span>
+                      )}
                       {item.Ds > 0 && (
                         <span>
-                          ৳
-                          {(
-                            (item.MRP -
-                              (item.MRP *
-                                item.Ds) /
-                                100) *
-                            item.quantity
-                          ).toFixed(2)}
+                          ৳{((item.MRP - item.Ds) * item.quantity).toFixed(2)}
                         </span>
                       )}
                     </td>

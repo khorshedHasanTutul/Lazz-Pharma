@@ -763,7 +763,7 @@ body {
 }
 
 .popup__title {
-  padding: 1.2rem;
+  padding: 0.7rem;
   background: #016449;
   display: flex;
   justify-content: space-between;
@@ -786,8 +786,45 @@ body {
   line-height: 30px;
 }
 
-.popup__body {
+/* .popup__body {
   padding: 2rem 3rem 3rem;
+} */
+.popup__body {
+  padding: 1rem 2rem 1rem;
+}
+.confirmation-buttons {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 1rem;
+}
+.confirmation-button {
+  padding: 5px 1rem;
+  background: #016449;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.comment-single-item {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
+  background: #d8dee3;
+}
+.comment-single-item .item-img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background: azure;
+}
+.comment_container {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.comment-single-item .item-img img {
+  width: 100%;
+  object-fit: fill;
 }
 
 .brick.primary.fill.round-corner {
@@ -1217,20 +1254,20 @@ width: 100%;
   height: 100px;
 }
 .banner-slider {
-	margin-left: -28px;
+  margin-left: -28px;
 }
 .notification span {
-	display: inline-block;
-	position: absolute;
-	width: 22px;
-	height: 22px;
-	background: #31B086;
-	border-radius: 50%;
-	text-align: center;
-	color: white;
-	left: 21px;
-	top: -7px;
-	font-weight: bold;
+  display: inline-block;
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: #31b086;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+  left: 21px;
+  top: -7px;
+  font-weight: bold;
 }
 .notification {
   position: relative;
@@ -2558,9 +2595,8 @@ div.brick.label {
 .line {
   height: 4px;
   width: 100%;
-  background-color: #31b086;
+  background-color: #9d8d8d;
   top: 50%;
-  -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
 }
 
@@ -2574,8 +2610,10 @@ div.brick.label {
   top: 0;
   height: 100%;
   width: 25%;
-  background-color: var(--green-color);
-  transition: 0.5s ease-in-out;
+  background: #09bf2e;
+  transition: width 2s ease-in-out;
+  z-index: 1;
+  position: absolute;
 }
 
 .Steps_step__2Wic5 {
@@ -2584,6 +2622,7 @@ div.brick.label {
   justify-content: center;
   align-items: center;
   position: relative;
+  z-index: 2;
 }
 
 .Steps_steps__3SNbF.Steps_wide__2JixU > div p:first-child {

@@ -135,7 +135,7 @@ const ContentCart = ({
                       )}
 
                       <strong class="SearchPrice" style={{ fontSize: "15px" }}>
-                        ৳ {(item.MRP - (item.MRP * item.Ds) / 100).toFixed(2)}
+                        ৳ {(item.MRP - item.Ds).toFixed(2)}
                       </strong>
                     </td>
                     <td
@@ -192,10 +192,9 @@ const ContentCart = ({
                             <del>{item.MRP * item.quantity}</del>
                             <br />
                             <span class="SearchFont SearchPrice">
-                              {(
-                                (item.MRP - (item.MRP * item.Ds) / 100) *
-                                item.quantity
-                              ).toFixed(2)}
+                              {((item.MRP - item.Ds) * item.quantity).toFixed(
+                                2
+                              )}
                             </span>
                           </>
                         )}

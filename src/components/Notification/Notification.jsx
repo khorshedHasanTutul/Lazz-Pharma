@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { GET_NOTIFICATION, NOTIFY_SEEN } from "../../lib/endpoints";
 import { paramsUrlGenerator } from "../../lib/utilities";
@@ -9,12 +10,14 @@ import {
   urlOrderRoute,
   urlProfileRoute,
 } from "../../Service/UrlService";
+import appContext from "../../store/app-context";
 import Paginator from "../Paginators/Paginators";
 import Suspense from "../Suspense/Suspense";
 import classes from "./Notification.module.css";
 
 const Notification = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const { orderCreated } = useContext(appContext);
   const [allNotification, setAllNotification] = useState({
     items: [],
     totalCount: 0,
@@ -43,6 +46,7 @@ const Notification = () => {
           count: res.Data.Data?.length ?? 0,
         });
         postSeenNotification();
+        orderCreated.orderStatus(false);
         setIsLoading(false);
       },
       failed: () => {},
@@ -96,6 +100,12 @@ const Notification = () => {
                         item.ReferenceId
                       }
                     >
+                      {item.Status === "New" && (
+                        <div className={`${classes.status__notification}`}>
+                          {item.Status}
+                        </div>
+                      )}
+
                       <p style={{ color: "white" }}>{item.Content}</p>
                     </Link>
                   </div>

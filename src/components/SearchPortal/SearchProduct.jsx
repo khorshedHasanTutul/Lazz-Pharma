@@ -1,10 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useContext } from "react";
 import { SEARCH_PRODUCT } from "../../lib/endpoints";
 import { tranformQuery } from "../../lib/utilities";
 import { http } from "../../Service/httpService";
+import appContext from "../../store/app-context";
+import { SearchContext } from "../../store/search-context";
 import SearchPortal from "./SearchPortal";
 
 const SearchProduct = ({ searchValue, closeSearchHandler }) => {
+  const appCtx = useContext(appContext);
+  
   const [searchedProduct, setSearchProduct] = useState([]);
   const [inputTimeout, setInputTimeout] = useState(null);
   const [isGetting, setIsGetting] = useState(false);
@@ -23,6 +28,7 @@ const SearchProduct = ({ searchValue, closeSearchHandler }) => {
       },
       before: () => {
         setIsGetting(true);
+        appCtx.searchQuery.storeSearchQuery(searchQuery);
       },
       successed: (res) => {
         setIsGetting(false);
@@ -48,9 +54,11 @@ const SearchProduct = ({ searchValue, closeSearchHandler }) => {
     },
     [getSearchProducts]
   );
+
   useEffect(() => {
     searchHandler(searchValue);
   }, [searchHandler, searchValue]);
+
   useEffect(() => () => clearTimeout(inputTimeout), [inputTimeout]);
 
   const lowerSearchvalue = searchValue.toLowerCase();

@@ -45,3 +45,5 @@ export const urlCheckoutRoute = () => "/checkout";
 export const urlHowToOrderRoute = () => "/howToOrder";
 
 export const urlNotificationRoute = () => "/notification";
+
+export const urlSearchProducts = () => "/products/Search";

@@ -5,6 +5,7 @@ import { storeAddressObj } from "../../Service/AddressService";
 import { http } from "../../Service/httpService";
 import { urlHomeRoute } from "../../Service/UrlService";
 import addressContext from "../../store/address-context";
+import appContext from "../../store/app-context";
 import cartContext from "../../store/cart-context";
 import AlertPopUp from "./OrderAlert/AlertPopUp";
 
@@ -13,6 +14,7 @@ const Payment = ({ AddressActiveHandler, addresses, prescriptionsHis }) => {
   const ctxAddress = useContext(addressContext);
   const ctxCart = useContext(cartContext);
   const [order, setOrder] = useState("");
+  const { orderCreated } = useContext(appContext);
 
   const [coupon, setCoupon] = useState("");
   const [couponClicked, setCouponClicked] = useState(false);
@@ -40,8 +42,6 @@ const Payment = ({ AddressActiveHandler, addresses, prescriptionsHis }) => {
   getStoreCartCtx.Items.map(function (element) {
     return products.push({ ProductId: element.id, Quantity: element.quantity });
   });
-
-  console.log({ getSelectedAddress });
   const radioButtonHandler = () => {
     setClickedRadio(true);
   };
@@ -81,7 +81,6 @@ const Payment = ({ AddressActiveHandler, addresses, prescriptionsHis }) => {
   const couponTouchedHandler = () => {
     setcouponIsTouched(true);
   };
-  console.log({ discounted });
   const proceedOrderHandler = () => {
     if (clickedRadio) {
       //create Order
@@ -113,6 +112,7 @@ const Payment = ({ AddressActiveHandler, addresses, prescriptionsHis }) => {
           setOrder(res.Data);
           setPopUpAlert(true);
           ctxCart.clearCart();
+          orderCreated.orderStatus(true);
         },
         failed: () => {},
         always: () => {},

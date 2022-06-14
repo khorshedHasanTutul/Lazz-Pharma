@@ -2,12 +2,11 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { PRODUCT_DETAILS_GET } from "../../../lib/endpoints";
 import { searchItemsConvertObject } from "../../../lib/utilities";
-import { http } from "../../../Service/httpService";
+import { BASE_URL, http } from "../../../Service/httpService";
 import cartContext from "../../../store/cart-context";
-import { BASE_URL } from "../../lib/endpoints";
 import ProductInfoTabs from "./ProductInfoTabs";
 
-const ProductDetailsContent = () => {
+const ProductDetailsContent = ({ productDetails, isGetting }) => {
   const { id } = useParams();
   const [qty, setQty] = useState("");
   const getCartContext = useContext(cartContext);
@@ -15,8 +14,9 @@ const ProductDetailsContent = () => {
   const findItem = getCartCtxItems.find((item2) => item2.id === id);
   const [clickedReviewHandler, setClickedReviewHandler] = useState(false);
   const [visibleCartBox, setVisibleCartBox] = useState(false);
-  const [productDetails, setProductDetails] = useState();
+
   // const [count, setCount] = useState(1);
+
   const storeCartHandler = (item, e) => {
     e.preventDefault();
     getCartContext.storeCartItems(item);
@@ -30,6 +30,7 @@ const ProductDetailsContent = () => {
       setVisibleCartBox(false);
     }
   };
+
   const qtyIncHandler = (e) => {
     e.preventDefault();
     let quantity = findItem.quantity + 1;
@@ -57,18 +58,7 @@ const ProductDetailsContent = () => {
   const reviewClickedHandler = () => {
     setClickedReviewHandler((prevState) => !prevState);
   };
-  const getProductDetails = useCallback(() => {
-    http.get({
-      url: PRODUCT_DETAILS_GET + id,
-      before: () => {},
-      successed: (res) => {
-        res.Id = id;
-        setProductDetails(searchItemsConvertObject(res));
-      },
-      failed: () => {},
-      always: () => {},
-    });
-  }, []);
+
   useEffect(() => {
     if (findItem) {
       setVisibleCartBox(true);
@@ -76,10 +66,6 @@ const ProductDetailsContent = () => {
       setVisibleCartBox(false);
     }
   }, [findItem]);
-  useEffect(() => {
-    getProductDetails();
-  }, []);
-  console.log({ productDetails });
 
   return (
     <div id="center_column" class="center_column col-xs-12 col-sm-9">

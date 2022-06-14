@@ -132,9 +132,6 @@ const OrderDetails = () => {
           <div class="tabbed niiceeTabContent profile-tab invoice-tab">
             <div class="brick label happiness" style={{ color: "#016449" }}>
               <div class="Steps_steps__3SNbF Steps_wide__2JixU">
-                <div class="line">
-                  <div class="filler"></div>
-                </div>
                 <div class="Steps_step__2Wic5">
                   <p class="Steps_step__counter__2y6zu false active">1</p>
                   <div class="Steps_details__1CSho">
@@ -165,7 +162,11 @@ const OrderDetails = () => {
                     <h5>completed</h5>
                   </div>
                 </div>
+                <div class="line">
+                <div class="filler"></div>
               </div>
+              </div>
+              
             </div>
             {prescriptions.length > 0 && (
               <div className="prescription_card_orderDetails">

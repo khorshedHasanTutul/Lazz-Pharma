@@ -28,9 +28,11 @@ const CategoryWiseProduct = () => {
     pageNumber: 1,
     pageSize: 20,
   });
+
   const pageChangeHandler = (page) => {
     setParams((prevState) => ({ ...prevState, pageNumber: page }));
   };
+
   const getCategoryProduct = useCallback((params) => {
     http.post({
       url: GET_CATEGORY_WISE_PRODUCT,
@@ -46,7 +48,6 @@ const CategoryWiseProduct = () => {
           count: res.Data.Data?.length ?? 0,
         });
         setIsGetting(false);
-        
       },
       failed: () => {},
       always: () => {
