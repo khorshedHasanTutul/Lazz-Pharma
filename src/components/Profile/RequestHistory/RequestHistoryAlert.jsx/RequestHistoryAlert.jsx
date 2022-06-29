@@ -21,7 +21,7 @@ const RequestHistoryAlert = ({
               ✖
             </div>
           </div>
-          <div class="popup__body" style={{minHeight:"15vw"}}>
+          <div class="popup__body" style={{ minHeight: "15vw" }}>
             {!isGetting && (
               <>
                 <div className="image-founded-container">

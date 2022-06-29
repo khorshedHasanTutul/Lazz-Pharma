@@ -113,7 +113,7 @@ const RequestHistory = () => {
               closeRequestAlert={requestCloseHandler}
               requestItems={requestItems}
               requestPres={requestPres}
-              isGetting = {isGetting}
+              isGetting={isGetting}
             />
           )}
         </div>

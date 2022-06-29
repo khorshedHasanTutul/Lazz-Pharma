@@ -182,10 +182,20 @@ const UpdateProfile = ({ ProfileInfoHttp }) => {
                 />
 
                 {nameIsValid && (
-                  <div class="alert alert-error" style={{position:"absolute"}}>Name is required.</div>
+                  <div
+                    class="alert alert-error"
+                    style={{ position: "absolute" }}
+                  >
+                    Name is required.
+                  </div>
                 )}
                 {nameIsTouched && name.length === 0 && !nameIsValid && (
-                  <div class="alert alert-error"  style={{position:"absolute"}}>Name is required.</div>
+                  <div
+                    class="alert alert-error"
+                    style={{ position: "absolute" }}
+                  >
+                    Name is required.
+                  </div>
                 )}
               </div>
               <div class="custom-input">
@@ -226,7 +236,10 @@ const UpdateProfile = ({ ProfileInfoHttp }) => {
                     onChange={fileUploadHandler}
                   />
                   {isInvalidImg && (
-                    <div class="alert alert-error"  style={{position:"absolute"}}>
+                    <div
+                      class="alert alert-error"
+                      style={{ position: "absolute" }}
+                    >
                       Only JPG JPEG PNG format acceptable.
                     </div>
                   )}
