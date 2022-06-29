@@ -94,7 +94,7 @@ const ProductsInfoModel = ({ item }) => {
               <div className="product-top-heading" style={{ height: "70%" }}>
                 <div className="product_heading_info">
                   <h3>{itemContain.Nm} &nbsp; </h3>
-                  <span>{itemContain.St!=='.' && itemContain.St}</span>
+                  <span>{itemContain.St !== "." && itemContain.St}</span>
                 </div>
                 <span>{itemContain.category}</span>
               </div>
