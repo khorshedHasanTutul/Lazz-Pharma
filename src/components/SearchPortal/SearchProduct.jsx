@@ -4,12 +4,11 @@ import { SEARCH_PRODUCT } from "../../lib/endpoints";
 import { tranformQuery } from "../../lib/utilities";
 import { http } from "../../Service/httpService";
 import appContext from "../../store/app-context";
-import { SearchContext } from "../../store/search-context";
 import SearchPortal from "./SearchPortal";
 
 const SearchProduct = ({ searchValue, closeSearchHandler }) => {
   const appCtx = useContext(appContext);
-  
+
   const [searchedProduct, setSearchProduct] = useState([]);
   const [inputTimeout, setInputTimeout] = useState(null);
   const [isGetting, setIsGetting] = useState(false);

@@ -13,7 +13,7 @@ const MiniCart = ({ closeCart }) => {
       <div class="cart-bag text-center">
         <img
           src="/Contents/assets/image/cartLogo.jpg"
-          style={{ height: "43px", width: "50px" }}
+          style={{ height: "50px !important", width: "50px !important" }}
           alt="img"
         />
       </div>
