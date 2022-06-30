@@ -6,7 +6,8 @@ import { urlProductDetails } from "../../Service/UrlService";
 import cartContext from "../../store/cart-context";
 
 const ProductsInfoModel = ({ item }) => {
-  let itemContain = searchItemsConvertObject(item);
+  let itemContain = item;
+  console.log({ itemContain });
   const [qty, setQty] = useState("");
 
   const getCartContext = useContext(cartContext);
@@ -74,7 +75,13 @@ const ProductsInfoModel = ({ item }) => {
         <Link to={urlProductDetails() + itemContain.id}>
           <div class="product-top-area">
             <div class="product-img">
-              {itemContain.image === null ? (
+              <img
+                src="/Contents/assets/image/capsule-420x512.jpg"
+                alt="product"
+              />
+
+              {/* later execute this when needs to production */}
+              {/* {itemContain.image === null ? (
                 <img
                   src="/Contents/assets/image/default-medicine.png"
                   alt="product"
@@ -88,7 +95,7 @@ const ProductsInfoModel = ({ item }) => {
                   }
                   alt="product"
                 />
-              )}
+              )} */}
             </div>
             <div class="product-content">
               <div className="product-top-heading" style={{ height: "70%" }}>

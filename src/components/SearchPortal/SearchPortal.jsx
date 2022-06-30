@@ -13,7 +13,7 @@ const SearchPortal = ({
   lowerSearchvalue,
   totalData,
   isGetting,
-  onClick
+  onClick,
 }) => {
   let history = useHistory();
   const ref = useRef(null);
@@ -43,7 +43,7 @@ const SearchPortal = ({
             item={item}
             closeSearch={closeSearchHandler}
             lowerSearchvalue={lowerSearchvalue}
-            onClick= {onClick}
+            onClick={onClick}
           />
         ))}
       {data.length >= 5 && !isGetting && (

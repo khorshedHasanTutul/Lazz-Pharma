@@ -6,7 +6,10 @@ import {
   GET_ALL_SEARCHED_PRODUCT,
   SEARCH_PRODUCT,
 } from "../../../lib/endpoints";
-import { tranformQuery } from "../../../lib/utilities";
+import {
+  searchItemsConvertObject,
+  tranformQuery,
+} from "../../../lib/utilities";
 import { http } from "../../../Service/httpService";
 import { urlHomeRoute } from "../../../Service/UrlService";
 import appContext from "../../../store/app-context";
@@ -88,11 +91,14 @@ const SearchAllProduct = () => {
             <div class="row">
               <div id="view-product-list" style={{ padding: "0px 20px" }}>
                 <ul>
-                  {searchedProduct.map((item) => (
-                    <li class="">
-                      <ProductsInfoModel item={item} />
-                    </li>
-                  ))}
+                  {searchedProduct.map((item) => {
+                    let converItem = searchItemsConvertObject(item);
+                    return (
+                      <li class="">
+                        <ProductsInfoModel item={converItem} />
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>

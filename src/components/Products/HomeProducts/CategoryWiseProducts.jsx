@@ -80,6 +80,7 @@ const CategoryWiseProducts = () => {
             const getProduct = appData.categoryProducts.filter(
               (item2) => item2.category_id === item.categoryId
             );
+            console.log({getProduct})
             return (
               <div className="product_scroll_container">
                 {/* THis commented lines are essential  */}

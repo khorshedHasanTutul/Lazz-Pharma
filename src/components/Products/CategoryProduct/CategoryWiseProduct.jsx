@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { GET_CATEGORY_WISE_PRODUCT } from "../../../lib/endpoints";
-import { gotoTop } from "../../../lib/utilities";
+import { gotoTop, searchItemsConvertObject } from "../../../lib/utilities";
 import { http } from "../../../Service/httpService";
 import { urlHomeRoute } from "../../../Service/UrlService";
 import Paginator from "../../Paginators/Paginators";
@@ -82,13 +82,16 @@ const CategoryWiseProduct = () => {
             <div class="row">
               <div id="view-product-list" style={{ padding: "0px 20px" }}>
                 <ul>
-                  {categoryProducts.items.map((item) => (
+                  {categoryProducts.items.map((item) => {
+                    let converItem = searchItemsConvertObject(item);
+                    return (
+                      <li class="">
+                        {/* <ProductModelCategoryWise /> */}
+                        <ProductsInfoModel item={converItem} />
+                      </li>
+                    );
                     // col-xs-6 col-sm-2 col-md-2
-                    <li class="">
-                      {/* <ProductModelCategoryWise /> */}
-                      <ProductsInfoModel item={item} />
-                    </li>
-                  ))}
+                  })}
                 </ul>
               </div>
             </div>
